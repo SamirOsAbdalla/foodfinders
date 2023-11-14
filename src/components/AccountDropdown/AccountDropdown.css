@@ -1,0 +1,9 @@
+.accountdropdown__wrapper {
+    z-index: 9999;
+    background-color: aquamarine;
+    right: 10%;
+}
+
+.accountdropdown__link {
+    color: black;
+}
