@@ -1,0 +1,23 @@
+.bigbutton__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bigbutton {
+    cursor: pointer;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    display: flex;
+    transition: 0.2s ease-out;
+    justify-content: center;
+    align-items: center;
+}
+
+.bigbutton:hover {
+    transform: scale(1.02);
+    background-color: aliceblue;
+}
+
+.bigbutton__loading {}
