@@ -22,7 +22,47 @@
     transform: translateX(-50%);
 }
 
+.filterdropdown__top__clickable {
+    cursor: pointer;
+}
+
+.filterdropdown__top__apply {
+    border: none;
+    background-color: white;
+}
+
 .mainfilteroptions__container {
     background-color: black;
     border-radius: var(--filter-border-radius);
+}
+
+.filterdropdown__fooditems__container {
+    background-color: black;
+    border-radius: var(--filter-border-radius);
+}
+
+.filterdropdown__fooditem {
+    cursor: pointer;
+    background-color: antiquewhite;
+    border-radius: 40px;
+    font-size: 14px;
+}
+
+.filterdropdown__label {
+    display: inline-block;
+    margin: 0 10px;
+    position: relative;
+    cursor: pointer;
+}
+
+.filterdropdown__foodname {
+    background-color: antiquewhite;
+    width: 80px;
+    border-radius: 40px;
+    font-size: 14px;
+    transition: 0.1s ease-in;
+}
+
+.filterdropdown__fooditem__active {
+    background-color: blueviolet;
 }
