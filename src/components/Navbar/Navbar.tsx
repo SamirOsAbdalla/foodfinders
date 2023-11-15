@@ -29,7 +29,7 @@ export default function Navbar() {
     }
 
     return (
-        <nav className="navbar p-3 d-flex justify-content-between bg-primary">
+        <nav className="navbar p-3 d-flex justify-content-between bg-primary position-fixed w-100">
             <span className="navbar-brand m-0 h1">FindMeFood</span>
             <div className="d-flex align-items-center gap-5">
                 <div className="position-relative">
