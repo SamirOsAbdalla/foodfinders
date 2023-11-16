@@ -11,6 +11,8 @@ export default function Navbar() {
     const [accountDropdownStatus, setAccountDropdownStatus] = useState<DropdownStatus>("closed")
     const [filterDropdownStatus, setFilterDropdownStatus] = useState<DropdownStatus>("closed")
 
+    //could probably figure out a way to combine these two functions
+    //but it's fine for now seeing as they are quite small
     const toggleAccountDropdownStatus = () => {
         setFilterDropdownStatus("closed")
         if (accountDropdownStatus == "open") {
@@ -37,7 +39,7 @@ export default function Navbar() {
                     {accountDropdownStatus == "open" && <AccountDropdown />}
                 </div>
                 <div className="position-relative">
-                    <RiFilter3Fill onClick={toggleFilterDropdownStatus} className="navbar__icon" />
+                    <RiFilter3Fill data-testid="navbar__filter__icon" onClick={toggleFilterDropdownStatus} className="navbar__icon" />
                 </div>
             </div>
             {filterDropdownStatus == "open" && <FilterDropdown setFilterDropdownStatus={setFilterDropdownStatus} />}

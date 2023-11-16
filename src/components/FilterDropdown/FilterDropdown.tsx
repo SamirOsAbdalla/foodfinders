@@ -58,7 +58,7 @@ export default function FilterDropdown({ setFilterDropdownStatus }: Props) {
         return watchAllFields.foodTypes.includes(foodName)
     }
     return (
-        <div onClick={(e) => handleFilterWrapperClick(e)} className="filterdropdown__wrapper position-fixed">
+        <div data-testid="filterdropdown" onClick={(e) => handleFilterWrapperClick(e)} className="filterdropdown__wrapper position-fixed">
             <form onSubmit={handleSubmit(onSubmit)} className="position-absolute filterdropdown__form form-group p-3 d-flex flex-column gap-4">
                 <div className="d-flex justify-content-between gap-5 filterdropdown__top">
                     <div onClick={() => setFilterDropdownStatus("closed")} className="filterdropdown__top__clickable">Cancel</div>
@@ -84,10 +84,10 @@ export default function FilterDropdown({ setFilterDropdownStatus }: Props) {
                                 <label key={foodName} className="filterdropdown__label m-0">
                                     <input type="checkbox" className="d-none" value={foodName} {...register("foodTypes")} />
                                     {foodItemIsClicked(foodName) ?
-                                        <span className={`filterdropdown__foodname filterdropdown__fooditem__active p-2`}>
+                                        <span data-testid="filterdropdown__foodname__active" className={`filterdropdown__foodname filterdropdown__fooditem__active p-2`}>
                                             {foodName}
                                         </span> :
-                                        <span className={`filterdropdown__foodname p-2`}>
+                                        <span data-testid="filterdropdown__foodname" className={`filterdropdown__foodname p-2`}>
                                             {foodName}
                                         </span>
                                     }
