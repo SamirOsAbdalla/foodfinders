@@ -13,10 +13,11 @@ import { useDispatch, useSelector } from "react-redux";
 interface Props {
     setFilterDropdownStatus: Dispatch<SetStateAction<DropdownStatus>>
 }
-const mainFilterOptions = ["Top Rated", "Open Now"]
+
+const mainFilterOptions = ["Cheap"]
 let defaultFoodTypes = [
-    "Breakfast", "Burgers", "Pizza", "Sushi", "Dinner",
-    "Sandwich", "Chinese", "Mexican"
+    "Breakfast", "Burgers", "Pizza", "Sushi",
+    "Sandwiches", "Chinese", "Mexican"
 ]
 
 let defaultStringArray: string[] = []
