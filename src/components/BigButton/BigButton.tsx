@@ -4,7 +4,6 @@ import { useState } from "react"
 
 export default function BigButton() {
 
-
     const [userLocation, setUserLocation] = useState<{ latitude: Number, longitude: number } | null>(null)
     const [loading, setLoading] = useState<boolean>(false)
 
@@ -13,17 +12,19 @@ export default function BigButton() {
         setUserLocation({ latitude: coords.latitude, longitude: coords.longitude })
         setLoading(true)
 
-        const yelpResponse = await fetch("/api/yelp", {
+        const restaurant = await fetch(`/api/getNearbyRestaurant?latitude=${coords.latitude}&longitude=${coords.longitude}`, {
             method: "GET",
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
-            }
+            },
+
         })
 
-        let jsonResp = await yelpResponse.json()
-        setLoading(false)
+        const restaurantJSON = await restaurant.json()
+
     }
+
     const geolocationError = (error: GeolocationPositionError) => {
         console.log("Error: Could not fetch user coordinates")
     }
