@@ -1,8 +1,8 @@
 "use client"
 import "./Navbar.css"
 import { BsFillPersonFill } from "react-icons/bs"
-import { RiFilter3Fill } from "react-icons/ri"
-import { useState } from "react"
+import { TbFilters } from "react-icons/tb";
+import { useState, useRef, useEffect } from "react"
 import AccountDropdown from "../AccountDropdown/AccountDropdown"
 import FilterDropdown from "../FilterDropdown/FilterDropdown"
 
@@ -29,20 +29,42 @@ export default function Navbar() {
         }
         setFilterDropdownStatus("open")
     }
+    const accountDropdownRef = useRef<HTMLDivElement>(null)
 
+    useEffect(() => {
+        window.onclick = (event) => {
+            let htmlTarget = event.target as HTMLElement
+            if (!accountDropdownRef.current?.contains(htmlTarget)) {
+                setAccountDropdownStatus("closed")
+            }
+        }
+    }, [])
     return (
-        <nav className="navbar p-3 d-flex justify-content-between bg-primary position-fixed w-100">
-            <span className="navbar-brand m-0 h1">FindMeFood</span>
-            <div className="d-flex align-items-center gap-5">
-                <div className="position-relative">
-                    <BsFillPersonFill onClick={toggleAccountDropdownStatus} className="navbar__icon" />
-                    {accountDropdownStatus == "open" && <AccountDropdown />}
+        <nav className="navbar d-flex justify-content-center p-3 bg-white position-fixed">
+            <div className="navbar__container d-flex justify-content-between">
+                <span className="navbar-brand m-0 h1">SpeedEats</span>
+                <div className="d-flex align-items-center gap-5">
+                    <div ref={accountDropdownRef} className="position-relative">
+                        <BsFillPersonFill onClick={toggleAccountDropdownStatus} className="navbar__icon" />
+                        {accountDropdownStatus == "open" &&
+                            <AccountDropdown
+                                setAccountDropdownStatus={setAccountDropdownStatus}
+                            />
+                        }
+                    </div>
+                    <div className="position-relative">
+                        <button data-testid="navbar__filter__button"
+                            className="filter__button d-flex align-items-center justify-content-center"
+                            onClick={toggleFilterDropdownStatus}
+                        >
+                            Filters
+                            <TbFilters />
+                        </button>
+                    </div>
                 </div>
-                <div className="position-relative">
-                    <RiFilter3Fill data-testid="navbar__filter__icon" onClick={toggleFilterDropdownStatus} className="navbar__icon" />
-                </div>
+                {filterDropdownStatus == "open" && <FilterDropdown setFilterDropdownStatus={setFilterDropdownStatus} />}
             </div>
-            {filterDropdownStatus == "open" && <FilterDropdown setFilterDropdownStatus={setFilterDropdownStatus} />}
+
         </nav>
     )
 }

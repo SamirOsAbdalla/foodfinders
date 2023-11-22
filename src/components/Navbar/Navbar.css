@@ -1,5 +1,35 @@
+nav {
+    box-shadow: 0 0 #0000,
+        0 0 #0000,
+        0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    width: 100vw;
+}
+
+.navbar__container {
+    width: 100%;
+    max-width: 900px;
+}
+
+.filter__button {
+    background-color: rgb(42, 42, 42);
+    border-radius: 4px;
+    color: white;
+    width: 100px;
+    padding: 2px 8px;
+    gap: 1em;
+    border: none;
+    box-shadow: 0 0 #0000,
+        0 0 #0000,
+        0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    transition: 0.1s ease;
+}
+
+.filter__button:hover {
+    background-color: rgba(21, 21, 21, 0.81);
+}
+
 .navbar__icon {
-    width: 50px;
+    width: 30px;
     height: var(--navbar-height);
     cursor: pointer;
 }
