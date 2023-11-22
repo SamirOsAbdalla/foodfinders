@@ -24,17 +24,17 @@ let defaultStringArray: string[] = []
 export default function FilterDropdown({ setFilterDropdownStatus }: Props) {
     const dispatch = useDispatch<AppDispatch>()
     const reduxFilterState = useSelector((state: RootState) => state.filterReducer.value)
+
     const {
         register,
         handleSubmit,
-        formState,
-        getValues,
         watch,
         setValue
     } = useForm({
         defaultValues: { foodTypes: defaultStringArray, mainOptions: defaultStringArray }
     });
     const watchAllFields = watch()
+
 
     useEffect(() => {
         setValue("foodTypes", reduxFilterState.foodTypes)
