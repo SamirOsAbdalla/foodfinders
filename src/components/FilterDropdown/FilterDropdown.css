@@ -13,9 +13,12 @@
     bottom: 0;
     top: 0;
     background-color: rgba(122, 122, 122, 0.354);
+
 }
 
 .filterdropdown__wrapper form {
+    width: 80%;
+    max-width: 700px;
     background-color: var(--filter-background-color);
     border-radius: var(--filter-border-radius);
     top: 10%;
