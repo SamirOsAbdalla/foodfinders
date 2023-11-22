@@ -31,7 +31,8 @@ nav {
     transition: 0.1s ease;
 }
 
-.filter__button:hover {
+.filter__button:hover,
+.logout__button:hover {
     background-color: rgba(21, 21, 21, 0.81);
 }
 
@@ -46,9 +47,9 @@ nav {
     padding: 0px 20px 0px 0px;
 }
 
-
-
-.navbar__hamburger {
+.navbar__hamburger,
+.navbar__dropdown,
+.navbar__hamburger__container {
     display: none
 }
 
@@ -59,13 +60,18 @@ nav {
     color: var(--navbar-text-color);
 }
 
+
 /* Small screen styling */
 @media screen and (max-width:601px) {
 
     .navbar__container {
+
+        font-size: 11px;
+    }
+
+    .navbar__container__open {
         padding-bottom: 10px;
         border-bottom: 1px solid rgba(129, 129, 129, 0.515);
-        font-size: 11px;
     }
 
     .logout__button {
@@ -76,13 +82,16 @@ nav {
     }
 
     .navbar__dropdown {
+        display: flex;
+        padding-top: 15px;
+        width: 100%;
         font-size: .9rem;
     }
 
     /* Reduce button width for more symmetric navbar */
     .filter__button {
         width: 40px;
-        padding: 5px 5px;
+        padding: 10px 8px;
     }
 
     /* Remove clutter from navbar on smaller screens */
@@ -98,6 +107,14 @@ nav {
     }
 
     /* Navbar hamburger styling */
+    .navbar__hamburger__container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        height: 18px;
+    }
+
     .navbar__hamburger {
         display: flex;
         justify-content: center;
