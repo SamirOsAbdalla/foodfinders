@@ -1,16 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+export type PriceType = '$' | "$$" | "$$$" | "$$$$"
+
 export type FilterState = {
-    foodTypes: string[],
-    mainOptions: string[]
+    cuisine: string[],
+    prices: PriceType[]
 }
+
 type InitialState = {
     value: FilterState
 }
 const initialState = {
     value: {
-        foodTypes: [],
-        mainOptions: []
+        cuisine: [],
+        prices: []
     }
 } as InitialState
 
