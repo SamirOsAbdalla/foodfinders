@@ -1,16 +1,23 @@
+:root {
+    --navbar-text-color: rgb(71 85 105/1);
+}
+
 nav {
     box-shadow: 0 0 #0000,
         0 0 #0000,
         0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
     width: 100vw;
+    z-index: 9999;
 }
 
 .navbar__container {
     width: 100%;
     max-width: 900px;
+
 }
 
-.filter__button {
+.filter__button,
+.logout__button {
     background-color: rgb(42, 42, 42);
     border-radius: 4px;
     color: white;
@@ -30,6 +37,96 @@ nav {
 
 .navbar__icon {
     width: 30px;
-    height: var(--navbar-height);
+    height: 30px;
     cursor: pointer;
+}
+
+.navbar__brand {
+    border-right: 2px solid rgba(207, 207, 207, 0.555);
+    padding: 0px 20px 0px 0px;
+}
+
+
+
+.navbar__hamburger {
+    display: none
+}
+
+.navbar__about,
+.navbar__brand,
+.navbar__dropdown,
+.navbar__dropdown__text {
+    color: var(--navbar-text-color);
+}
+
+/* Small screen styling */
+@media screen and (max-width:601px) {
+
+    .navbar__container {
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(129, 129, 129, 0.515);
+        font-size: 11px;
+    }
+
+    .logout__button {
+        padding-top: 6px;
+        padding-bottom: 6px;
+        font-size: 14px;
+        align-self: center;
+    }
+
+    .navbar__dropdown {
+        font-size: .9rem;
+    }
+
+    /* Reduce button width for more symmetric navbar */
+    .filter__button {
+        width: 40px;
+        padding: 5px 5px;
+    }
+
+    /* Remove clutter from navbar on smaller screens */
+    .navbar__brand {
+        border: none;
+        padding: 0;
+    }
+
+    .navbar__filters__text,
+    .navbar__icon__container,
+    .navbar__about {
+        display: none;
+    }
+
+    /* Navbar hamburger styling */
+    .navbar__hamburger {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 20px;
+        height: 2px;
+        background: rgba(42, 42, 42, 0.871);
+        border-radius: 5px;
+        transition: 0.2s ease-in;
+    }
+
+    .navbar__hamburger::before,
+    .navbar__hamburger::after {
+        position: absolute;
+        content: '';
+        display: flex;
+        width: 20px;
+        height: 2px;
+        background: rgba(42, 42, 42, 0.871);
+        border-radius: 5px;
+    }
+
+    .navbar__hamburger::before {
+        transform: translateY(-6px);
+    }
+
+    .navbar__hamburger::after {
+        transform: translateY(6px);
+
+    }
+
 }

@@ -5,7 +5,8 @@ import { TbFilters } from "react-icons/tb";
 import { useState, useRef, useEffect } from "react"
 import AccountDropdown from "../AccountDropdown/AccountDropdown"
 import FilterDropdown from "../FilterDropdown/FilterDropdown"
-
+import Link from "next/link";
+import { HiLogout } from "react-icons/hi";
 export type DropdownStatus = "open" | "closed"
 export default function Navbar() {
     const [accountDropdownStatus, setAccountDropdownStatus] = useState<DropdownStatus>("closed")
@@ -30,6 +31,7 @@ export default function Navbar() {
         setFilterDropdownStatus("open")
     }
     const accountDropdownRef = useRef<HTMLDivElement>(null)
+    const navbarDropdownRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         window.onclick = (event) => {
@@ -41,10 +43,18 @@ export default function Navbar() {
     }, [])
     return (
         <nav className="navbar d-flex justify-content-center p-3 bg-white position-fixed">
-            <div className="navbar__container d-flex justify-content-between">
-                <span className="navbar-brand m-0 h1">SpeedEats</span>
-                <div className="d-flex align-items-center gap-5">
-                    <div ref={accountDropdownRef} className="position-relative">
+            <div className="navbar__container d-flex justify-content-between align-items-center">
+                <div className="navbar__hamburger">
+
+                </div>
+                <div className="d-flex navbar__left align-items-center gap-3">
+                    <div className="d-flex align-items-center justify-content-center navbar__brand navbar-brand m-0 h1">SpeedEats</div>
+                    <Link className="text-decoration-none navbar__about" href="/about">
+                        About
+                    </Link>
+                </div>
+                <div className="d-flex align-items-center gap-4">
+                    <div ref={accountDropdownRef} className="navbar__icon__container position-relative">
                         <BsFillPersonFill onClick={toggleAccountDropdownStatus} className="navbar__icon" />
                         {accountDropdownStatus == "open" &&
                             <AccountDropdown
@@ -57,14 +67,25 @@ export default function Navbar() {
                             className="filter__button d-flex align-items-center justify-content-center"
                             onClick={toggleFilterDropdownStatus}
                         >
-                            Filters
+                            <span className="navbar__filters__text">Filters</span>
                             <TbFilters />
                         </button>
                     </div>
                 </div>
                 {filterDropdownStatus == "open" && <FilterDropdown setFilterDropdownStatus={setFilterDropdownStatus} />}
             </div>
-
+            <div className="navbar__dropdown w-100 d-flex pt-3 align-items-start flex-column gap-4" ref={navbarDropdownRef}>
+                <Link className="navbar__dropdown__text text-decoration-none" href="/favorites">
+                    Favorites
+                </Link>
+                <Link className="navbar__dropdown__text text-decoration-none" href="/about">
+                    About
+                </Link>
+                <Link href="/login" className="text-decoration-none logout__button d-flex align-items-center justify-content-center">
+                    Logout
+                    <HiLogout />
+                </Link>
+            </div>
         </nav>
     )
 }
