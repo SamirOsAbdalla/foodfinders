@@ -1,6 +1,7 @@
 "use client"
 import "./BigButton.css"
 import { useState } from "react"
+import { IoFastFoodOutline } from "react-icons/io5";
 
 export default function BigButton() {
 
@@ -35,9 +36,12 @@ export default function BigButton() {
     }
     return (
         <div className={`bigbutton__wrapper ${loading == false && "bigbutton__loading"}`}>
-            <button onClick={handleBigButtonClick} className="bigbutton">
-                FIND FOOD
-            </button>
+            <div className="bigbutton__container d-flex align-items-center justify-content-center">
+                <button onClick={handleBigButtonClick} className="bigbutton">
+                    <IoFastFoodOutline className="fastfood__icon" />
+                </button>
+            </div>
+
         </div>
     )
 }

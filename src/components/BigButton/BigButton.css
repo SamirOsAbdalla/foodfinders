@@ -2,22 +2,51 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1;
+}
+
+/* Gradient gives 3-D/lighting illusion */
+.bigbutton__container {
+    width: 350px;
+    height: 350px;
+    background-image: linear-gradient(rgb(171, 211, 254), rgb(155, 203, 255), rgb(127, 175, 227));
+    border-radius: 50%;
+    transition: 0.2s ease-out;
+    cursor: pointer;
+
+}
+
+.bigbutton__container:hover {
+    transform: scale(1.02);
 }
 
 .bigbutton {
-    cursor: pointer;
-    width: 300px;
-    height: 300px;
+    width: 280px;
+    height: 280px;
     border-radius: 50%;
     display: flex;
-    transition: 0.2s ease-out;
+
     justify-content: center;
     align-items: center;
+    border: none;
+    background-color: rgb(155, 203, 255);
 }
 
-.bigbutton:hover {
-    transform: scale(1.02);
-    background-color: aliceblue;
+.fastfood__icon {
+    color: white;
+    font-size: 50px;
 }
 
-.bigbutton__loading {}
+/* Button takes up way too much space on smaller screens so reduce size */
+@media screen and (max-width:600px) {
+    .bigbutton__container {
+        width: 300px;
+        height: 300px;
+
+    }
+
+    .bigbutton {
+        width: 230px;
+        height: 230px;
+    }
+}
