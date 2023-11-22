@@ -13,8 +13,8 @@ it("should change the input color when a food name filter icon is clicked", () =
             />
         </ReduxProvider>
     )
-    const filterDropdownFoodNames = screen.getAllByTestId("filterdropdown__foodname")
-    fireEvent.click(filterDropdownFoodNames[0])
-    const filterDropdownFoodNamesActive = screen.getAllByTestId("filterdropdown__foodname__active")
-    expect(filterDropdownFoodNamesActive[0]).toBeInTheDocument()
+    const filterDropdownFoodTypes = screen.getAllByTestId("filterdropdown__foodtype")
+    fireEvent.click(filterDropdownFoodTypes[0])
+    const filterDropdownFoodTypesActive = screen.getAllByTestId("filterdropdown__foodtype__active")
+    expect(filterDropdownFoodTypesActive[0]).toBeInTheDocument()
 })
