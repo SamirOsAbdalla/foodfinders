@@ -43,8 +43,10 @@ nav {
 }
 
 .navbar__brand {
+    font-size: 22px;
     border-right: 2px solid rgba(207, 207, 207, 0.555);
     padding: 0px 20px 0px 0px;
+    color: var(--navbar-text-color);
 }
 
 .navbar__hamburger,
@@ -54,7 +56,6 @@ nav {
 }
 
 .navbar__about,
-.navbar__brand,
 .navbar__dropdown,
 .navbar__dropdown__text {
     color: var(--navbar-text-color);

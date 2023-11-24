@@ -39,7 +39,6 @@ export default function Navbar() {
     useEffect(() => {
         window.onclick = (event) => {
             let htmlTarget = event.target as HTMLElement
-            console.log(htmlTarget)
             if (!accountDropdownRef.current?.contains(htmlTarget)) {
                 setAccountDropdownStatus("closed")
             }
@@ -66,7 +65,7 @@ export default function Navbar() {
                     </div>
                 </div>
                 <div className="d-flex navbar__left align-items-center gap-3">
-                    <div className="d-flex align-items-center justify-content-center navbar__brand navbar-brand m-0 h1">SpeedEats</div>
+                    <div className="d-flex align-items-center justify-content-center navbar__brand m-0">SpeedEats</div>
                     <Link className="text-decoration-none navbar__about" href="/about">
                         About
                     </Link>
