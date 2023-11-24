@@ -2,18 +2,30 @@
 import "./BigButton.css"
 import { useState } from "react"
 import { IoFastFoodOutline } from "react-icons/io5";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 export default function BigButton() {
 
     const [userLocation, setUserLocation] = useState<{ latitude: Number, longitude: number } | null>(null)
     const [loading, setLoading] = useState<boolean>(false)
+    const reduxFilterState = useSelector((state: RootState) => state.filterReducer.value)
 
     const geolocationSuccess = async (position: GeolocationPosition) => {
         const coords = position.coords
         setUserLocation({ latitude: coords.latitude, longitude: coords.longitude })
         setLoading(true)
 
-        const restaurant = await fetch(`/api/getNearbyRestaurant?latitude=${coords.latitude}&longitude=${coords.longitude}`, {
+        const cuisineString = reduxFilterState.cuisine.join(",")
+        const pricesString = reduxFilterState.prices.join(",")
+
+
+        const fetchUrl = `/api/getNearbyRestaurant?` +
+            `latitude=${coords.latitude}&longitude=${coords.longitude}` +
+            `${cuisineString ? ("&cuisineString=" + cuisineString) : ""}` +
+            `${pricesString ? ("&pricesString=" + pricesString) : ""}`
+
+        const restaurant = await fetch(fetchUrl, {
             method: "GET",
             headers: {
                 "Accept": "application/json",
