@@ -3,5 +3,25 @@
     height: 100vh;
     display: flex;
     justify-content: center;
+    gap: 5em;
     align-items: center;
+    overflow: auto;
+    padding: 0px 30px;
+}
+
+.mainpage__modals {
+    gap: 20em;
+}
+
+@media screen and (max-width:1000px) {
+    .mainpage__wrapper {
+        padding-top: 150px;
+        gap: 0em;
+        flex-direction: column !important;
+    }
+
+    .mainpage__modals {
+        gap: 5em;
+        position: relative !important
+    }
 }
