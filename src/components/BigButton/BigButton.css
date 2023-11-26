@@ -6,7 +6,7 @@
 }
 
 /* Gradient gives 3-D/lighting illusion */
-.bigbutton__container {
+.bigbutton__container__regular {
     width: 350px;
     height: 350px;
     background-image: linear-gradient(rgb(171, 211, 254), rgb(155, 203, 255), rgb(127, 175, 227));
@@ -16,11 +16,12 @@
 
 }
 
-.bigbutton__container:hover {
+.bigbutton__container__regular:hover,
+.bigbutton__container__small:hover {
     transform: scale(1.02);
 }
 
-.bigbutton {
+.bigbutton__regular {
     width: 280px;
     height: 280px;
     border-radius: 50%;
@@ -32,20 +33,40 @@
     background-color: rgb(155, 203, 255);
 }
 
-.fastfood__icon {
+.fastfood__icon__regular {
     color: white;
     font-size: 50px;
 }
 
+.bigbutton__container__loading {
+    animation: spin 2s linear infinite;
+}
+
+.bigbutton__loading {
+    animation: opposite-spin 2s linear infinite
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes opposite-spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 /* Button takes up way too much space on smaller screens so reduce size */
 @media screen and (max-width:600px) {
-    .bigbutton__container {
+    .bigbutton__container__regular {
         width: 300px;
         height: 300px;
 
     }
 
-    .bigbutton {
+    .bigbutton__regular {
         width: 230px;
         height: 230px;
     }
