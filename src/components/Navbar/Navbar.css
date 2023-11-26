@@ -16,12 +16,10 @@ nav {
 
 }
 
-.filter__button,
+.navbar__button,
 .logout__button {
-    background-color: rgb(42, 42, 42);
     border-radius: 4px;
-    color: white;
-    width: 100px;
+    width: 120px;
     padding: 2px 8px;
     gap: 1em;
     border: none;
@@ -31,15 +29,29 @@ nav {
     transition: 0.1s ease;
 }
 
-.filter__button:hover,
-.logout__button:hover {
+.navbar__button__black {
+    background-color: rgb(42, 42, 42);
+    color: white;
+}
+
+.navbar__button__black:hover {
     background-color: rgba(21, 21, 21, 0.81);
 }
 
+.navbar__button__light {
+    border: 1px solid #e2e8f0;
+    background-color: white;
+    color: rgb(71 85 105/1);
+}
+
+.navbar__button__light:hover {
+    background-color: rgb(253, 252, 252);
+
+}
+
 .navbar__icon {
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
+    height: 15px;
+    width: 15px;
 }
 
 .navbar__brand {
@@ -78,7 +90,6 @@ nav {
     .logout__button {
         padding-top: 6px;
         padding-bottom: 6px;
-        font-size: 14px;
         align-self: center;
     }
 
@@ -90,7 +101,7 @@ nav {
     }
 
     /* Reduce button width for more symmetric navbar */
-    .filter__button {
+    .navbar__button {
         width: 40px;
         padding: 10px 8px;
     }
@@ -101,7 +112,7 @@ nav {
         padding: 0;
     }
 
-    .navbar__filters__text,
+    .navbar__button__text,
     .navbar__icon__container,
     .navbar__about {
         display: none;

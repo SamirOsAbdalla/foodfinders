@@ -1,12 +1,13 @@
 "use client"
 import "./Navbar.css"
-import { BsFillPersonFill } from "react-icons/bs"
+import { BsPerson } from "react-icons/bs";
 import { TbFilters } from "react-icons/tb";
 import { useState, useRef, useEffect } from "react"
 import AccountDropdown from "../AccountDropdown/AccountDropdown"
 import FilterDropdown from "../FilterDropdown/FilterDropdown"
 import Link from "next/link";
 import { HiLogout } from "react-icons/hi";
+
 export type DropdownStatus = "open" | "closed"
 export default function Navbar() {
     const [accountDropdownStatus, setAccountDropdownStatus] = useState<DropdownStatus>("closed")
@@ -16,6 +17,7 @@ export default function Navbar() {
     //could probably figure out a way to combine these two functions
     //but it's fine for now seeing as they are quite small
     const toggleAccountDropdownStatus = () => {
+
         setFilterDropdownStatus("closed")
         if (accountDropdownStatus == "open") {
             setAccountDropdownStatus("closed")
@@ -71,8 +73,14 @@ export default function Navbar() {
                     </Link>
                 </div>
                 <div className="d-flex align-items-center gap-4">
-                    <div ref={accountDropdownRef} className="navbar__icon__container position-relative">
-                        <BsFillPersonFill onClick={toggleAccountDropdownStatus} className="navbar__icon" />
+                    <div ref={accountDropdownRef} className="position-relative">
+                        <button data-testid="navbar__account__button"
+                            className="navbar__button navbar__button__light d-flex align-items-center justify-content-center"
+                            onClick={toggleAccountDropdownStatus}
+                        >
+                            <span className="navbar__button__text">Account</span>
+                            <BsPerson className="navbar__icon" />
+                        </button>
                         {accountDropdownStatus == "open" &&
                             <AccountDropdown
                                 setAccountDropdownStatus={setAccountDropdownStatus}
@@ -81,11 +89,11 @@ export default function Navbar() {
                     </div>
                     <div className="position-relative">
                         <button data-testid="navbar__filter__button"
-                            className="filter__button d-flex align-items-center justify-content-center"
+                            className="navbar__button navbar__button__black d-flex align-items-center justify-content-center"
                             onClick={toggleFilterDropdownStatus}
                         >
-                            <span className="navbar__filters__text">Filters</span>
-                            <TbFilters />
+                            <span className="navbar__button__text">Filters</span>
+                            <TbFilters className="navbar__icon" />
                         </button>
                     </div>
                 </div>
@@ -93,13 +101,10 @@ export default function Navbar() {
             </div>
             {hamburgerStatus == "open" &&
                 <div className="navbar__dropdown justify-content-start align-items-start flex-column gap-4" ref={navbarDropdownRef}>
-                    <Link className="navbar__dropdown__text text-decoration-none" href="/favorites">
-                        Favorites
-                    </Link>
                     <Link className="navbar__dropdown__text text-decoration-none" href="/about">
                         About
                     </Link>
-                    <Link href="/login" className="text-decoration-none logout__button d-flex align-items-center justify-content-center">
+                    <Link href="/login" className="text-decoration-none logout__button navbar__button__black logout__button d-flex align-items-center justify-content-center">
                         Logout
                         <HiLogout />
                     </Link>
