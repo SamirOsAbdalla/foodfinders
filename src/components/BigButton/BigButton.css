@@ -3,6 +3,7 @@
     justify-content: center;
     align-items: center;
     z-index: 1;
+    padding-top: 100px;
 }
 
 /* Gradient gives 3-D/lighting illusion */
