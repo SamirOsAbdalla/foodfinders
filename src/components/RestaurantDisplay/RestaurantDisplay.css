@@ -1,0 +1,104 @@
+.rd__wrapper {
+    width: 100%;
+    max-width: 900px;
+
+}
+
+.rd__text {
+    color: rgb(71 85 105/1);
+}
+
+.rd__container {
+    border-top: none;
+    color: rgb(71 85 105/1);
+    border-radius: 0x 0px 4px 4px;
+    padding: 10px 20px;
+
+}
+
+.rd__heading {
+    font-size: 40px;
+    border-radius: 4px 4px 0px 0px;
+    color: rgb(48, 50, 53);
+    padding: 40px 0px 20px 0px;
+}
+
+.rd__restaurant__image {
+    border-radius: 15px;
+    overflow: hidden;
+    height: 250px;
+}
+
+/* Category button styling */
+.rd__category {
+    width: 110px;
+    font-size: 14px;
+    border-radius: 4px;
+    padding: 5px;
+    color: white;
+}
+
+.rd__category__0 {
+    background-color: rgb(0, 115, 255);
+}
+
+.rd__category__1 {
+    background-color: rgb(255, 147, 147);
+}
+
+.rd__category__2 {
+    background-color: rgb(118, 122, 255);
+}
+
+.rd__price {
+    padding: 5px 14px;
+    width: 120px;
+    border-radius: 4px;
+    font-size: 24px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.rd__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: black;
+    width: 70px;
+    border-radius: 4px;
+    font-size: 24px;
+    height: 40px;
+    border: none;
+}
+
+.rd__price {
+    color: rgb(71 85 105/1);
+    border: 1px solid #e2e8f0;
+    background-color: white;
+    box-shadow: 0 0 #0000,
+        0 0 #0000,
+        0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}
+
+.reviewcount__text {
+    color: rgba(71, 85, 105, 0.792);
+}
+
+.rd__website__link {
+    top: 80%;
+    left: 2%;
+    z-index: 2;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    border: 1px solid #e8ecf1;
+    box-shadow: 0 0 #0000,
+        0 0 #0000,
+        0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+
+}
