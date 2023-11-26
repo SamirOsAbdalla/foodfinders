@@ -1,26 +1,31 @@
-.rd__wrapper {
-    width: 100%;
-    max-width: 900px;
+.rd__section {
+    background-color: white;
 
 }
 
-.rd__text {
+.rd__wrapper {
+    width: 75%;
+    border-right: 1px solid rgba(186, 186, 186, 0.633);
+    padding: 100px 30px;
+}
+
+.rd__text,
+.reviewcount__text,
+.rd__container,
+.rd__price {
     color: rgb(71 85 105/1);
 }
 
 .rd__container {
     border-top: none;
-    color: rgb(71 85 105/1);
     border-radius: 0x 0px 4px 4px;
-    padding: 10px 20px;
-
 }
 
 .rd__heading {
+    font-weight: bold;
     font-size: 40px;
     border-radius: 4px 4px 0px 0px;
     color: rgb(48, 50, 53);
-    padding: 40px 0px 20px 0px;
 }
 
 .rd__restaurant__image {
@@ -31,61 +36,72 @@
 
 /* Category button styling */
 .rd__category {
-    width: 110px;
     font-size: 14px;
-    border-radius: 4px;
-    padding: 5px;
-    color: white;
 }
 
-.rd__category__0 {
-    background-color: rgb(0, 115, 255);
-}
-
-.rd__category__1 {
-    background-color: rgb(255, 147, 147);
-}
-
-.rd__category__2 {
-    background-color: rgb(118, 122, 255);
-}
-
-.rd__price {
-    padding: 5px 14px;
-    width: 120px;
-    border-radius: 4px;
-    font-size: 24px;
-    height: 35px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
+.rd__category span {
+    text-overflow: ellipsis;
 }
 
 .rd__button {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: .5em;
     color: white;
     background-color: black;
-    width: 70px;
+    width: 120px;
     border-radius: 4px;
-    font-size: 24px;
+    font-size: 16px;
     height: 40px;
+    font-weight: bold;
     border: none;
 }
 
-.rd__price {
-    color: rgb(71 85 105/1);
+.rd__button__white {
+    padding: 5px 14px;
+    font-weight: bold;
+    width: 130px;
+    border-radius: 4px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border: 1px solid #e2e8f0;
     background-color: white;
+
     box-shadow: 0 0 #0000,
         0 0 #0000,
         0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+
 }
 
-.reviewcount__text {
-    color: rgba(71, 85, 105, 0.792);
+.rd_button_red {
+    border: 2px solid rgba(255, 43, 43, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5em;
+    color: rgba(255, 43, 43, 0.85);
+    width: 150px;
+    font-weight: bold;
+    border-radius: 4px;
+    font-size: 14px;
+    height: 40px;
+    background-color: white;
+}
+
+.rd__price {
+    font-size: 18px;
+}
+
+.clock__container,
+.rd__miles {
+    font-size: 14px;
+}
+
+.rd__clock {
+    font-size: 12px;
 }
 
 .rd__website__link {
@@ -100,5 +116,4 @@
     box-shadow: 0 0 #0000,
         0 0 #0000,
         0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-
 }

@@ -6,12 +6,15 @@ import { YelpRestaurant } from '@/util/restaurantTypes'
 import Link from 'next/link'
 import { IoCallOutline } from "react-icons/io5";
 import { FaMapMarkedAlt } from "react-icons/fa";
+import { FaRegClock, FaHeart } from "react-icons/fa6";
+import RestaurantHistory from '../RestaurantHistory/RestaurantHistory'
 
 
-
+const metersToMilesFactor = 0.000621371
 export default function RestaurantDisplay({ name,
     rating, phoneNumber, price, address, apiRespOrigin,
-    yelpWebsiteUrl, restaurantImageUrl, categories, reviewCount
+    yelpWebsiteUrl, restaurantImageUrl, categories, reviewCount,
+    distance
 }: YelpRestaurant) {
 
 
@@ -24,8 +27,8 @@ export default function RestaurantDisplay({ name,
                         return (<></>)
                     } else {
                         return (
-                            <div key={category.alias} className={`d-flex justify-content-center rd__category rd__category__${index}`}>
-                                {category.title}
+                            <div key={category.alias} className={`rd__button__white rd__category d-flex justify-content-center`}>
+                                <span>{category.title}</span>
                             </div>
                         )
                     }
@@ -59,65 +62,89 @@ export default function RestaurantDisplay({ name,
         }
     }
     return (
-        <section className="rd__wrapper d-flex flex-column align-items-around justify-content-start">
-            {restaurantImageUrl &&
-                <div className="position-relative">
-                    <div className="w-100 rd__restaurant__image position-relative">
-                        <Image fill style={{ objectFit: "cover" }} src={restaurantImageUrl} alt="Restaurant Image" />
-                    </div>
-                    <a href={yelpWebsiteUrl} target="_blank" className="rd__website__link d-flex justify-content-center align-items-center position-absolute">
-                        <Image src="/yelp_logo.svg" alt="Yelp Logo" width={70} height={25} />
-                    </a>
-                </div>
-
-            }
-            <div className="rd__heading d-flex align-items-center w-100 justify-content-between">
-                {name &&
-                    <div className="fw-bold d-flex justify-content-start">
-                        {name}
-                    </div>
-                }
-                {price &&
-                    <div className="rd__price  d-flex justify-content-center align-items-center">
-                        {price}
-                    </div>
-                }
-            </div>
-            <div className="d-flex flex-column w-100 gap-4">
-                <div className="w-100 d-flex justify-content-between align-items-center">
-                    {categories && categories.length > 0 &&
-                        <div className="d-flex align-items-center gap-3">
-                            {getCategoryButtons(categories)}
+        <section className="w-100 rd__section d-flex">
+            <div className="rd__wrapper d-flex flex-column align-items-around">
+                {restaurantImageUrl &&
+                    <div className="position-relative">
+                        <div className="w-100 rd__restaurant__image position-relative">
+                            <Image fill style={{ objectFit: "cover" }} src={restaurantImageUrl} alt="Restaurant Image" />
                         </div>
-                    }
-                    {rating &&
-
-                        <div className="d-flex gap-2">
-                            <div className="position-relative">
-                                <Image width={100} height={20} src={getYelpRatingImageSrc()} alt="Yelp Rating" />
+                        <a href={yelpWebsiteUrl} target="_blank" className="rd__website__link d-flex justify-content-center align-items-center position-absolute">
+                            <Image src="/yelp_logo.svg" alt="Yelp Logo" width={70} height={25} />
+                        </a>
+                    </div>
+                }
+                <div className="d-flex flex-column gap-3">
+                    <div className="w-100 pt-4 d-flex justify-content-between align-items-center">
+                        {name &&
+                            <div className="rd__heading d-flex justify-content-start">
+                                {name}
                             </div>
-                            <span className="rating__text fw-bold">{rating}</span>
-                            {reviewCount &&
-                                <span className="reviewcount__text">
-                                    {`(${reviewCount} reviews)`}
-                                </span>
+                        }
+                        {categories && categories.length > 0 &&
+                            <div className="d-flex align-items-center">
+                                {getCategoryButtons(categories)}
+                            </div>
+                        }
+                    </div>
+                    <div className="d-flex align-items-center gap-1">
+                        {rating &&
+                            <div className="d-flex align-items-center gap-2">
+                                <div className="position-relative">
+                                    <Image width={100} height={20} src={getYelpRatingImageSrc()} alt="Yelp Rating" />
+                                </div>
+                                <span className="rating__text fw-bold">{rating}</span>
+                            </div>
+                        }
+                        {reviewCount && <span>•</span>}
+                        {reviewCount &&
+                            <span className="reviewcount__text">
+                                {`${reviewCount} reviews`}
+                            </span>
+                        }
+                        {price && <span>•</span>}
+                        {price &&
+                            <div className="d-flex justify-content-center align-items-center">
+                                {price}
+                            </div>
+                        }
+                    </div>
+                    <div className="d-flex w-100 justify-content-between align-items-center">
+                        <div className="d-flex justify-content-start align-items-center gap-2">
+                            <div className="clock__container d-flex justify-content-start align-items-center gap-1">
+                                <FaRegClock className="rd__clock" />
+                                <span>Open Now</span>
+                            </div>
+                            <span>•</span>
+                            {distance &&
+                                <div className="rd__miles">
+                                    {(parseFloat(distance) * metersToMilesFactor).toFixed(1)} mi
+                                </div>
                             }
                         </div>
+                        <button className="rd_button_red">
+                            <FaHeart />
+                            Add To Favorites
+                        </button>
+                    </div>
+                    <div className="d-flex w-100 justify-content-start align-items-center gap-2">
+                        {phoneNumber &&
+                            <Link className="text-decoration-none rd__button d-flex justify-content-center align-items-center" href={`tel:${phoneNumber}`}>
+                                <IoCallOutline className="phone__icon" />
+                                Call
+                            </Link>
+                        }
+                        {address &&
+                            <button className="rd__button">
+                                <FaMapMarkedAlt />
+                                Navigate
+                            </button>
+                        }
+                    </div>
 
-                    }
-                </div>
-                <div className="d-flex pt-5 gap-5 w-100 align-items-center justify-content-center">
-                    {phoneNumber &&
-                        <Link className="text-decoration-none rd__button d-flex justify-content-center align-items-center" href={`tel:${phoneNumber}`}>
-                            <IoCallOutline className="phone__icon" />
-                        </Link>
-                    }
-                    {address && <button className="rd__button"><FaMapMarkedAlt />
-                    </button>}
                 </div>
             </div>
+            <RestaurantHistory />
         </section>
-
-
     )
 }
