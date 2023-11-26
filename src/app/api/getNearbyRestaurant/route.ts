@@ -1,8 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { AcceptedFoodFilters, PriceRanges } from "restaurants-api-wrapper"
-const getANearbyRestaurant = require("restaurants-api-wrapper")
-
-
+import getANearbyRestaurant from "@/util/getRestaurant"
 
 export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams
@@ -26,15 +23,22 @@ export async function GET(request: NextRequest) {
         tripAdvisorKey: process.env.NEXT_PUBLIC_TA_API_KEY,
         tomTomKey: process.env.NEXT_PUBLIC_TOMTOM_API_KEY
     }
-    const coordinates = { latitude, longitude }
+    let coordinates = {
+        latitude: 0,
+        longitude: 0
+    }
+    if (latitude && longitude) {
+        coordinates = {
+            latitude: parseFloat(latitude),
+            longitude: parseFloat(longitude)
+        }
+    }
 
     const filtersObject = {
         prices: pricesArray,
         foodTypes: foodTypesArray
     }
-
     const response = await getANearbyRestaurant(coordinates, apiKeyBundler, filtersObject)
-    console.log("RESPONSE", response)
-
+    console.log(response)
     return Response.json(null)
 }
