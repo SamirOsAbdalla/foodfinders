@@ -1,0 +1,32 @@
+.rh__wrapper {
+    padding: 100px 10px;
+    width: 25%;
+}
+
+.rh__heading {
+    font-weight: bold;
+    font-size: 24px;
+    padding-bottom: 1em;
+    text-decoration: underline;
+
+}
+
+.rh__history__item__container {
+    max-height: 700px;
+    overflow: auto;
+}
+
+.rh__history__item {
+    border-bottom: 1px solid rgba(157, 157, 157, 0.59);
+    padding: 10px;
+    cursor: pointer;
+}
+
+.rh__name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.rh__bottom__text {
+    color: var(--light-blue-text)
+}
