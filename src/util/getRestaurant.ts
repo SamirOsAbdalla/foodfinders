@@ -120,6 +120,7 @@ async function getYelpNearby(coordinates: Coordinates, yelpKey: string, filtersO
     yelpRespJSON?.businesses?.forEach((business: any) => {
         if (business.rating && business.rating >= 2.5) {
             const address = business.location.display_address.join(" ")
+            console.log(business.distance)
             let yelpRestaurant: YelpRestaurant = {
                 name: business.name,
                 restaurantImageUrl: business.image_url,
@@ -135,6 +136,7 @@ async function getYelpNearby(coordinates: Coordinates, yelpKey: string, filtersO
             yelpCache.push(yelpRestaurant)
         }
     })
+
     if (yelpCache.length > 0) {
 
         //Although this may seem redundant the 'else' is accounting for the scenario where we have re-entered this function 

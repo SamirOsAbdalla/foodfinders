@@ -25,7 +25,6 @@ export interface GenericRestaurant {
     rating?: number
     phoneNumber?: string
     address?: string,
-    price?: PriceRanges
     reviewCount?: number
 }
 
@@ -36,8 +35,10 @@ export interface TripAdvisorRestaurant extends GenericRestaurant {
 
 export interface YelpRestaurant extends GenericRestaurant {
     restaurantImageUrl?: string
+    price?: PriceRanges
     yelpWebsiteUrl?: string
     categories?: any[]
+    distance?: string
 }
 
 export interface FiltersObject {
