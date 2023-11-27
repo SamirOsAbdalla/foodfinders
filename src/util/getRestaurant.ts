@@ -1,12 +1,24 @@
 import {
-    baseYelpURL, baseTripAdvisorURL, baseTomTomURL,
-    acceptedFoodTypes, maxRadiusMeters, tomTomFilterToCategoryMap,
-    unitedStatesLatitudeMin, unitedStatesLatitudeMax, unitedStatesLongitudeMin,
-    unitedStatesLongitudeMax, errorMessage
+    baseYelpURL,
+    baseTripAdvisorURL,
+    maxRadiusMeters,
+    unitedStatesLatitudeMin,
+    unitedStatesLatitudeMax,
+    unitedStatesLongitudeMin,
+    unitedStatesLongitudeMax,
+    errorMessage
 } from "./constants"
-import { ApiKeyBundler, YelpRestaurant, Coordinates, FiltersObject, PriceRanges, TripAdvisorRestaurant } from "./restaurantTypes"
 
-let tomTomCache: [] = []
+import {
+    ApiKeyBundler,
+    YelpRestaurant,
+    Coordinates,
+    FiltersObject,
+    PriceRanges,
+    TripAdvisorRestaurant
+} from "./restaurantTypes"
+
+
 let tripAdvisorCache: string[] = []
 
 
@@ -176,9 +188,14 @@ async function fetchTripAdvisorResult(tripAdvisorFetchUrl: string, tripAdvisorHT
         apiRespOrigin: "tripadvisor",
         ratingImageUrl: singleTaItemRespJSON.rating_image_url,
         reviewCount: singleTaItemRespJSON.num_reviews,
+        price: singleTaItemRespJSON.price_level,
+        hours: singleTaItemRespJSON.hours?.weekday_text
     }
+
     return tripAdvisorRestaurant
 }
+
+
 async function getTripAdvisorNearby(coordinates: Coordinates, tripAdvisorKey: string, filtersObject: FiltersObject) {
 
     const tripAdvisorHTTPOptions = {
@@ -253,78 +270,6 @@ async function getTripAdvisorNearby(coordinates: Coordinates, tripAdvisorKey: st
 
 }
 
-// async function getTomTomNearby(coordinates: Coordinates, tomTomKey: string, filtersObject: FiltersObject) {
-//     if (tomTomCache.length > 0) {
-//         return tomTomCache.pop()
-//     }
-
-//     const tomTomHTTPOptions = {
-//         method: "GET",
-//         headers: {
-//             "Accept": "application/json"
-//         }
-//     }
-//     const { latitude, longitude } = coordinates
-
-//     //tomtom takes certain category codes to obtain more specific restaurant types
-//     const categoryStringArray = []
-//     const foodTypes = filtersObject.foodTypes
-//     const foodTypesLength = foodTypes.length ?? 0
-
-//     for (let i = 0; i < foodTypesLength; i++) {
-//         let mapRes = tomTomFilterToCategoryMap.get(foodTypes[i].toLowerCase())
-//         if (mapRes) {
-//             categoryStringArray.push(mapRes)
-//         }
-//     }
-
-//     const tomTomFetchUrl = baseTomTomURL +
-//         `/nearbySearch/.json?key=${tomTomKey}&openingHours=nextSevenDays` +
-//         `&categorySet=${categoryStringArray.length > 0 ? categoryStringArray.join(",") : "7315"}` +
-//         `&radius=${maxRadiusMeters}` +
-//         `&lat=${latitude}&lon=${longitude}&limit=15`
-
-//     const tomTomResp = await fetch(tomTomFetchUrl, tomTomHTTPOptions)
-//     const tomTomRespJSON = await tomTomResp.json()
-//     if (!tomTomRespJSON.results) {
-//         return errorMessage
-//     }
-
-//     const results = tomTomRespJSON.results
-//     const resultsLength = results.length ?? 0
-//     for (let i = 0; i < resultsLength; i++) {
-//         let business = results[i]
-//         let businessPoi = business?.poi
-//         tomTomCache.push({
-//             apiRespOrigin: "tomtom",
-//             name: businessPoi.name,
-//             phoneNumber: businessPoi.phone,
-//             websiteLink: businessPoi.url,
-//             address: business.address.freeformAddress
-//         })
-//     }
-
-//     //Once again, only return results if we actually found matching businesses
-//     if (tomTomCache.length > 0) {
-//         return tomTomCache.pop()
-//     } else {
-//         return errorMessage
-//     }
-// }
-
-function isCoordsInUnitedState(coordinates: Coordinates) {
-    const { latitude, longitude } = coordinates
-    if (latitude > unitedStatesLatitudeMin
-        && latitude < unitedStatesLatitudeMax
-        && longitude > unitedStatesLongitudeMin
-        && longitude < unitedStatesLongitudeMax) {
-        return true
-    }
-    return false
-
-}
-
-
 
 async function getANearbyRestaurant(coordinates: Coordinates, apiKeyBundler: ApiKeyBundler,
     filtersObject: FiltersObject) {
@@ -334,23 +279,8 @@ async function getANearbyRestaurant(coordinates: Coordinates, apiKeyBundler: Api
         return errorMessage
     }
 
-    const { yelpKey, tomTomKey, tripAdvisorKey } = apiKeyBundler
+    const { yelpKey, tripAdvisorKey } = apiKeyBundler
 
-
-    const isInUS: boolean = isCoordsInUnitedState(coordinates)
-
-    // //Yelp is US centric so prioritize TomTom API first
-    // if (!isInUS) {
-    //     if (!tomTomKey) {
-    //         return
-    //     }
-    //     const result = await getTomTomNearby(coordinates, tomTomKey, filtersObject)
-
-    //     //fall through to other API's if TomTom fails
-    //     if (result && !("errorMessage" in result)) {
-    //         return result
-    //     }
-    // }
 
     //Order of priority goes: Prices Option Enabled -> nextApiType.
     //This is because TripAdvisor does not always provide a price rating
