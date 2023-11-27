@@ -1,0 +1,16 @@
+.yelp__phone__icon {}
+
+.yelp__util__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5em;
+    color: white;
+    background-color: black;
+    width: 120px;
+    border-radius: 4px;
+    font-size: 16px;
+    height: 40px;
+    font-weight: bold;
+    border: none;
+}

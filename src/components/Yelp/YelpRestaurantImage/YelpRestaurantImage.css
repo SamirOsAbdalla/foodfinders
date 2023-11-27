@@ -1,0 +1,19 @@
+.restaurant__image {
+    border-radius: 15px;
+    overflow: hidden;
+    height: 250px;
+}
+
+.yelp__website__link {
+    top: 80%;
+    left: 2%;
+    z-index: 2;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    border: 1px solid #e8ecf1;
+    box-shadow: 0 0 #0000,
+        0 0 #0000,
+        0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}

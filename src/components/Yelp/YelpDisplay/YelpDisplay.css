@@ -1,0 +1,10 @@
+.yelp__section {
+    background-color: white;
+    height: 100%;
+}
+
+.yelp__display__main {
+    padding: 100px 50px;
+    width: 75%;
+    border-right: 1px solid rgba(142, 142, 142, 0.616);
+}
