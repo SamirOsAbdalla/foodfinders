@@ -132,7 +132,6 @@ async function getYelpNearby(coordinates: Coordinates, yelpKey: string, filtersO
     yelpRespJSON?.businesses?.forEach((business: any) => {
         if (business.rating && business.rating >= 2.5) {
             const address = business.location.display_address.join(" ")
-            console.log(business.distance)
             let yelpRestaurant: YelpRestaurant = {
                 name: business.name,
                 restaurantImageUrl: business.image_url,
@@ -175,10 +174,29 @@ async function getYelpNearby(coordinates: Coordinates, yelpKey: string, filtersO
 
 //Since we can only get valuable information from making a seperate API call, I just made
 //this util function to handle the API request
-async function fetchTripAdvisorResult(tripAdvisorFetchUrl: string, tripAdvisorHTTPOptions: any) {
+async function fetchTripAdvisorResult(tripAdvisorFetchUrl: string, tripAdvisorHTTPOptions: any, placeId: string, tripAdvisorKey: string) {
+
+    // Fetching main information
     const singleTaItemResp = await fetch(tripAdvisorFetchUrl, tripAdvisorHTTPOptions)
     const singleTaItemRespJSON = await singleTaItemResp.json()
 
+    // Have to make seperate API call to fetch images
+    const imageFetchUrl = baseTripAdvisorURL +
+        `/${placeId}/photos?key=${tripAdvisorKey}`
+    const imageResp = await fetch(imageFetchUrl, tripAdvisorHTTPOptions)
+    let images = (await imageResp.json()).data[0]?.images
+    let restaurantImageUrl;
+
+    if (images) {
+        if (images.large?.url) {
+            restaurantImageUrl = images.large?.url
+        } else if (images.original.url) {
+            restaurantImageUrl = images.original.url
+        }
+    }
+
+
+    // Final Object
     let tripAdvisorRestaurant: TripAdvisorRestaurant = {
         name: singleTaItemRespJSON.name,
         address: singleTaItemRespJSON.address_obj?.address_string,
@@ -189,7 +207,8 @@ async function fetchTripAdvisorResult(tripAdvisorFetchUrl: string, tripAdvisorHT
         ratingImageUrl: singleTaItemRespJSON.rating_image_url,
         reviewCount: singleTaItemRespJSON.num_reviews,
         price: singleTaItemRespJSON.price_level,
-        hours: singleTaItemRespJSON.hours?.weekday_text
+        hours: singleTaItemRespJSON.hours?.weekday_text,
+        restaurantImageUrl
     }
 
     return tripAdvisorRestaurant
@@ -210,10 +229,15 @@ async function getTripAdvisorNearby(coordinates: Coordinates, tripAdvisorKey: st
         if (tripAdvisorCache.length - 1 == 0) {
             nextApiType = "yelp"
         }
-        const tripAdvisorFetchUrl = baseTripAdvisorURL +
-            `/${tripAdvisorCache.pop()}/details?key=${tripAdvisorKey}`
 
-        return fetchTripAdvisorResult(tripAdvisorFetchUrl, tripAdvisorHTTPOptions)
+        const placeId = tripAdvisorCache.pop()!
+
+        console.log("cache", placeId)
+
+        const tripAdvisorFetchUrl = baseTripAdvisorURL +
+            `/${placeId}/details?key=${tripAdvisorKey}`
+
+        return fetchTripAdvisorResult(tripAdvisorFetchUrl, tripAdvisorHTTPOptions, placeId, tripAdvisorKey)
     }
 
 
@@ -257,13 +281,15 @@ async function getTripAdvisorNearby(coordinates: Coordinates, tripAdvisorKey: st
 
     //Return last item if we actually found locations
     if (tripAdvisorCache.length > 0) {
+
+        let placeId = tripAdvisorCache.pop()!
         const tripAdvisorFetchUrl = baseTripAdvisorURL +
-            `/${tripAdvisorCache.pop()}/details?key=${tripAdvisorKey}`
+            `/${placeId}/details?key=${tripAdvisorKey}`
 
         if (tripAdvisorCache.length == 0) {
             nextApiType = "yelp"
         }
-        return await fetchTripAdvisorResult(tripAdvisorFetchUrl, tripAdvisorHTTPOptions)
+        return await fetchTripAdvisorResult(tripAdvisorFetchUrl, tripAdvisorHTTPOptions, placeId, tripAdvisorKey)
     } else {
         return errorMessage
     }
@@ -287,12 +313,12 @@ async function getANearbyRestaurant(coordinates: Coordinates, apiKeyBundler: Api
     const { prices } = filtersObject
 
     if (prices.length > 0 || nextApiType == "yelp") {
-        if (yelpKey) {
-            const result = await getYelpNearby(coordinates, yelpKey, filtersObject)
-            if (result && !("errorMessage" in result)) {
-                return result
-            }
-        }
+        // if (yelpKey) {
+        //     const result = await getYelpNearby(coordinates, yelpKey, filtersObject)
+        //     if (result && !("errorMessage" in result)) {
+        //         return result
+        //     }
+        // }
 
         //if yelp API fails then fall through to TA
         if (tripAdvisorKey) {
