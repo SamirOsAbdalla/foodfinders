@@ -28,16 +28,17 @@ export interface GenericRestaurant {
     address?: string,
     reviewCount?: number
     price?: PriceRanges
+    restaurantImageUrl?: string
 }
 
 export interface TripAdvisorRestaurant extends GenericRestaurant {
     ratingImageUrl?: string
     tripAdvisorUrl?: string
     hours?: string[]
+
 }
 
 export interface YelpRestaurant extends GenericRestaurant {
-    restaurantImageUrl?: string
     yelpWebsiteUrl?: string
     categories?: any[]
     distance?: string
