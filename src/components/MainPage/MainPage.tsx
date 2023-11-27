@@ -2,8 +2,10 @@ import BigButton from '@/components/BigButton/BigButton'
 import "./MainPage.css"
 import HowToUseModal from '../HowToUseModal/HowToUseModal'
 import RestaurantHistory from '../RestaurantHistory/RestaurantHistory'
-import RestaurantDisplay from '../RestaurantDisplay/RestaurantDisplay'
-import { YelpRestaurant } from '@/util/restaurantTypes'
+import { TripAdvisorRestaurant, YelpRestaurant } from '@/util/restaurantTypes'
+import YelpDisplay from '../Yelp/YelpDisplay/YelpDisplay'
+
+
 const test: YelpRestaurant = {
     name: 'The Boil Daddy - Corona',
     restaurantImageUrl: 'https://s3-media2.fl.yelpcdn.com/bphoto/UPX2Oyeims-VIZhntFCEqQ/o.jpg',
@@ -22,6 +24,16 @@ const test: YelpRestaurant = {
     distance: "9942.805026107226"
 }
 
+const test2: TripAdvisorRestaurant = {
+    name: 'The Boil Daddy - Corona',
+    rating: 4.5,
+    phoneNumber: '+19515318029',
+    price: "$$$$",
+    address: '490 Hidden Valley Pkwy Ste 102 Corona, CA 92879',
+    apiRespOrigin: 'tripadvisor',
+    reviewCount: 4850,
+
+}
 export default function MainPage() {
     return (
         <section className="mainpage__wrapper">
@@ -29,7 +41,7 @@ export default function MainPage() {
             {/* <BigButton buttonSize='regular' />
             <div className="break"></div>
             <HowToUseModal /> */}
-            <RestaurantDisplay {...test} />
+            <YelpDisplay {...test} />
 
         </section>
     )
