@@ -15,18 +15,19 @@ import {
     Coordinates,
     FiltersObject,
     PriceRanges,
-    TripAdvisorRestaurant
+    TripAdvisorRestaurant,
+    AcceptedFoodFilters
 } from "./restaurantTypes"
-
-
-let tripAdvisorCache: string[] = []
-
 
 
 //Variable to help cycle through API's. If for some reason a user gets through
 //all results of one API then the another API will be used
 let nextApiType = "yelp"
 
+let tripAdvisorCache: string[] = []
+let prevTripAdvisorFilters = {
+    prevFoodTypesString: "",
+}
 
 let yelpCache: YelpRestaurant[] = []
 let prevYelpFilters = {
@@ -67,7 +68,7 @@ function arePrevFiltersASubset(filtersObject: FiltersObject) {
     let prevPricesString = prevYelpFilters.prevPricesString
     let prevFoodTypesString = prevYelpFilters.prevFoodTypesString
     let currentPricesString = mapPricesToNumberString(filtersObject.prices)
-    let currentFoodTypesString = filtersObject.foodTypes.join(",").toLowerCase()
+    let currentFoodTypesString = filtersObject.foodTypes.sort().join(",").toLowerCase()
 
     if (currentPricesString.includes(prevPricesString) && currentFoodTypesString.includes(prevFoodTypesString)) {
         return true
@@ -93,8 +94,7 @@ async function getYelpNearby(coordinates: Coordinates, yelpKey: string, filtersO
         method: "GET",
         headers: {
             "Accept": "application/json",
-            "Authorization": `Bearer ${yelpKey}`,
-            cache: "no-store"
+            "Authorization": `Bearer ${yelpKey}`
         }
     }
     const foodTypesArray = filtersObject.foodTypes
@@ -106,7 +106,7 @@ async function getYelpNearby(coordinates: Coordinates, yelpKey: string, filtersO
     if (foodTypesArray) {
 
         //Yelp requires the category string to be of the form: Food1,Food2,...FoodN
-        filterString = foodTypesArray.join(",").toLowerCase()
+        filterString = foodTypesArray.sort().join(",").toLowerCase()
     }
 
     //Example of a yelp price string: 1,2,4
@@ -132,6 +132,9 @@ async function getYelpNearby(coordinates: Coordinates, yelpKey: string, filtersO
     yelpRespJSON?.businesses?.forEach((business: any) => {
         if (business.rating && business.rating >= 2.5) {
             const address = business.location.display_address.join(" ")
+            const coordinates = business.coordinates
+            const latitudeAndLongitude = coordinates.latitude + `&${coordinates.longitude}`
+
             let yelpRestaurant: YelpRestaurant = {
                 name: business.name,
                 restaurantImageUrl: business.image_url,
@@ -142,7 +145,8 @@ async function getYelpNearby(coordinates: Coordinates, yelpKey: string, filtersO
                 apiRespOrigin: "yelp",
                 yelpWebsiteUrl: business.url,
                 reviewCount: business.review_count,
-                categories: business.categories
+                categories: business.categories,
+                latitudeAndLongitude
             }
             yelpCache.push(yelpRestaurant)
         }
@@ -186,20 +190,22 @@ async function fetchTripAdvisorResult(tripAdvisorFetchUrl: string, tripAdvisorHT
     const imageResp = await fetch(imageFetchUrl, tripAdvisorHTTPOptions)
     let images = (await imageResp.json()).data[0]?.images
     let restaurantImageUrl;
-
     if (images) {
-        if (images.large?.url) {
-            restaurantImageUrl = images.large?.url
-        } else if (images.original.url) {
-            restaurantImageUrl = images.original.url
+        if (images.original?.url) {
+            restaurantImageUrl = images.original?.url
+        } else if (images.large.url) {
+            restaurantImageUrl = images.large.url
         }
     }
 
+    let addressObj = singleTaItemRespJSON.address_obj
+    let address = singleTaItemRespJSON?.address_obj?.address_string
+    let latitudeAndLongitude = singleTaItemRespJSON.latitude + `&${singleTaItemRespJSON.longitude}`
 
     // Final Object
     let tripAdvisorRestaurant: TripAdvisorRestaurant = {
         name: singleTaItemRespJSON.name,
-        address: singleTaItemRespJSON.address_obj?.address_string,
+        address,
         tripAdvisorUrl: singleTaItemRespJSON.website,
         rating: singleTaItemRespJSON.rating,
         phoneNumber: singleTaItemRespJSON.phone,
@@ -208,12 +214,25 @@ async function fetchTripAdvisorResult(tripAdvisorFetchUrl: string, tripAdvisorHT
         reviewCount: singleTaItemRespJSON.num_reviews,
         price: singleTaItemRespJSON.price_level,
         hours: singleTaItemRespJSON.hours?.weekday_text,
-        restaurantImageUrl
+        restaurantImageUrl,
+        latitudeAndLongitude
     }
 
     return tripAdvisorRestaurant
 }
 
+
+function checkTripAdvisorFilterSubset(foodTypes: AcceptedFoodFilters[]) {
+    const curFoodStr = foodTypes.sort().join(",").toLowerCase()
+    const prevFoodStr = prevTripAdvisorFilters.prevFoodTypesString
+    if (prevFoodStr == "" && curFoodStr != "") {
+        return false;
+    }
+    else if (curFoodStr == "" || curFoodStr.includes(prevTripAdvisorFilters.prevFoodTypesString)) {
+        return true
+    }
+    return false
+}
 
 async function getTripAdvisorNearby(coordinates: Coordinates, tripAdvisorKey: string, filtersObject: FiltersObject) {
 
@@ -225,14 +244,13 @@ async function getTripAdvisorNearby(coordinates: Coordinates, tripAdvisorKey: st
         }
     }
 
-    if (tripAdvisorCache.length > 0) {
+    const { foodTypes } = filtersObject
+    if (tripAdvisorCache.length > 0 && checkTripAdvisorFilterSubset(foodTypes)) {
         if (tripAdvisorCache.length - 1 == 0) {
             nextApiType = "yelp"
         }
 
         const placeId = tripAdvisorCache.pop()!
-
-        console.log("cache", placeId)
 
         const tripAdvisorFetchUrl = baseTripAdvisorURL +
             `/${placeId}/details?key=${tripAdvisorKey}`
@@ -245,13 +263,14 @@ async function getTripAdvisorNearby(coordinates: Coordinates, tripAdvisorKey: st
     const foodTypesArray = filtersObject.foodTypes
     let tripAdvisorResp;
 
+    let filterString = ""
     //If filters are present perform a filter search
     if (foodTypesArray.length > 0) {
-        let filterString = ""
-        filterString = foodTypesArray.join(",")
+
+        filterString = foodTypesArray.sort().join(",")
         const tripAdvisorFetchUrl = baseTripAdvisorURL +
             `/search?key=${tripAdvisorKey}` +
-            `&radius=${maxRadiusMeters}&radiusUnit=mi` +
+            `&radius=${maxRadiusMeters}&radiusUnit=m` +
             `&category=restaurants` +
             `&latLong=${latitude},${longitude}` +
             `&searchQuery=${filterString}`
@@ -260,7 +279,7 @@ async function getTripAdvisorNearby(coordinates: Coordinates, tripAdvisorKey: st
     } else {
         const tripAdvisorFetchUrl = baseTripAdvisorURL +
             `/nearby_search?key=${tripAdvisorKey}` +
-            `&radius=${maxRadiusMeters}&radiusUnit=mi` +
+            `&radius=${maxRadiusMeters}&radiusUnit=m` +
             `&category=restaurants` +
             `&latLong=${latitude},${longitude}`
         tripAdvisorResp = await fetch(tripAdvisorFetchUrl, tripAdvisorHTTPOptions)
@@ -282,13 +301,24 @@ async function getTripAdvisorNearby(coordinates: Coordinates, tripAdvisorKey: st
     //Return last item if we actually found locations
     if (tripAdvisorCache.length > 0) {
 
+        // randomize the array since TripAdvisor does NOT like to give unique results on a refresh
+        let p1
+        let p2;
+        let p3;
+        p2 = tripAdvisorCache.length; while (p2) p1 = Math.random() * p2-- | 0, p3 = tripAdvisorCache[p2], tripAdvisorCache[p2] = tripAdvisorCache[p1], tripAdvisorCache[p1] = p3
+
+        // update previous filters based off of current filters
+        prevTripAdvisorFilters.prevFoodTypesString = filterString.toLowerCase()
         let placeId = tripAdvisorCache.pop()!
         const tripAdvisorFetchUrl = baseTripAdvisorURL +
             `/${placeId}/details?key=${tripAdvisorKey}`
 
+
         if (tripAdvisorCache.length == 0) {
             nextApiType = "yelp"
         }
+
+        prevTripAdvisorFilters.prevFoodTypesString = filterString.toLowerCase()
         return await fetchTripAdvisorResult(tripAdvisorFetchUrl, tripAdvisorHTTPOptions, placeId, tripAdvisorKey)
     } else {
         return errorMessage
