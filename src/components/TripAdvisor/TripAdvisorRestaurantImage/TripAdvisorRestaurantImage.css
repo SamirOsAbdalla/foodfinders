@@ -1,0 +1,5 @@
+.ta__restaurantimage__container {
+    height: 250px;
+    border-radius: 15px;
+    overflow: hidden;
+}
