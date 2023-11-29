@@ -29,17 +29,18 @@ export default function YelpHeading({
     }
 
     return (
-        <div className="w-100 pt-4 d-flex justify-content-between align-items-center">
+        <div className="w-100 flex-wrap pt-4 d-flex justify-content-between align-items-center gap-2">
             {name &&
                 <div className="yelp__heading d-flex justify-content-start">
                     {name}
                 </div>
             }
             {categories && categories.length > 0 &&
-                <div className="d-flex align-items-center">
+                <div className="yelp__category__buttons d-flex align-items-center">
                     {getCategoryButtons(categories)}
                 </div>
             }
+
         </div>
     )
 }

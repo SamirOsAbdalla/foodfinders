@@ -28,7 +28,7 @@ export default function YelpDisplay({
                     restaurantImageUrl={restaurantImageUrl}
                     yelpWebsiteUrl={yelpWebsiteUrl}
                 />
-                <div className="d-flex flex-column gap-3">
+                <div className="yelp__display__bottom d-flex flex-column gap-3">
                     <YelpHeading
                         name={name}
                         categories={categories}

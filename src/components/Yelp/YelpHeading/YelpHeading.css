@@ -1,7 +1,7 @@
 .yelp__button__white {
     padding: 5px 14px;
     font-weight: bold;
-    width: 130px;
+    width: 150px;
     border-radius: 4px;
     height: 35px;
     display: flex;
@@ -17,11 +17,30 @@
 
 .yelp__heading {
     font-weight: bold;
-    font-size: 40px;
+    font-size: min(40px, 7vw);
     border-radius: 4px 4px 0px 0px;
     color: rgb(48, 50, 53);
 }
 
 .fs-14 {
     font-size: 14px;
+}
+
+@media screen and (max-width:560px) {
+
+    .yelp__category__buttons {
+        background-color: black;
+        border-radius: 4px;
+        padding: 5px;
+        overflow: auto;
+    }
+
+    .yelp__button__white {
+        width: 140px;
+    }
+
+    .yelp__heading {
+        padding-top: 1rem !important;
+    }
+
 }
