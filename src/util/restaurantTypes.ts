@@ -23,25 +23,27 @@ export interface ApiError {
 export interface GenericRestaurant {
     apiRespOrigin: PossibleApis
     name?: string
-    rating?: number
     phoneNumber?: string
     address?: string,
-    reviewCount?: number
     price?: PriceRanges
     restaurantImageUrl?: string
+    latitudeAndLongitude?: string
 }
 
 export interface TripAdvisorRestaurant extends GenericRestaurant {
     ratingImageUrl?: string
     tripAdvisorUrl?: string
     hours?: string[]
-
+    rating?: string
+    reviewCount?: string
 }
 
 export interface YelpRestaurant extends GenericRestaurant {
     yelpWebsiteUrl?: string
     categories?: any[]
     distance?: string
+    rating?: number
+    reviewCount?: number
 }
 
 export interface FiltersObject {
