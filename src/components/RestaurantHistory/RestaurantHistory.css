@@ -12,7 +12,7 @@
 }
 
 .rh__history__item__container {
-    max-height: 700px;
+    max-height: 90%;
     overflow: auto;
 }
 
