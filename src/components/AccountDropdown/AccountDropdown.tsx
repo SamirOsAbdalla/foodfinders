@@ -1,27 +1,39 @@
-import React, { SetStateAction, Dispatch } from 'react'
-import Link from 'next/link'
 import "./AccountDropdown.css"
+import Link from 'next/link'
 import { HiLogout } from "react-icons/hi";
 import { MdOutlineFavoriteBorder } from "react-icons/md";
-import { useRef, useEffect } from "react"
-import { DropdownStatus } from '../Navbar/Navbar';
+import DropdownLink from "./DropdownLink";
+import { DropdownStatus } from "../Navbar/Navbar";
 
 interface Props {
-    setAccountDropdownStatus: Dispatch<SetStateAction<DropdownStatus>>
+    dropdownStatus: DropdownStatus
 }
-export default function AccountDropdown({ setAccountDropdownStatus }: Props) {
+export default function AccountDropdown({
+    dropdownStatus
+}: Props) {
 
+    if (dropdownStatus != "open") {
+        return (
+            <></>
+        )
+    }
+    // Practicing with SOLID principles led to me try and implement the links using the
+    // open closed principle
     return (
-        <div className="accountdropdown__wrapper position-absolute d-flex flex-column py-2 gap-2">
-            <Link href="/saved" className="d-flex align-items-center justify-content-between gap-3 w-100 text-decoration-none accountdropdown__link">
-                Favorites
+        <div className="account-dropdown__wrapper position-absolute d-flex flex-column py-2 gap-2">
+            <DropdownLink
+                text="Favorites"
+                linkhref="/favorites"
+            >
                 <MdOutlineFavoriteBorder />
-            </Link>
-            <Link href="/login" className="d-flex align-items-center justify-content-between gap-3 text-decoration-none accountdropdown__link">
-                {/*Get Session*/}
-                Logout
+            </DropdownLink>
+
+            <DropdownLink
+                text="Logout"
+                linkhref="/login"
+            >
                 <HiLogout />
-            </Link>
+            </DropdownLink>
         </div>
     )
 }

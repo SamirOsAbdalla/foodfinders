@@ -1,0 +1,9 @@
+.dropdown__link {
+    font-size: 16px;
+    padding: 7px 20px;
+    color: rgb(71 85 105/1);
+}
+
+.dropdown__link:hover {
+    background-color: rgba(238, 242, 247, 0.501);
+}
