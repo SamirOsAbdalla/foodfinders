@@ -1,0 +1,23 @@
+.favorites__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5em;
+    width: 150px;
+    font-weight: bold;
+    border-radius: 4px;
+    font-size: 14px;
+    height: 40px;
+    background-color: white;
+}
+
+.tripadvisor__button__green {
+    border: 2px solid #34e0a1;
+    color: #34e0a1;
+}
+
+.yelp__button__red {
+    border: 2px solid rgba(255, 43, 43, 0.85);
+    color: rgba(255, 43, 43, 0.85);
+    background-color: white;
+}
