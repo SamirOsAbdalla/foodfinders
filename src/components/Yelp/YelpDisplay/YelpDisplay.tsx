@@ -7,6 +7,7 @@ import YelpReview from "../YelpReview/YelpReview"
 import YelpOpen from "../YelpOpen/YelpOpen"
 import YelpUtilButtons from "../YelpUtilButtons/YelpUtilButtons"
 import RestaurantHistory from "@/components/RestaurantHistory/RestaurantHistory"
+import BigButton from "@/components/BigButton/BigButton"
 
 export default function YelpDisplay({
     name,
@@ -14,7 +15,6 @@ export default function YelpDisplay({
     phoneNumber,
     price,
     address,
-    apiRespOrigin,
     yelpWebsiteUrl,
     restaurantImageUrl,
     categories,
@@ -45,6 +45,10 @@ export default function YelpDisplay({
                         phoneNumber={phoneNumber}
                         address={address}
                     />
+                    <BigButton
+                        buttonSize="small"
+                    />
+
                 </div>
             </div>
             <RestaurantHistory />

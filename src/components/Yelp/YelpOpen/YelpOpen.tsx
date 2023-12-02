@@ -1,4 +1,5 @@
 
+import FavoritesButton from "@/components/FavoritesButton/FavoritesButton";
 import "./YelpOpen.css"
 import { FaRegClock, FaHeart } from "react-icons/fa6";
 
@@ -25,10 +26,9 @@ export default function YelpOpen({
                     </div>
                 }
             </div>
-            <button className="yelp__button__red">
-                <FaHeart />
-                Add To Favorites
-            </button>
+            <FavoritesButton
+                buttonOrigin="yelp"
+            />
         </div>
     )
 }

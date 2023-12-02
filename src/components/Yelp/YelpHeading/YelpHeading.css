@@ -1,9 +1,9 @@
 .yelp__button__white {
-    padding: 5px 14px;
+    padding: 15px 14px;
     font-weight: bold;
     width: 150px;
     border-radius: 4px;
-    height: 35px;
+    height: 45px;
     display: flex;
     justify-content: center;
     align-items: center;

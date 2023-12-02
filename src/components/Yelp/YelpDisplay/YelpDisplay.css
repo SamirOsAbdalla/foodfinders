@@ -1,11 +1,15 @@
 .yelp__section {
     background-color: white;
-    height: 100%;
-    overflow: auto;
+    height: 100vh;
+}
+
+.yelp__display__bottom {
+    padding-bottom: 20px;
 }
 
 .yelp__display__main {
     padding: 100px 50px;
+    overflow: auto;
     width: 75%;
     border-right: 1px solid rgba(142, 142, 142, 0.616);
 }
@@ -18,7 +22,12 @@
     .yelp__display__main {
         width: 100%;
         border-right: none;
+        overflow: visible;
         border-bottom: 1px solid rgba(142, 142, 142, 0.616);
+    }
+
+    .yelp__section {
+        overflow: auto;
     }
 }
 
