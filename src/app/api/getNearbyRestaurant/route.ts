@@ -39,6 +39,5 @@ export async function GET(request: NextRequest) {
         foodTypes: foodTypesArray
     }
     const response = await getANearbyRestaurant(coordinates, apiKeyBundler, filtersObject)
-    console.log(response)
-    return Response.json(null)
+    return Response.json(response)
 }
