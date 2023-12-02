@@ -6,15 +6,26 @@
     padding-top: 100px;
 }
 
-/* Gradient gives 3-D/lighting illusion */
-.bigbutton__container__regular {
-    width: 350px;
-    height: 350px;
+.bigbutton__wrapper__small {
+    padding-top: 20px;
+}
+
+.bigbutton__container {
     background-image: linear-gradient(rgb(171, 211, 254), rgb(155, 203, 255), rgb(127, 175, 227));
     border-radius: 50%;
     transition: 0.2s ease-out;
     cursor: pointer;
+}
 
+/* Gradient gives 3-D/lighting illusion */
+.bigbutton__container__regular {
+    width: 350px;
+    height: 350px;
+}
+
+.bigbutton__container__small {
+    width: 230px;
+    height: 230px;
 }
 
 .bigbutton__container__regular:hover,
@@ -22,20 +33,37 @@
     transform: scale(1.02);
 }
 
-.bigbutton__regular {
-    width: 280px;
-    height: 280px;
+/* bigbutton styling */
+.bigbutton {
     border-radius: 50%;
     display: flex;
-
     justify-content: center;
     align-items: center;
     border: none;
     background-color: rgb(155, 203, 255);
 }
 
-.fastfood__icon__regular {
+.bigbutton__regular {
+    width: 280px;
+    height: 280px;
+}
+
+.bigbutton__small {
+    width: 150px;
+    height: 150px;
+}
+
+/*              */
+.fastfood__icon {
     color: white;
+}
+
+.fastfood__icon__small {
+    font-size: 30px;
+}
+
+.fastfood__icon__regular {
+
     font-size: 50px;
 }
 
