@@ -1,5 +1,7 @@
 import "./TripAdvisorRestaurantImage.css"
 import Image from "next/image"
+import { FaRegHeart } from "react-icons/fa";
+
 interface Props {
     restaurantImageUrl?: string
 }
@@ -9,7 +11,7 @@ export default function TripAdvisorRestaurantImage({
     restaurantImageUrl
 }: Props) {
     return (
-        <div className="w-100 ta__restaurantimage__container position-relative">
+        <div className={`w-100 ta__restaurantimage__container ${restaurantImageUrl ? "" : "background__black"} position-relative`}>
             {restaurantImageUrl ?
                 <Image
                     fill
@@ -24,7 +26,6 @@ export default function TripAdvisorRestaurantImage({
                     alt="TripAdvisor Image"
                 />
             }
-
         </div>
     )
 }

@@ -1,0 +1,29 @@
+.ta__rating__container {
+    width: 130px;
+    height: 60px;
+}
+
+@media screen and (max-width:1000px) {
+    .ta__ratingrow__wrapper {
+        flex-wrap: wrap-reverse;
+    }
+
+    .ta__ratingrow__main {
+        font-size: 14px;
+    }
+
+    .ta__rating__container {
+        width: 100px;
+        height: 40px;
+    }
+}
+
+@media screen and (max-width:500px) {
+    .ta__ratingrow__wrapper {
+        padding-top: 10px;
+    }
+
+    .ta__review__count {
+        display: none;
+    }
+}

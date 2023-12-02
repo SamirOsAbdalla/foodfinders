@@ -1,0 +1,21 @@
+.ta__hours {
+    width: 50%;
+    max-width: 400px;
+    min-width: 300px;
+}
+
+
+.ta__hours__heading {
+    padding: 10px;
+    width: 100%;
+    background-color: rgba(245, 245, 245, 0.702);
+    font-size: 16px;
+    color: var(--light-blue-text);
+    font-weight: bold;
+}
+
+.ta__hours__info {
+    padding: 20px 10px;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(204, 204, 204, 0.702);
+}
