@@ -16,7 +16,8 @@ import {
     FiltersObject,
     PriceRanges,
     TripAdvisorRestaurant,
-    AcceptedFoodFilters
+    AcceptedFoodFilters,
+    ErrorMessage
 } from "./restaurantTypes"
 
 
@@ -142,16 +143,23 @@ async function getYelpNearby(coordinates: Coordinates, yelpKey: string, filtersO
                 phoneNumber: business.phone,
                 price: business.price,
                 address,
-                apiRespOrigin: "yelp",
+                yelpType: "yelp",
                 yelpWebsiteUrl: business.url,
                 reviewCount: business.review_count,
                 categories: business.categories,
                 latitudeAndLongitude
             }
+
+            console.log(yelpRestaurant)
+
             yelpCache.push(yelpRestaurant)
         }
     })
-
+    // randomize the array since TripAdvisor does NOT like to give unique results on a refresh
+    let p1
+    let p2;
+    let p3;
+    p2 = yelpCache.length; while (p2) p1 = Math.random() * p2-- | 0, p3 = yelpCache[p2], yelpCache[p2] = yelpCache[p1], yelpCache[p1] = p3
     if (yelpCache.length > 0) {
 
         //Although this may seem redundant the 'else' is accounting for the scenario where we have re-entered this function 
@@ -209,7 +217,7 @@ async function fetchTripAdvisorResult(tripAdvisorFetchUrl: string, tripAdvisorHT
         tripAdvisorUrl: singleTaItemRespJSON.website,
         rating: singleTaItemRespJSON.rating,
         phoneNumber: singleTaItemRespJSON.phone,
-        apiRespOrigin: "tripadvisor",
+        taType: "tripadvisor",
         ratingImageUrl: singleTaItemRespJSON.rating_image_url,
         reviewCount: singleTaItemRespJSON.num_reviews,
         price: singleTaItemRespJSON.price_level,
@@ -328,7 +336,7 @@ async function getTripAdvisorNearby(coordinates: Coordinates, tripAdvisorKey: st
 
 
 async function getANearbyRestaurant(coordinates: Coordinates, apiKeyBundler: ApiKeyBundler,
-    filtersObject: FiltersObject) {
+    filtersObject: FiltersObject): Promise<TripAdvisorRestaurant | YelpRestaurant | ErrorMessage> {
 
 
     if (coordinates.latitude == 0 || coordinates.longitude == 0) {
@@ -343,12 +351,12 @@ async function getANearbyRestaurant(coordinates: Coordinates, apiKeyBundler: Api
     const { prices } = filtersObject
 
     if (prices.length > 0 || nextApiType == "yelp") {
-        // if (yelpKey) {
-        //     const result = await getYelpNearby(coordinates, yelpKey, filtersObject)
-        //     if (result && !("errorMessage" in result)) {
-        //         return result
-        //     }
-        // }
+        if (yelpKey) {
+            const result = await getYelpNearby(coordinates, yelpKey, filtersObject)
+            if (result && !("errorMessage" in result)) {
+                return result
+            }
+        }
 
         //if yelp API fails then fall through to TA
         if (tripAdvisorKey) {

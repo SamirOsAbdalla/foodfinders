@@ -5,6 +5,11 @@ export type PossibleApis = "yelp" | "tripadvisor" | undefined
 
 export type PriceRanges = "$" | "$$" | "$$$" | "$$$$"
 
+
+export interface ICuisine {
+    name: string,
+    localized_name: string
+}
 export type ApiKeyBundler = {
     yelpKey?: string,
     tripAdvisorKey?: string
@@ -21,31 +26,39 @@ export interface ApiError {
 }
 
 export interface GenericRestaurant {
-    apiRespOrigin: PossibleApis
     name?: string
     phoneNumber?: string
     address?: string,
-    price?: PriceRanges
     restaurantImageUrl?: string
     latitudeAndLongitude?: string
 }
 
+//This type is so BAD. However I can't find a fix around this for some reason.
+// Need to fix this hack cuz it hurts my eyes
 export interface TripAdvisorRestaurant extends GenericRestaurant {
+    taType: "tripadvisor"
     ratingImageUrl?: string
+    price?: string
     tripAdvisorUrl?: string
     hours?: string[]
     rating?: string
     reviewCount?: string
+    cuisine?: ICuisine[]
 }
 
 export interface YelpRestaurant extends GenericRestaurant {
+    yelpType: "yelp"
     yelpWebsiteUrl?: string
     categories?: any[]
     distance?: string
     rating?: number
     reviewCount?: number
+    price?: PriceRanges
 }
 
+export interface ErrorMessage {
+    errorMessage: string
+}
 export interface FiltersObject {
     prices: PriceRanges[]
     foodTypes: AcceptedFoodFilters[]
