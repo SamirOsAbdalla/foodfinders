@@ -1,116 +1,46 @@
 "use client"
+
 import "./Navbar.css"
-import { BsPerson } from "react-icons/bs";
-import { TbFilters } from "react-icons/tb";
-import { useState, useRef, useEffect } from "react"
+import {
+    useState,
+} from "react"
 import AccountDropdown from "../AccountDropdown/AccountDropdown"
 import FilterDropdown from "../FilterDropdown/FilterDropdown"
-import Link from "next/link";
-import { HiLogout } from "react-icons/hi";
+import Hamburger from "./Hamburger";
+import NavbarLink from "./NavbarLink";
+import NavbarButtonDropdowns from "./NavbarButtonDropdowns";
+import NavbarDropdown from "./NavbarDropdown";
+
+
 
 export type DropdownStatus = "open" | "closed"
+
 export default function Navbar() {
-    const [accountDropdownStatus, setAccountDropdownStatus] = useState<DropdownStatus>("closed")
-    const [filterDropdownStatus, setFilterDropdownStatus] = useState<DropdownStatus>("closed")
+
     const [hamburgerStatus, setHamburgerStatus] = useState<DropdownStatus>("closed")
 
-    //could probably figure out a way to combine these two functions
-    //but it's fine for now seeing as they are quite small
-    const toggleAccountDropdownStatus = () => {
-
-        setFilterDropdownStatus("closed")
-        if (accountDropdownStatus == "open") {
-            setAccountDropdownStatus("closed")
-            return;
-        }
-        setAccountDropdownStatus("open")
-    }
-
-    const toggleFilterDropdownStatus = () => {
-        setAccountDropdownStatus("closed")
-        if (filterDropdownStatus == "open") {
-            setFilterDropdownStatus("closed")
-            return;
-        }
-        setFilterDropdownStatus("open")
-        setHamburgerStatus("closed")
-    }
-    const accountDropdownRef = useRef<HTMLDivElement>(null)
-    const navbarDropdownRef = useRef<HTMLDivElement>(null)
-
-    useEffect(() => {
-        window.onclick = (event) => {
-            let htmlTarget = event.target as HTMLElement
-            if (!accountDropdownRef.current?.contains(htmlTarget)) {
-                setAccountDropdownStatus("closed")
-            }
-
-
-            if (!navbarDropdownRef.current?.contains(htmlTarget) && !(htmlTarget.classList.contains("navbar__hamburger__container") || htmlTarget.classList.contains("navbar__hamburger"))) {
-                setHamburgerStatus("closed")
-            }
-        }
-    }, [])
-
-    const handleHamburgerClick = (e: React.MouseEvent<HTMLDivElement>) => {
-
-        hamburgerStatus == "closed" ? setHamburgerStatus("open") : setHamburgerStatus("closed")
-
-    }
-
     return (
-        <nav className="navbar d-flex justify-content-center p-3 bg-white position-fixed">
-            <div className={`navbar__container ${hamburgerStatus == "open" && "navbar__container__open"} d-flex justify-content-between align-items-center`}>
-                <div onClick={handleHamburgerClick} className="navbar__hamburger__container">
-                    <div className="navbar__hamburger">
-
-                    </div>
+        <nav className="position-fixed p-3 bg-white d-flex justify-content-center flex-wrap">
+            <div className={`navbar__container ${hamburgerStatus == "open" && "navbar__container--open"} d-flex justify-content-between align-items-center`}>
+                <Hamburger
+                    hamburgerStatus={hamburgerStatus}
+                    setHamburgerStatus={setHamburgerStatus}
+                />
+                <div className="d-flex align-items-center gap-3">
+                    <div className="navbar__brand m-0 d-flex align-items-center justify-content-center">SpeedEats</div>
+                    <NavbarLink
+                        text="About"
+                        linkhref="/about"
+                    />
                 </div>
-                <div className="d-flex navbar__left align-items-center gap-3">
-                    <div className="d-flex align-items-center justify-content-center navbar__brand m-0">SpeedEats</div>
-                    <Link className="text-decoration-none navbar__about" href="/about">
-                        About
-                    </Link>
-                </div>
-                <div className="d-flex align-items-center gap-4">
-                    <div ref={accountDropdownRef} className="position-relative">
-                        <button data-testid="navbar__account__button"
-                            className="navbar__button navbar__button__light d-flex align-items-center justify-content-center"
-                            onClick={toggleAccountDropdownStatus}
-                        >
-                            <span className="navbar__button__text">Account</span>
-                            <BsPerson className="navbar__icon" />
-                        </button>
-                        {accountDropdownStatus == "open" &&
-                            <AccountDropdown
-                                setAccountDropdownStatus={setAccountDropdownStatus}
-                            />
-                        }
-                    </div>
-                    <div className="position-relative">
-                        <button data-testid="navbar__filter__button"
-                            className="navbar__button navbar__button__black d-flex align-items-center justify-content-center"
-                            onClick={toggleFilterDropdownStatus}
-                        >
-                            <span className="navbar__button__text">Filters</span>
-                            <TbFilters className="navbar__icon" />
-                        </button>
-                    </div>
-                </div>
-                {filterDropdownStatus == "open" && <FilterDropdown setFilterDropdownStatus={setFilterDropdownStatus} />}
+                <NavbarButtonDropdowns
+                    setHamburgerStatus={setHamburgerStatus}
+                />
             </div>
-            {hamburgerStatus == "open" &&
-                <div className="navbar__dropdown justify-content-start align-items-start flex-column gap-4" ref={navbarDropdownRef}>
-                    <Link className="navbar__dropdown__text text-decoration-none" href="/about">
-                        About
-                    </Link>
-                    <Link href="/login" className="text-decoration-none logout__button navbar__button__black logout__button d-flex align-items-center justify-content-center">
-                        Logout
-                        <HiLogout />
-                    </Link>
-                </div>
-            }
-
+            <NavbarDropdown
+                hamburgerStatus={hamburgerStatus}
+                setHamburgerStatus={setHamburgerStatus}
+            />
         </nav>
     )
 }

@@ -3,9 +3,7 @@
 }
 
 nav {
-    box-shadow: 0 0 #0000,
-        0 0 #0000,
-        0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    box-shadow: var(--threed-box-shadow);
     width: 100vw;
     z-index: 9999;
 }
@@ -13,11 +11,38 @@ nav {
 .navbar__container {
     width: 100%;
     max-width: 900px;
-
 }
 
+.navbar__hamburger--container,
+.navbar__dropdown {
+    display: none;
+}
+
+.navbar__brand {
+    font-size: 18px;
+    border-right: 2px solid rgba(207, 207, 207, 0.555);
+    padding: 0px 20px 0px 0px;
+}
+
+.navbar__link {
+    font-size: 15px;
+}
+
+.dropdown__link,
+.navbar__link,
+.navbar__brand {
+    color: var(--navbar-text-color);
+}
+
+.navbar__icon {
+    height: 15px;
+    width: 15px;
+}
+
+
+/* Navbar Button Styling */
 .navbar__button,
-.logout__button {
+.navbar__button--wide {
     border-radius: 4px;
     width: 120px;
     padding: 2px 8px;
@@ -29,16 +54,7 @@ nav {
     transition: 0.1s ease;
 }
 
-.navbar__button__black {
-    background-color: rgb(42, 42, 42);
-    color: white;
-}
-
-.navbar__button__black:hover {
-    background-color: rgba(21, 21, 21, 0.81);
-}
-
-.navbar__button__light {
+.navbar__button--light {
     border: 1px solid #e2e8f0;
     background-color: white;
     color: rgb(71 85 105/1);
@@ -46,51 +62,38 @@ nav {
 
 .navbar__button__light:hover {
     background-color: rgb(253, 252, 252);
-
 }
 
-.navbar__icon {
-    height: 15px;
-    width: 15px;
+.navbar__button--black {
+    background-color: rgb(42, 42, 42);
+    color: white;
 }
 
-.navbar__brand {
-    font-size: 22px;
-    border-right: 2px solid rgba(207, 207, 207, 0.555);
-    padding: 0px 20px 0px 0px;
-    color: var(--navbar-text-color);
+.navbar__button--black:hover {
+    background-color: rgba(21, 21, 21, 0.81);
 }
 
-.navbar__hamburger,
-.navbar__dropdown,
-.navbar__hamburger__container {
-    display: none
-}
+@media screen and (max-width:600px) {
 
-.navbar__about,
-.navbar__dropdown,
-.navbar__dropdown__text {
-    color: var(--navbar-text-color);
-}
-
-
-/* Small screen styling */
-@media screen and (max-width:601px) {
-
-    .navbar__container {
-
-        font-size: 11px;
-    }
-
-    .navbar__container__open {
+    .navbar__container--open {
         padding-bottom: 10px;
         border-bottom: 1px solid rgba(129, 129, 129, 0.515);
     }
 
-    .logout__button {
-        padding-top: 6px;
-        padding-bottom: 6px;
-        align-self: center;
+    .navbar__button--text,
+    .navbar__icon--container,
+    .navbar__link {
+        display: none;
+    }
+
+    .navbar__brand {
+        border: none;
+        padding: 0;
+    }
+
+    .navbar__button {
+        width: 40px;
+        padding: 10px 8px;
     }
 
     .navbar__dropdown {
@@ -100,26 +103,8 @@ nav {
         font-size: .9rem;
     }
 
-    /* Reduce button width for more symmetric navbar */
-    .navbar__button {
-        width: 40px;
-        padding: 10px 8px;
-    }
-
-    /* Remove clutter from navbar on smaller screens */
-    .navbar__brand {
-        border: none;
-        padding: 0;
-    }
-
-    .navbar__button__text,
-    .navbar__icon__container,
-    .navbar__about {
-        display: none;
-    }
-
-    /* Navbar hamburger styling */
-    .navbar__hamburger__container {
+    /* Hamburger Styling*/
+    .navbar__hamburger--container {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -157,5 +142,4 @@ nav {
         transform: translateY(6px);
 
     }
-
 }
