@@ -11,12 +11,12 @@ import { HiLogout } from "react-icons/hi"
 
 interface Props {
     hamburgerStatus: DropdownStatus,
-    setHamburgerStatus: Dispatch<SetStateAction<DropdownStatus>>
+    closeHamburger: () => any
 }
 
 export default function NavbarDropdown({
     hamburgerStatus,
-    setHamburgerStatus
+    closeHamburger
 }: Props) {
 
     const navbarDropdownRef = useRef<HTMLDivElement>(null)
@@ -26,7 +26,7 @@ export default function NavbarDropdown({
             let htmlTarget = event.target as HTMLElement
             if (!navbarDropdownRef.current?.contains(htmlTarget) &&
                 !(htmlTarget.classList.contains("navbar__hamburger--container") || htmlTarget.classList.contains("navbar__hamburger"))) {
-                setHamburgerStatus("closed")
+                closeHamburger()
             }
         }
     }, [])
