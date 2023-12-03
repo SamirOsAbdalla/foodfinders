@@ -7,7 +7,7 @@ import { ReduxProvider } from "@/redux/provider"
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Food Finders',
+  title: 'SpeedEats',
 }
 
 export default function RootLayout({
