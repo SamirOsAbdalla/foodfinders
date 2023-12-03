@@ -1,7 +1,7 @@
 "use client"
 import BigButton from '@/components/BigButton/BigButton'
 import "./MainPage.css"
-import HowToUseModal from '../HowToUseModal/HowToUseModal'
+import Instructions from '../Instructions/Instructions'
 import RestaurantHistory from '../RestaurantHistory/RestaurantHistory'
 import { TripAdvisorRestaurant, YelpRestaurant } from '@/util/restaurantTypes'
 import YelpDisplay from '../Yelp/YelpDisplay/YelpDisplay'
@@ -19,7 +19,7 @@ export default function MainPage() {
                 <>
                     <BigButton buttonSize='regular' />
                     <div className="break"></div>
-                    <HowToUseModal />
+                    <Instructions />
                 </>
             }
             {reduxRestaurant && ("yelpType" in reduxRestaurant) &&
