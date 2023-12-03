@@ -1,4 +1,3 @@
-
 import {
     SetStateAction,
     Dispatch,
@@ -15,12 +14,10 @@ import FilterDropdown from '../FilterDropdown/FilterDropdown';
 import { NavbarButtonColor } from './NavbarButton';
 
 interface Props {
-    setHamburgerStatus: Dispatch<SetStateAction<DropdownStatus>>
+    closeHamburger: () => any
 }
-export default function NavbarButtonDropdowns({
-    setHamburgerStatus
-}: Props) {
 
+const useNavbarButtonToggles = (closeHamburger: () => any) => {
     const accountDropdownRef = useRef<HTMLDivElement>(null)
 
     // Here I lifted state up into the common ancestor (the current component) since 
@@ -45,7 +42,7 @@ export default function NavbarButtonDropdowns({
             return;
         }
         setFilterDropdownStatus("open")
-        setHamburgerStatus("closed")
+        closeHamburger()
     }
 
     useEffect(() => {
@@ -56,6 +53,37 @@ export default function NavbarButtonDropdowns({
             }
         }
     }, [])
+
+
+    const closeForm = () => {
+        toggleFilterDropdownStatus()
+    }
+
+    return {
+        closeHamburger,
+        closeForm,
+        accountDropdownRef,
+        accountDropdownStatus,
+        filterDropdownStatus,
+        toggleAccountDropdownStatus,
+        toggleFilterDropdownStatus
+    }
+
+}
+
+
+export default function NavbarButtonDropdowns({
+    closeHamburger
+}: Props) {
+
+    let {
+        closeForm,
+        accountDropdownRef,
+        accountDropdownStatus,
+        filterDropdownStatus,
+        toggleAccountDropdownStatus,
+        toggleFilterDropdownStatus
+    } = useNavbarButtonToggles(closeHamburger)
 
 
     return (
@@ -81,7 +109,7 @@ export default function NavbarButtonDropdowns({
             </div>
             <FilterDropdown
                 filterDropdownStatus={filterDropdownStatus}
-                setFilterDropdownStatus={setFilterDropdownStatus}
+                closeForm={closeForm}
             />
         </div>
     )
