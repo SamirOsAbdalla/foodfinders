@@ -19,6 +19,9 @@ export default function Navbar() {
 
     const [hamburgerStatus, setHamburgerStatus] = useState<DropdownStatus>("closed")
 
+    const closeHamburger = () => {
+        setHamburgerStatus("closed")
+    }
     return (
         <nav className="position-fixed p-3 bg-white d-flex justify-content-center flex-wrap">
             <div className={`navbar__container ${hamburgerStatus == "open" && "navbar__container--open"} d-flex justify-content-between align-items-center`}>
@@ -34,12 +37,12 @@ export default function Navbar() {
                     />
                 </div>
                 <NavbarButtonDropdowns
-                    setHamburgerStatus={setHamburgerStatus}
+                    closeHamburger={closeHamburger}
                 />
             </div>
             <NavbarDropdown
                 hamburgerStatus={hamburgerStatus}
-                setHamburgerStatus={setHamburgerStatus}
+                closeHamburger={closeHamburger}
             />
         </nav>
     )
