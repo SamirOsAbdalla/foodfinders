@@ -3,7 +3,7 @@ export type AcceptedFoodFilters = "Sandwiches" | "Breakfast" | "Sushi" | "Burger
 
 export type PossibleApis = "yelp" | "tripadvisor" | undefined
 
-export type PriceRanges = "$" | "$$" | "$$$" | "$$$$"
+export type PossiblePrices = "$" | "$$" | "$$$" | "$$$$"
 
 
 export interface ICuisine {
@@ -53,13 +53,14 @@ export interface YelpRestaurant extends GenericRestaurant {
     distance?: string
     rating?: number
     reviewCount?: number
-    price?: PriceRanges
+    price?: PossiblePrices
 }
 
 export interface ErrorMessage {
     errorMessage: string
 }
 export interface FiltersObject {
-    prices: PriceRanges[]
+    prices: PossiblePrices[]
     foodTypes: AcceptedFoodFilters[]
 }
+
