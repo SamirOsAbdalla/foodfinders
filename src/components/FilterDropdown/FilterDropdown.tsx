@@ -11,6 +11,7 @@ import { AppDispatch, RootState } from "@/redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { PriceType } from "@/redux/slices/filter-slice";
 interface Props {
+    filterDropdownStatus: DropdownStatus,
     setFilterDropdownStatus: Dispatch<SetStateAction<DropdownStatus>>
 }
 
@@ -24,7 +25,14 @@ let pricesArray: PriceType[] = ["$", "$$", "$$$", "$$$$"]
 let defaultCuisineArray: string[] = []
 let defaultPricesArray: PriceType[] = []
 
-export default function FilterDropdown({ setFilterDropdownStatus }: Props) {
+export default function FilterDropdown({
+    filterDropdownStatus,
+    setFilterDropdownStatus
+}: Props) {
+    if (filterDropdownStatus != "open") {
+        return (<></>)
+    }
+
     const dispatch = useDispatch<AppDispatch>()
     const reduxFilterState = useSelector((state: RootState) => state.filterReducer.value)
 
