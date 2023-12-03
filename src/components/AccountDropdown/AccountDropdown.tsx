@@ -12,11 +12,12 @@ export default function AccountDropdown({
     dropdownStatus
 }: Props) {
 
-    if (dropdownStatus != "open") {
+    if (dropdownStatus == "closed") {
         return (
             <></>
         )
     }
+
     // Practicing with SOLID principles led to me try and implement the links using the
     // open closed principle
     return (
