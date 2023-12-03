@@ -1,5 +1,5 @@
 
-export type AcceptedFoodFilters = "Sandwiches" | "Burgers" | "Pizza" | "Chinese" | "Mexican"
+export type AcceptedFoodFilters = "Sandwiches" | "Breakfast" | "Sushi" | "Burgers" | "Pizza" | "Chinese" | "Mexican"
 
 export type PossibleApis = "yelp" | "tripadvisor" | undefined
 

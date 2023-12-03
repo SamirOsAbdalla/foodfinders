@@ -1,26 +1,47 @@
 "use client"
-import { Dispatch, SetStateAction } from "react"
 import "./FilterDropdown.css"
-import { DropdownStatus } from "../Navbar/Navbar"
-import { MouseEvent } from 'react';
-import MainFilterOption from "../MainFilterOption/MainFilterOption";
+import {
+    Dispatch,
+    SetStateAction,
+    MouseEvent,
+    useEffect
+} from "react"
 import { useForm } from 'react-hook-form';
-import { useEffect } from "react";
-import { setFilters } from "@/redux/slices/filter-slice";
-import { AppDispatch, RootState } from "@/redux/store";
-import { useDispatch, useSelector } from "react-redux";
-import { PriceType } from "@/redux/slices/filter-slice";
+import {
+    useDispatch,
+    useSelector
+} from "react-redux";
+import {
+    AppDispatch,
+    RootState
+} from "@/redux/store";
+import {
+    setFilters,
+    PriceType
+} from "@/redux/slices/filter-slice";
+
+import { DropdownStatus } from "../Navbar/Navbar"
+import MainFilterOption from "../MainFilterOption/MainFilterOption";
+import { AcceptedFoodFilters } from "@/util/restaurantTypes";
+
+
 interface Props {
     filterDropdownStatus: DropdownStatus,
     setFilterDropdownStatus: Dispatch<SetStateAction<DropdownStatus>>
 }
 
 
-let defaultCuisine = [
-    "Breakfast", "Burgers", "Pizza", "Sushi",
-    "Sandwiches", "Chinese", "Mexican"
+let defaultCuisine: AcceptedFoodFilters[] = [
+    "Breakfast",
+    "Burgers",
+    "Pizza",
+    "Sushi",
+    "Sandwiches",
+    "Chinese",
+    "Mexican"
 ]
 let pricesArray: PriceType[] = ["$", "$$", "$$$", "$$$$"]
+
 //Have to set these variables since react-hook-form complains about the typing when using setValue
 let defaultCuisineArray: string[] = []
 let defaultPricesArray: PriceType[] = []
