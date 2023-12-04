@@ -17,7 +17,7 @@ interface Props {
     closeHamburger: () => any
 }
 
-const useNavbarButtonToggles = (closeHamburger: () => any) => {
+const useDropdowns = (closeHamburger: () => any) => {
     const accountDropdownRef = useRef<HTMLDivElement>(null)
 
     // Here I lifted state up into the common ancestor (the current component) since 
@@ -83,7 +83,7 @@ export default function NavbarButtonDropdowns({
         filterDropdownStatus,
         toggleAccountDropdownStatus,
         toggleFilterDropdownStatus
-    } = useNavbarButtonToggles(closeHamburger)
+    } = useDropdowns(closeHamburger)
 
 
     return (
