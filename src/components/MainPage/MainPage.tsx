@@ -17,7 +17,7 @@ export default function MainPage() {
         <section className="mainpage__wrapper">
             {("currentRestaurant" in reduxRestaurant) &&
                 <>
-                    <BigButton buttonSize='regular' />
+                    <BigButton buttonSize='main' />
                     <div className="break"></div>
                     <Instructions />
                 </>
