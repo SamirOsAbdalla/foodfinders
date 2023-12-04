@@ -6,22 +6,23 @@ import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import { setCurrentRestaurant } from "@/redux/slices/currentRestaurant-slice";
 import { setRestaurantHistory } from "@/redux/slices/restaurantHistory-slice";
-interface Props {
-    buttonSize: "small" | "regular"
-}
-export default function BigButton({ buttonSize }: Props) {
 
+
+interface Props {
+    buttonSize: "small" | "main"
+}
+
+function useGeoLocation() {
     const reduxFilterState = useSelector((state: RootState) => state.filterReducer.value)
     const dispatch = useDispatch<AppDispatch>()
-    const [userLocation, setUserLocation] = useState<{ latitude: Number, longitude: number } | null>(null)
+
     const [loading, setLoading] = useState<boolean>(false)
 
     const geolocationSuccess = async (position: GeolocationPosition) => {
         setLoading(true)
         const coords = position.coords
-        setUserLocation({ latitude: coords.latitude, longitude: coords.longitude })
 
-        const cuisineString = reduxFilterState.cuisine.join(",")
+        const cuisineString = reduxFilterState.cuisines.join(",")
         const pricesString = reduxFilterState.prices.join(",")
         const fetchUrl = `/api/getNearbyRestaurant?` +
             `latitude=${coords.latitude}&longitude=${coords.longitude}` +
@@ -49,16 +50,30 @@ export default function BigButton({ buttonSize }: Props) {
         console.log("Error: Could not fetch user coordinates")
     }
     const handleBigButtonClick = () => {
-
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(geolocationSuccess, geolocationError)
         }
     }
+
+    return {
+        handleBigButtonClick,
+        loading
+    }
+
+}
+
+export default function BigButton({ buttonSize }: Props) {
+
+    const {
+        loading,
+        handleBigButtonClick
+    } = useGeoLocation()
+
     return (
-        <div className={`bigbutton__wrapper bigbutton__wrapper__${buttonSize}`}>
-            <div onClick={handleBigButtonClick} className={`bigbutton__container bigbutton__container__${buttonSize} ${loading == true && "bigbutton__container__loading"} d-flex align-items-center justify-content-center`}>
-                <button className={`bigbutton bigbutton__${buttonSize} ${loading == true && "bigbutton__loading"}`}>
-                    <IoFastFoodOutline className={`fastfood__icon fastfood__icon__${buttonSize}`} />
+        <div className={`big-button__wrapper big-button__wrapper--${buttonSize}`}>
+            <div onClick={handleBigButtonClick} className={`big-button__container big-button__container--${buttonSize} ${loading == true && "big-button__container--loading"} d-flex align-items-center justify-content-center`}>
+                <button className={`big-button big-button--${buttonSize} ${loading == true && "big-button--loading"}`}>
+                    <IoFastFoodOutline className={`fast-food__icon fast-food__icon--${buttonSize}`} />
                 </button>
             </div>
         </div>
