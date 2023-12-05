@@ -1,12 +1,13 @@
-.tadisplay__wrapper {
-    width: 100%;
+.ta-display__wrapper {
     background-color: white;
+    height: 100vh;
 }
 
-.tadisplay__main {
+.ta-display__main {
     padding: 100px 30px 30px 30px;
     width: 75%;
     border-right: 1px solid rgba(142, 142, 142, 0.616);
+    overflow: auto;
 }
 
 .ta__heading__name {
@@ -15,12 +16,12 @@
 }
 
 @media screen and (max-width:1000px) {
-    .tadisplay__wrapper {
-        overflow: auto;
+    .ta-display__wrapper {
         flex-direction: column;
+        overflow: auto;
     }
 
-    .tadisplay__main {
+    .ta-display__main {
         width: 100%;
         border-right: none;
         overflow: visible;

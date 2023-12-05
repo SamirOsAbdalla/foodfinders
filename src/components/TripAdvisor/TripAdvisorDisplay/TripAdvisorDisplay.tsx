@@ -23,8 +23,8 @@ export default function TripAdvisorDisplay({
     cuisine
 }: TripAdvisorRestaurant) {
     return (
-        <section className="tadisplay__wrapper d-flex">
-            <div className="tadisplay__main d-flex flex-column gap-2">
+        <section className="w-100 ta-display__wrapper d-flex">
+            <div className="ta-display__main d-flex flex-column gap-2">
                 <TripAdvisorRestaurantImage
                     restaurantImageUrl={restaurantImageUrl}
                 />
