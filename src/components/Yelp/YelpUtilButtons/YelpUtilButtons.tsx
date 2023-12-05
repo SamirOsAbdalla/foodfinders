@@ -13,15 +13,15 @@ export default function YelpUtilButtons(
         address
     }: Props) {
     return (
-        <div className="d-flex w-100 justify-content-start align-items-center gap-2">
+        <div className="yelp-util-buttons__wrapper d-flex justify-content-start align-items-center gap-2">
             {phoneNumber &&
-                <Link className="text-decoration-none yelp__util__button d-flex justify-content-center align-items-center" href={`tel:${phoneNumber}`}>
-                    <IoCallOutline className="yelp__phone__icon" />
+                <Link className="text-decoration-none yelp-util__button d-flex justify-content-center align-items-center" href={`tel:${phoneNumber}`}>
+                    <IoCallOutline className="yelp-phone__icon" />
                     Call
                 </Link>
             }
             {address &&
-                <button className="yelp__util__button">
+                <button className="yelp-util__button">
                     <FaMapMarkedAlt />
                     Navigate
                 </button>
