@@ -1,13 +1,13 @@
-.yelp__section {
+.yelp-display__section {
     background-color: white;
     height: 100vh;
 }
 
-.yelp__display__bottom {
+.yelp-display__bottom {
     padding-bottom: 20px;
 }
 
-.yelp__display__main {
+.yelp-display__main {
     padding: 100px 50px;
     overflow: auto;
     width: 75%;
@@ -15,28 +15,25 @@
 }
 
 @media screen and (max-width:1000px) {
-    .yelp__section {
+    .yelp-display__section {
         flex-direction: column;
+        overflow: auto;
     }
 
-    .yelp__display__main {
+    .yelp-display__main {
         width: 100%;
         border-right: none;
         overflow: visible;
         border-bottom: 1px solid rgba(142, 142, 142, 0.616);
     }
-
-    .yelp__section {
-        overflow: auto;
-    }
 }
 
 @media screen and (max-width:560px) {
-    .yelp__display__main {
+    .yelp-display__main {
         padding: 100px 20px;
     }
 
-    .yelp__display__bottom {
+    .yelp-display__bottom {
         gap: 2em !important;
     }
 }
