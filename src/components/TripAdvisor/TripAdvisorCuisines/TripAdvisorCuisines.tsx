@@ -7,6 +7,9 @@ interface Props {
 export default function TripAdvisorCuisines({
     cuisines
 }: Props) {
+    if (!cuisines) {
+        return (<></>)
+    }
     return (
         <div>
             {cuisines &&
