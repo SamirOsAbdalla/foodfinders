@@ -1,46 +1,16 @@
-.yelp__button__white {
-    padding: 15px 14px;
-    font-weight: bold;
-    width: 150px;
-    border-radius: 4px;
-    height: 45px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid #e2e8f0;
-    background-color: white;
-    box-shadow: 0 0 #0000,
-        0 0 #0000,
-        0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-
-}
-
 .yelp__heading {
     font-weight: bold;
-    font-size: min(40px, 7vw);
+    font-size: 40px;
     border-radius: 4px 4px 0px 0px;
     color: rgb(48, 50, 53);
-}
-
-.fs-14 {
-    font-size: 14px;
+    padding-top: 10px;
 }
 
 @media screen and (max-width:560px) {
 
-    .yelp__category__buttons {
-        background-color: black;
-        border-radius: 4px;
-        padding: 5px;
-        overflow: auto;
-    }
-
-    .yelp__button__white {
-        width: 140px;
-    }
-
     .yelp__heading {
-        padding-top: 1rem !important;
+        font-size: 32px;
+        line-height: 40px;
     }
 
 }

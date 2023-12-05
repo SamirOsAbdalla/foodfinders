@@ -1,0 +1,26 @@
+.yelp-category__buttons {
+    padding-top: 15px;
+}
+
+.yelp-category__button--dark {
+    background-color: var(--light-blue-background);
+    border-radius: 4px;
+    color: white;
+    width: min-content;
+    height: 36px;
+    padding: 10px 16px;
+    overflow: visible;
+    font-size: 14px;
+    flex-basis: 140px;
+}
+
+
+@media screen and (max-width: 680px) {
+    .yelp-category__buttons {
+        padding-top: 35px;
+    }
+
+    .yelp-category__button--dark {
+        font-size: 12px;
+    }
+}
