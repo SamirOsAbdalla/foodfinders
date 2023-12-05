@@ -11,21 +11,24 @@ export default function TripAdvisorRestaurantImage({
     restaurantImageUrl
 }: Props) {
     return (
-        <div className={`w-100 ta__restaurantimage__container ${restaurantImageUrl ? "" : "background__black"} position-relative`}>
-            {restaurantImageUrl ?
-                <Image
-                    fill
-                    src={`${restaurantImageUrl}`}
-                    style={{ objectFit: "cover" }}
-                    alt="TripAdvisor Image"
-                /> :
-                <Image
-                    fill
-                    src="/tripadvisor_logo.png"
-                    style={{ objectFit: "contain" }}
-                    alt="TripAdvisor Image"
-                />
-            }
+        <div>
+            <div className={`w-100 ta__restaurantimage__container ${restaurantImageUrl ? "" : "background__black"} position-relative`}>
+                {restaurantImageUrl ?
+                    <Image
+                        fill
+                        src={`${restaurantImageUrl}`}
+                        style={{ objectFit: "cover" }}
+                        alt="TripAdvisor Image"
+                    /> :
+                    <Image
+                        fill
+                        src="/tripadvisor_logo.png"
+                        style={{ objectFit: "contain" }}
+                        alt="TripAdvisor Image"
+                    />
+                }
+            </div>
         </div>
+
     )
 }
