@@ -6,6 +6,7 @@ const baseTripAdvisorURL = `https://api.content.tripadvisor.com/api/v1/location`
 
 
 const maxRadiusMeters = 15312
+const metersToMiles = .00062137
 const unitedStatesLatitudeMin = 24.396308
 const unitedStatesLatitudeMax = 49.384358
 const unitedStatesLongitudeMin = -125.000000
@@ -22,5 +23,6 @@ export {
     unitedStatesLatitudeMax,
     unitedStatesLongitudeMin,
     unitedStatesLongitudeMax,
-    errorMessage
+    errorMessage,
+    metersToMiles
 }
