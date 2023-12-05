@@ -1,3 +1,7 @@
-.yelp__rating__text {}
+@media screen and (max-width:520px) {
 
-.yelp__reviewcount__text {}
+    .yelp-reviewcount__text,
+    .yelp-reviewcount__text__dot {
+        display: none
+    }
+}

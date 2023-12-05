@@ -1,19 +1,25 @@
 
 
-import { PriceRanges } from "@/util/restaurantTypes"
+import { PossiblePrices } from "@/util/restaurantTypes"
 import "./YelpReview.css"
 import Image from "next/image"
+import React from "react"
+import FavoritesButton from "@/components/FavoritesButton/FavoritesButton"
 
 interface Props {
     rating?: number,
     reviewCount?: number,
-    price?: PriceRanges
+    price?: PossiblePrices,
+    children?: React.ReactNode
+    distance?: number
 }
 
 export default function YelpReview({
     rating,
     reviewCount,
-    price
+    price,
+    children,
+    distance
 }: Props) {
     const getYelpRatingImageSrc = () => {
         switch (rating) {
@@ -40,28 +46,37 @@ export default function YelpReview({
         }
     }
 
+
     return (
-        <div className="w-100 d-flex align-items-center gap-1">
-            {rating &&
-                <div className="d-flex align-items-center gap-2">
-                    <div className="position-relative">
-                        <Image width={100} height={20} src={getYelpRatingImageSrc()} alt="Yelp Rating" />
+        <div className="w-100 d-flex justify-content-between flex-wrap gap-3">
+            <div className="d-flex align-items-center gap-1">
+                {rating &&
+                    <div className="d-flex align-items-center gap-2">
+                        <div className="position-relative">
+                            <Image width={100} height={20} src={getYelpRatingImageSrc()} alt="Yelp Rating" />
+                        </div>
+                        <span className="yelp-rating__text">{rating}</span>
                     </div>
-                    <span className="yelp__rating__text">{rating}</span>
-                </div>
-            }
-            {reviewCount && <span>•</span>}
-            {reviewCount &&
-                <span className="yelp__reviewcount__text">
-                    {`${reviewCount} reviews`}
-                </span>
-            }
-            {price && <span>•</span>}
-            {price &&
-                <div className="d-flex justify-content-center align-items-center">
-                    {price}
-                </div>
-            }
+                }
+                {reviewCount && <span className="yelp-reviewcount__text__dot">•</span>}
+                {reviewCount &&
+                    <span className="yelp-reviewcount__text">
+                        {`${reviewCount} reviews`}
+                    </span>
+                }
+                {price && <span>•</span>}
+                {price &&
+                    <div className="d-flex justify-content-center align-items-center">
+                        {price}
+                    </div>
+                }
+                <span>•</span>
+                {distance && <div>{distance.toFixed(2)} mi</div>}
+            </div>
+            <FavoritesButton
+                buttonOrigin="yelp"
+            />
         </div>
+
     )
 }
