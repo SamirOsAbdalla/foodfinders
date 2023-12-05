@@ -50,7 +50,7 @@ export interface YelpRestaurant extends GenericRestaurant {
     yelpType: "yelp"
     yelpWebsiteUrl?: string
     categories?: any[]
-    distance?: string
+    distance?: number
     rating?: number
     reviewCount?: number
     price?: PossiblePrices

@@ -6,7 +6,8 @@ import {
     unitedStatesLatitudeMax,
     unitedStatesLongitudeMin,
     unitedStatesLongitudeMax,
-    errorMessage
+    errorMessage,
+    metersToMiles
 } from "./constants"
 
 import {
@@ -14,10 +15,10 @@ import {
     YelpRestaurant,
     Coordinates,
     FiltersObject,
-    PriceRanges,
     TripAdvisorRestaurant,
     AcceptedFoodFilters,
-    ErrorMessage
+    ErrorMessage,
+    PossiblePrices
 } from "./restaurantTypes"
 
 
@@ -38,7 +39,7 @@ let prevYelpFilters = {
 }
 
 // e.g. [$,$$,$$$$] -> 1,2,4
-function mapPricesToNumberString(priceArr: PriceRanges[]) {
+function mapPricesToNumberString(priceArr: PossiblePrices[]) {
     let new_arr: number[] = []
 
     for (let i = 0; i < priceArr.length; i++) {
@@ -136,6 +137,10 @@ async function getYelpNearby(coordinates: Coordinates, yelpKey: string, filtersO
             const coordinates = business.coordinates
             const latitudeAndLongitude = coordinates.latitude + `&${coordinates.longitude}`
 
+            let distance = business.distance ?? undefined
+            if (distance) {
+                distance *= metersToMiles
+            }
             let yelpRestaurant: YelpRestaurant = {
                 name: business.name,
                 restaurantImageUrl: business.image_url,
@@ -147,15 +152,15 @@ async function getYelpNearby(coordinates: Coordinates, yelpKey: string, filtersO
                 yelpWebsiteUrl: business.url,
                 reviewCount: business.review_count,
                 categories: business.categories,
-                latitudeAndLongitude
+                latitudeAndLongitude,
+                distance
             }
-
-            console.log(yelpRestaurant)
 
             yelpCache.push(yelpRestaurant)
         }
     })
-    // randomize the array since TripAdvisor does NOT like to give unique results on a refresh
+
+    //randomize array
     let p1
     let p2;
     let p3;
@@ -331,7 +336,6 @@ async function getTripAdvisorNearby(coordinates: Coordinates, tripAdvisorKey: st
     } else {
         return errorMessage
     }
-
 }
 
 
