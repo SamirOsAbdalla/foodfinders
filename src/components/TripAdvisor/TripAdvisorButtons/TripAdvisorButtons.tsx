@@ -2,9 +2,10 @@ import "./TripAdvisorButtons.css"
 import { IoCallOutline } from "react-icons/io5"
 import { FaMapMarkedAlt } from "react-icons/fa"
 import Link from "next/link"
+
+
 // Admittedly this can be a combined component along with the Yelp buttons
 // but making a generic component is a task for a later time
-
 interface Props {
     phoneNumber?: string,
     address?: string
