@@ -7,9 +7,9 @@ export default function FavoritesButton({
     buttonOrigin
 }: Props) {
     return (
-        <button className={`favorites__button ${buttonOrigin == "yelp" ? "yelp__button__red" : "tripadvisor__button__green"}`}>
+        <button className={`favorites-button ${buttonOrigin == "yelp" ? "yelp-button--red" : "tripadvisor-button--green"}`}>
             <FaHeart />
-            Add To Favorites
+            <span>Add To Favorites</span>
         </button>
     )
 }

@@ -1,4 +1,4 @@
-.favorites__button {
+.favorites-button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,13 +11,23 @@
     background-color: white;
 }
 
-.tripadvisor__button__green {
+.tripadvisor-button--green {
     border: 2px solid #34e0a1;
     color: #34e0a1;
 }
 
-.yelp__button__red {
+.yelp-button--red {
     border: 2px solid rgba(255, 43, 43, 0.85);
     color: rgba(255, 43, 43, 0.85);
     background-color: white;
+}
+
+@media screen and (max-width:550px) {
+    .favorites-button {
+        width: 50px;
+    }
+
+    .favorites-button span {
+        display: none;
+    }
 }
