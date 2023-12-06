@@ -19,9 +19,10 @@ export default function TripAdvisorRatingRow({
     rating,
     price
 }: Props) {
+
     return (
         <div className="ta__ratingrow__wrapper w-100 d-flex justify-content-between align-items-center gap-3">
-            <div className="ta__ratingrow__main d-flex justify-content-start align-items-center gap-2">
+            {(!price && !rating && !reviewCount) ? <></> : <div className="ta__ratingrow__main d-flex justify-content-start align-items-center gap-2">
                 {price &&
                     <span className="d-flex gap-2">
                         {price}
@@ -38,7 +39,8 @@ export default function TripAdvisorRatingRow({
                 }
                 {rating && <span className="ta__rating">{rating}</span>}
                 {reviewCount && <span className="ta__review__count">({reviewCount} reviews)</span>}
-            </div>
+            </div>}
+
             <FavoritesButton
                 buttonOrigin="tripadvisor"
             />
