@@ -2,6 +2,7 @@
 export type AcceptedFoodFilters = "Sandwiches" | "Breakfast" | "Sushi" | "Burgers" | "Pizza" | "Chinese" | "Mexican"
 
 export type PossibleApis = "yelp" | "tripadvisor" | undefined
+export type PossibleApisStrict = "yelp" | "tripadvisor"
 
 export type PossiblePrices = "$" | "$$" | "$$$" | "$$$$"
 
@@ -26,6 +27,7 @@ export interface ApiError {
 }
 
 export interface GenericRestaurant {
+    apiRespOrigin: PossibleApisStrict
     name?: string
     phoneNumber?: string
     address?: string,
@@ -36,7 +38,6 @@ export interface GenericRestaurant {
 //This type is so BAD. However I can't find a fix around this for some reason.
 // Need to fix this hack cuz it hurts my eyes
 export interface TripAdvisorRestaurant extends GenericRestaurant {
-    taType: "tripadvisor"
     ratingImageUrl?: string
     price?: string
     tripAdvisorUrl?: string
@@ -47,7 +48,6 @@ export interface TripAdvisorRestaurant extends GenericRestaurant {
 }
 
 export interface YelpRestaurant extends GenericRestaurant {
-    yelpType: "yelp"
     yelpWebsiteUrl?: string
     categories?: any[]
     distance?: number
