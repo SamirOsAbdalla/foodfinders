@@ -19,7 +19,7 @@ export default function YelpDisplay({
     restaurantImageUrl,
     categories,
     reviewCount,
-    distance
+    distance,
 }: YelpRestaurant) {
 
     return (
