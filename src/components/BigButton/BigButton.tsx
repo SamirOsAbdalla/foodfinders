@@ -38,11 +38,10 @@ function useGeoLocation() {
         })
 
         const restaurantJSON = await restaurant.json()
-        if ("errorMessage" in restaurantJSON) {
-            //handle error
-        }
         dispatch(setCurrentRestaurant({ currentRestaurant: restaurantJSON }))
-        dispatch(setRestaurantHistory(restaurantJSON))
+        if (!("errorMessage" in restaurantJSON)) {
+            dispatch(setRestaurantHistory(restaurantJSON))
+        }
         setLoading(false)
     }
 
@@ -59,7 +58,6 @@ function useGeoLocation() {
         handleBigButtonClick,
         loading
     }
-
 }
 
 export default function BigButton({ buttonSize }: Props) {
