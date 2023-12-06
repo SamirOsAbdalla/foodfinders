@@ -12,13 +12,23 @@ const initialState: RestaurantHistoryState = {
     restaurantHistory: []
 }
 
+
+
 export const restaurantHistory = createSlice({
     name: "restaurantHistory",
     initialState,
     reducers: {
         setRestaurantHistory: (state, action: PayloadAction<YelpRestaurant | TripAdvisorRestaurant>) => {
+            if (state.restaurantHistory.find(restaurant => {
+                if (restaurant.name == action.payload.name) {
+                    return true
+                }
+                return false
+            }) != undefined) {
+                return state
+            }
+
             return ({
-                ...state,
                 restaurantHistory: [...state.restaurantHistory, action.payload]
             })
         }
