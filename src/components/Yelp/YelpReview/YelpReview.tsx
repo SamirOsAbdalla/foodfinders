@@ -73,9 +73,9 @@ export default function YelpReview({
                 <span>•</span>
                 {distance && <div>{distance.toFixed(1)} mi</div>}
             </div>
-            <FavoritesButton
+            {/* <FavoritesButton
                 buttonOrigin="yelp"
-            />
+            /> */}
         </div>
 
     )
