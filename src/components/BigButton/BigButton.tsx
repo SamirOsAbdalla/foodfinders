@@ -41,7 +41,7 @@ function useGeoLocation() {
         if ("errorMessage" in restaurantJSON) {
             //handle error
         }
-        dispatch(setCurrentRestaurant(restaurantJSON))
+        dispatch(setCurrentRestaurant({ currentRestaurant: restaurantJSON }))
         dispatch(setRestaurantHistory(restaurantJSON))
         setLoading(false)
     }
