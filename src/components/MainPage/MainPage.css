@@ -1,13 +1,12 @@
-.mainpage__wrapper {
+.main-page__wrapper {
     width: 100vw;
     height: 100vh;
     display: flex;
     justify-content: center;
     gap: 2em;
     align-items: center;
-    overflow: auto;
+    overflow: hidden;
     flex-wrap: wrap;
-    padding-bottom: 20px;
 }
 
 .break {
