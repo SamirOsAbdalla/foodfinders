@@ -71,7 +71,7 @@ export default function YelpReview({
                     </div>
                 }
                 <span>•</span>
-                {distance && <div>{distance.toFixed(2)} mi</div>}
+                {distance && <div>{distance.toFixed(1)} mi</div>}
             </div>
             <FavoritesButton
                 buttonOrigin="yelp"
