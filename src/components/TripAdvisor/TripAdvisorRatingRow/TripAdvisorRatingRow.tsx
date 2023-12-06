@@ -41,9 +41,9 @@ export default function TripAdvisorRatingRow({
                 {reviewCount && <span className="ta__review__count">({reviewCount} reviews)</span>}
             </div>}
 
-            <FavoritesButton
+            {/* <FavoritesButton
                 buttonOrigin="tripadvisor"
-            />
+            /> */}
         </div>
     )
 }
