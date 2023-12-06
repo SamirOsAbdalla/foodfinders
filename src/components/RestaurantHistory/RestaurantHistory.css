@@ -11,12 +11,15 @@
 
 }
 
-.rh__history__item__container {
+.rh__item__container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
     max-height: 90%;
     overflow: auto;
 }
 
-.rh__history__item {
+.rh__item {
     border-bottom: 1px solid rgba(157, 157, 157, 0.59);
     padding: 10px;
     cursor: pointer;
@@ -29,4 +32,18 @@
 
 .rh__bottom__text {
     color: var(--light-blue-text)
+}
+
+@media screen and (max-width:1000px) {
+    .rh__wrapper {
+        width: 100%;
+    }
+
+    .rh__item__container {
+        max-height: 250px;
+        overflow: auto;
+        width: 100%;
+    }
+
+
 }
