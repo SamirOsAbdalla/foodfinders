@@ -363,7 +363,7 @@ async function getANearbyRestaurant(coordinates: Coordinates, apiKeyBundler: Api
         }
 
         //if yelp API fails then fall through to TA
-        if (tripAdvisorKey) {
+        if (prices.length == 0 && tripAdvisorKey) {
             const result = await getTripAdvisorNearby(coordinates, tripAdvisorKey, filtersObject)
             if (result && !("errorMessage" in result)) {
                 return result
