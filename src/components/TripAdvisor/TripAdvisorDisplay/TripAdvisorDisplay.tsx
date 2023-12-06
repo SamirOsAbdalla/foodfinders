@@ -22,6 +22,7 @@ export default function TripAdvisorDisplay({
     reviewCount,
     cuisine
 }: TripAdvisorRestaurant) {
+
     return (
         <section className="w-100 ta-display__wrapper d-flex">
             <div className="ta-display__main d-flex flex-column gap-2">
