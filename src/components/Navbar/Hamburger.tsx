@@ -15,7 +15,7 @@ export default function Hamburger({
     }
 
     return (
-        <div onClick={handleHamburgerClick} className="navbar__hamburger--container">
+        <div data-testid="navbar__hamburger" onClick={handleHamburgerClick} className="navbar__hamburger--container">
             <div className="navbar__hamburger">
 
             </div>

@@ -12,7 +12,7 @@ export default function NavbarButton({
     color
 }: Props) {
     return (
-        <button data-testid="navbar__account__button"
+        <button data-testid={`${text == "Account" ? "navbar-account__button" : "navbar-filter__button"}`}
             className={`navbar__button navbar__button--${color} d-flex align-items-center justify-content-center`}
             onClick={clickHandler}
         >

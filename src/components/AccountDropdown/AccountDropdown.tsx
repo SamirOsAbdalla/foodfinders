@@ -21,7 +21,7 @@ export default function AccountDropdown({
     // Practicing with SOLID principles led to me try and implement the links using the
     // open closed principle
     return (
-        <div className="account-dropdown__wrapper position-absolute d-flex flex-column py-2 gap-2">
+        <div data-testid="account-dropdown" className="account-dropdown__wrapper py-2  position-absolute d-flex flex-column gap-2">
             <DropdownLink
                 text="Favorites"
                 linkhref="/favorites"

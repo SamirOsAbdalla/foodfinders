@@ -32,7 +32,7 @@ export default function FilterDropdown({
     }
 
     return (
-        <div onClick={(e) => handleWrapperClick(e)} className={`${wrapperClassName} position-fixed top-0 start-0 end-0 bottom-0`}>
+        <div data-testid="filter-dropdown" onClick={(e) => handleWrapperClick(e)} className={`${wrapperClassName} position-fixed top-0 start-0 end-0 bottom-0`}>
             <FilterForm
                 closeForm={closeForm}
             />
