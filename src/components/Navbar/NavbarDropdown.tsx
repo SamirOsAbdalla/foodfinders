@@ -32,17 +32,17 @@ export default function NavbarDropdown({
     }, [])
 
     if (hamburgerStatus != "open") {
-        return (<></>)
+        return (<div data-testid="navbar__dropdown--closed"></div>)
     }
     return (
-        <div ref={navbarDropdownRef} className="navbar__dropdown justify-content-start align-items-start flex-column gap-4">
+        <div ref={navbarDropdownRef} data-testid="navbar__dropdown" className="navbar__dropdown justify-content-start align-items-start flex-column gap-4">
             <Link href="/about" className="text-decoration-none dropdown__link">
                 About
             </Link>
-            <Link href="/login" className="navbar__button--wide navbar__button--black text-decoration-none d-flex align-items-center justify-content-center align-self-center">
+            {/* <Link href="/login" className="navbar__button--wide navbar__button--black text-decoration-none d-flex align-items-center justify-content-center align-self-center">
                 Logout
                 <HiLogout />
-            </Link>
+            </Link> */}
         </div>
     )
 }

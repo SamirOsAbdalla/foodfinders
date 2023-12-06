@@ -5,7 +5,7 @@
 nav {
     box-shadow: var(--threed-box-shadow);
     width: 100vw;
-    z-index: 9999;
+    z-index: 9998;
 }
 
 .navbar__container {

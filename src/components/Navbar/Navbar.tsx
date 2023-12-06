@@ -10,7 +10,7 @@ import Hamburger from "./Hamburger";
 import NavbarLink from "./NavbarLink";
 import NavbarButtonDropdowns from "./NavbarButtonDropdowns";
 import NavbarDropdown from "./NavbarDropdown";
-
+import Link from "next/link"
 
 
 export type DropdownStatus = "open" | "closed"
@@ -22,6 +22,7 @@ export default function Navbar() {
     const closeHamburger = () => {
         setHamburgerStatus("closed")
     }
+
     return (
         <nav className="position-fixed p-3 bg-white d-flex justify-content-center flex-wrap">
             <div className={`navbar__container ${hamburgerStatus == "open" && "navbar__container--open"} d-flex justify-content-between align-items-center`}>
@@ -30,7 +31,9 @@ export default function Navbar() {
                     setHamburgerStatus={setHamburgerStatus}
                 />
                 <div className="d-flex align-items-center gap-3">
-                    <div className="navbar__brand m-0 d-flex align-items-center justify-content-center">SpeedEats</div>
+                    <Link href="/" className="navbar__brand text-decoration-none m-0 d-flex align-items-center justify-content-center">
+                        SpeedEats
+                    </Link>
                     <NavbarLink
                         text="About"
                         linkhref="/about"
