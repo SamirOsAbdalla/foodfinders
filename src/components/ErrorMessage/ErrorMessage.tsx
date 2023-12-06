@@ -15,7 +15,7 @@ export default function ErrorMessage() {
         if (reduxRestaurant.currentRestaurant?.apiRespOrigin == "error") {
             setTimeout(() => {
                 dispatch(setCurrentRestaurant({ currentRestaurant: undefined }))
-            }, 1500)
+            }, 3000)
         }
 
     }, [reduxRestaurant])
