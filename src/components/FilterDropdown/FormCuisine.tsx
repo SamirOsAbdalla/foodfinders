@@ -15,8 +15,10 @@ export default function FormCuisine({
     register,
     isClicked
 }: Props) {
+
+
     return (
-        <label className="filter-form__label">
+        <label data-testid={`filter-form__cuisine ${isClicked ? "filter-form__cuisine--clicked" : ""}`} className="filter-form__label">
             <input type="checkbox" value={cuisine} {...register("cuisines")} className="d-none" />
             <span className={`filter-form__button filter-form__button--large ${isClicked ? "filter-form__button--clicked" : ""} d-flex justify-content-center align-items-center`}>
                 {cuisine}
