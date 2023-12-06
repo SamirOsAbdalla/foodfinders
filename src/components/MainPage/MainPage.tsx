@@ -33,7 +33,7 @@ export default function MainPage() {
 
     return (
         <section className="main-page__wrapper">
-            {(!reduxRestaurant.currentRestaurant) &&
+            {(!reduxRestaurant.currentRestaurant || reduxRestaurant.currentRestaurant.apiRespOrigin == "error") &&
                 <>
                     <BigButton buttonSize='main' />
                     <div className="break"></div>
@@ -43,8 +43,6 @@ export default function MainPage() {
             {reduxRestaurant && (reduxRestaurant.currentRestaurant?.apiRespOrigin == "yelp") &&
                 <YelpDisplay {...reduxRestaurant.currentRestaurant as YelpRestaurant} />
             }
-
-            {/* <YelpDisplay {...test} /> */}
 
             {reduxRestaurant && (reduxRestaurant.currentRestaurant?.apiRespOrigin == "tripadvisor") &&
                 <TripAdvisorDisplay {...reduxRestaurant.currentRestaurant as TripAdvisorRestaurant} />
