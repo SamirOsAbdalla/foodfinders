@@ -7,6 +7,7 @@ type CurrentRestaurantState = {
 type InitialState = {
     value: CurrentRestaurantState
 }
+
 const initialState = {
     value: {
         currentRestaurant: undefined
