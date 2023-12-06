@@ -57,6 +57,7 @@ export interface YelpRestaurant extends GenericRestaurant {
 }
 
 export interface ErrorMessage {
+    apiRespOrigin: "error"
     errorMessage: string
 }
 export interface FiltersObject {
