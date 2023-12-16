@@ -14,7 +14,7 @@ export default function YelpHeading({
     return (
         <div className="w-100 d-flex justify-content-between align-items-center flex-wrap gap-2">
             {name &&
-                <div className="yelp__heading d-flex justify-content-start">
+                <div className="yelp__heading d-flex justify-content-start align-items-end">
                     {name}
                 </div>
             }

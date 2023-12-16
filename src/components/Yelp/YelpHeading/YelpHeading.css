@@ -4,13 +4,16 @@
     border-radius: 4px 4px 0px 0px;
     color: rgb(48, 50, 53);
     padding-top: 10px;
+    vertical-align: bottom;
 }
 
 @media screen and (max-width:560px) {
 
     .yelp__heading {
-        font-size: 32px;
+        font-size: 28px;
         line-height: 40px;
+        padding-top: 30px;
+        padding-bottom: 10px;
     }
 
 }
