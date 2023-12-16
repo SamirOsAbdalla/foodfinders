@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { RootState } from '@/redux/store'
 import { useEffect, useState } from 'react'
 import HomePage from '../HomePage/HomePage'
+import ErrorMessage from '../ErrorMessage/ErrorMessage'
 
 export default function MainPage() {
     let reduxRestaurant = useSelector((state: RootState) => state.currentRestaurantReducer.value)
@@ -17,7 +18,8 @@ export default function MainPage() {
 
     return (
         <section className="main-page__wrapper">
-            {(!reduxRestaurant.currentRestaurant || reduxRestaurant.currentRestaurant.apiRespOrigin == "error") &&
+            <ErrorMessage />
+            {(!reduxRestaurant.currentRestaurant) &&
                 <HomePage />
             }
             {reduxRestaurant && (reduxRestaurant.currentRestaurant?.apiRespOrigin == "yelp") &&
