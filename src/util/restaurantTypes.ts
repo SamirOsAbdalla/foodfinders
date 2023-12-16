@@ -1,11 +1,13 @@
 
-export type AcceptedFoodFilters = "Sandwiches" | "Breakfast" | "Sushi" | "Burgers" | "Pizza" | "Chinese" | "Mexican"
+export type AcceptedFoodFilters =
+    "Sandwiches" | "Breakfast" | "Sushi" | "Burgers"
+    | "Pizza" | "Chinese" | "Mexican" | "Steak" | "Seafood" | "Thai" | "Japanese"
 
 export type PossibleApis = "yelp" | "tripadvisor" | undefined
 export type PossibleApisStrict = "yelp" | "tripadvisor"
 
 export type PossiblePrices = "$" | "$$" | "$$$" | "$$$$"
-
+export type FilterDistance = string
 
 export interface ICuisine {
     name: string,
@@ -22,9 +24,7 @@ export interface Coordinates {
     longitude: number
 }
 
-export interface ApiError {
-    errorMessage: string
-}
+
 
 export interface GenericRestaurant {
     apiRespOrigin: PossibleApisStrict
@@ -35,8 +35,6 @@ export interface GenericRestaurant {
     latitudeAndLongitude?: string
 }
 
-//This type is so BAD. However I can't find a fix around this for some reason.
-// Need to fix this hack cuz it hurts my eyes
 export interface TripAdvisorRestaurant extends GenericRestaurant {
     ratingImageUrl?: string
     price?: string
@@ -58,10 +56,11 @@ export interface YelpRestaurant extends GenericRestaurant {
 
 export interface ErrorMessage {
     apiRespOrigin: "error"
-    errorMessage: string
+    error: string
 }
 export interface FiltersObject {
     prices: PossiblePrices[]
-    foodTypes: AcceptedFoodFilters[]
+    cuisines: AcceptedFoodFilters[]
+    filterDistance: FilterDistance
 }
 
