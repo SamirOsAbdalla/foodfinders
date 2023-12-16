@@ -88,7 +88,7 @@ export default function NavbarButtonDropdowns({
 
     return (
         <div className="d-flex align-items-center gap-4">
-            {/* <div ref={accountDropdownRef} className="position-relative">
+            <div ref={accountDropdownRef} className="position-relative">
                 <NavbarButton
                     clickHandler={toggleAccountDropdownStatus}
                     text="Account"
@@ -97,7 +97,7 @@ export default function NavbarButtonDropdowns({
                     <BsPerson className="navbar__button--icon" />
                 </NavbarButton>
                 <AccountDropdown dropdownStatus={accountDropdownStatus} />
-            </div> */}
+            </div>
             <div className="position-relative">
                 <NavbarButton
                     clickHandler={toggleFilterDropdownStatus}
