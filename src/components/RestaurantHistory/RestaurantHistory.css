@@ -1,13 +1,13 @@
 .rh__wrapper {
     padding: 100px 10px;
     width: 25%;
+    background-color: white;
 }
 
 .rh__heading {
     font-weight: bold;
-    font-size: 24px;
+    font-size: 20px;
     padding-bottom: 1em;
-    text-decoration: underline;
 
 }
 
@@ -17,33 +17,47 @@
     gap: 1.5em;
     max-height: 90%;
     overflow: auto;
+    background-color: rgb(0, 34, 38);
+    padding: 10px;
+    border-radius: 4px;
 }
 
 .rh__item {
-    border-bottom: 1px solid rgba(157, 157, 157, 0.59);
+    border: 1px solid rgba(255, 255, 255, 0.743);
     padding: 10px;
+    background-color: var(--dark-background);
     cursor: pointer;
+    border-radius: 4px;
+    box-shadow: rgb(235, 235, 235) 0px 2px 0px;
+    transition: 0.1s ease-in;
+}
+
+.rh__item:active {
+    transform: translateY(2px);
+    box-shadow: none;
 }
 
 .rh__name {
+    color: white;
     font-size: 18px;
     font-weight: bold;
 }
 
 .rh__bottom__text {
-    color: var(--light-blue-text)
+    font-size: 14px;
+    color: rgb(238, 238, 238);
 }
 
 @media screen and (max-width:1000px) {
     .rh__wrapper {
+        padding: 50px 10px;
         width: 100%;
     }
 
     .rh__item__container {
-        max-height: 250px;
+        max-height: 350px;
         overflow: auto;
         width: 100%;
     }
-
 
 }
