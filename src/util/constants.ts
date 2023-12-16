@@ -7,13 +7,14 @@ const baseTripAdvisorURL = `https://api.content.tripadvisor.com/api/v1/location`
 
 const maxRadiusMeters = 15312
 const metersToMiles = .00062137
+const milesToMeters = 1609.34
 const unitedStatesLatitudeMin = 24.396308
 const unitedStatesLatitudeMax = 49.384358
 const unitedStatesLongitudeMin = -125.000000
 const unitedStatesLongitudeMax = -66.934570
 const errorMessage: ErrorMessage = {
     apiRespOrigin: "error",
-    errorMessage: "Error: Could not find nearby restaurants with these filters."
+    error: "Error: Could not find nearby restaurants with these filters."
 }
 
 export {
@@ -25,5 +26,6 @@ export {
     unitedStatesLongitudeMin,
     unitedStatesLongitudeMax,
     errorMessage,
+    milesToMeters,
     metersToMiles
 }
