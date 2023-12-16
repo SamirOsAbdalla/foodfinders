@@ -1,18 +1,21 @@
 import { NextRequest, NextResponse } from "next/server"
 import getANearbyRestaurant from "@/util/getRestaurant"
+import { FiltersObject } from "@/util/restaurantTypes"
 
 export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams
     const latitude = searchParams.get("latitude")
     const longitude = searchParams.get("longitude")
+
     const cuisineString = searchParams.get("cuisineString")
     const pricesString = searchParams.get("pricesString")
+    const filterDistance = searchParams.get("filterDistance")!
 
-    let foodTypesArray: any[] = []
+    let cuisinesArray: any[] = []
     let pricesArray: any[] = []
 
     if (cuisineString) {
-        foodTypesArray = cuisineString.split(",")
+        cuisinesArray = cuisineString.split(",")
     }
     if (pricesString) {
         pricesArray = pricesString.split(",")
@@ -34,9 +37,10 @@ export async function GET(request: NextRequest) {
         }
     }
 
-    const filtersObject = {
+    const filtersObject: FiltersObject = {
         prices: pricesArray,
-        foodTypes: foodTypesArray
+        cuisines: cuisinesArray,
+        filterDistance
     }
     const response = await getANearbyRestaurant(coordinates, apiKeyBundler, filtersObject)
     return Response.json(response)
