@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import { setCurrentRestaurant } from "@/redux/slices/currentRestaurant-slice";
 import { setRestaurantHistory } from "@/redux/slices/restaurantHistory-slice";
-
+import { setRestaurantError } from "@/redux/slices/restaurantError-slice";
 
 interface Props {
     buttonSize: "small" | "main"
@@ -40,9 +40,11 @@ function useGeoLocation() {
         })
 
         const restaurantJSON = await restaurant.json()
-        dispatch(setCurrentRestaurant({ currentRestaurant: restaurantJSON }))
-        if (!("errorMessage" in restaurantJSON)) {
+        if (!("error" in restaurantJSON)) {
+            dispatch(setCurrentRestaurant({ currentRestaurant: restaurantJSON }))
             dispatch(setRestaurantHistory(restaurantJSON))
+        } else {
+            dispatch(setRestaurantError(true))
         }
         setLoading(false)
     }
