@@ -5,7 +5,6 @@ import './globals.css'
 import BootstrapClient from "@/components/BootstrapClient"
 import { ReduxProvider } from "@/redux/provider"
 import Navbar from "@/components/Navbar/Navbar"
-import ErrorMessage from "@/components/ErrorMessage/ErrorMessage"
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,7 +21,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ReduxProvider>
-          <ErrorMessage />
           <Navbar />
           {children}
           <BootstrapClient />
