@@ -12,6 +12,7 @@ const unitedStatesLatitudeMin = 24.396308
 const unitedStatesLatitudeMax = 49.384358
 const unitedStatesLongitudeMin = -125.000000
 const unitedStatesLongitudeMax = -66.934570
+const defaultDistanceRadius = "13"
 const errorMessage: ErrorMessage = {
     apiRespOrigin: "error",
     error: "Error: Could not find nearby restaurants with these filters."
@@ -27,5 +28,6 @@ export {
     unitedStatesLongitudeMax,
     errorMessage,
     milesToMeters,
-    metersToMiles
+    metersToMiles,
+    defaultDistanceRadius
 }
