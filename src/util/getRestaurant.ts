@@ -1,13 +1,13 @@
 import {
     baseYelpURL,
     baseTripAdvisorURL,
-    maxRadiusMeters,
     unitedStatesLatitudeMin,
     unitedStatesLatitudeMax,
     unitedStatesLongitudeMin,
     unitedStatesLongitudeMax,
     errorMessage,
-    metersToMiles
+    metersToMiles,
+    milesToMeters,
 } from "./constants"
 
 import {
@@ -28,14 +28,15 @@ let nextApiType = "yelp"
 
 let tripAdvisorCache: string[] = []
 let prevTripAdvisorFilters = {
-    prevFoodTypesString: "",
+    prevCuisinesString: "",
 }
 
 let yelpCache: YelpRestaurant[] = []
 let prevYelpFilters = {
     isEmpty: true,
     prevPricesString: "",
-    prevFoodTypesString: ""
+    prevCuisinesString: "",
+    prevDistance: "13"
 }
 
 // e.g. [$,$$,$$$$] -> 1,2,4
@@ -63,23 +64,25 @@ another API call*/
 function arePrevFiltersASubset(filtersObject: FiltersObject) {
 
     //We must make the API call since the previous filters are too general for the current call
-    if (prevYelpFilters.isEmpty && (filtersObject.prices.length > 0 || filtersObject.foodTypes.length > 0)) {
+    if (prevYelpFilters.isEmpty &&
+        (filtersObject.prices.length > 0 || filtersObject.cuisines.length > 0)) {
         return false
     }
 
     let prevPricesString = prevYelpFilters.prevPricesString
-    let prevFoodTypesString = prevYelpFilters.prevFoodTypesString
+    let prevCuisinesString = prevYelpFilters.prevCuisinesString
     let currentPricesString = mapPricesToNumberString(filtersObject.prices)
-    let currentFoodTypesString = filtersObject.foodTypes.sort().join(",").toLowerCase()
+    let currentCuisinesString = filtersObject.cuisines.sort().join(",").toLowerCase()
 
-    if (currentPricesString.includes(prevPricesString) && currentFoodTypesString.includes(prevFoodTypesString)) {
+    if (currentPricesString.includes(prevPricesString) && currentCuisinesString.includes(prevCuisinesString) &&
+        parseInt(filtersObject.filterDistance) >= parseInt(prevYelpFilters.prevDistance)) {
         return true
     }
     return false
 }
 
-async function getYelpNearby(coordinates: Coordinates, yelpKey: string, filtersObject: FiltersObject) {
 
+async function getYelpNearby(coordinates: Coordinates, yelpKey: string, filtersObject: FiltersObject) {
 
     if (arePrevFiltersASubset(filtersObject) && yelpCache.length > 0) {
         nextApiType = "yelp"
@@ -99,16 +102,14 @@ async function getYelpNearby(coordinates: Coordinates, yelpKey: string, filtersO
             "Authorization": `Bearer ${yelpKey}`
         }
     }
-    const foodTypesArray = filtersObject.foodTypes
+    const cuisinesArray = filtersObject.cuisines
     const pricesArray = filtersObject.prices
-
 
     //setup categories for yelp URL
     let filterString = ""
-    if (foodTypesArray) {
-
+    if (cuisinesArray) {
         //Yelp requires the category string to be of the form: Food1,Food2,...FoodN
-        filterString = foodTypesArray.sort().join(",").toLowerCase()
+        filterString = cuisinesArray.sort().join(",").toLowerCase()
     }
 
     //Example of a yelp price string: 1,2,4
@@ -116,15 +117,16 @@ async function getYelpNearby(coordinates: Coordinates, yelpKey: string, filtersO
 
     const { latitude, longitude } = coordinates
 
+    let yelpRadius = (parseInt(filtersObject.filterDistance) * milesToMeters).toFixed(0)
+
     const yelpFetchUrl = baseYelpURL +
-        `&radius=${maxRadiusMeters}&open_now=true` +
+        `&radius=${yelpRadius}&open_now=true` +
         `${filterString ? `&categories=${filterString}` : ""}` +
         `${pricesString ? `&price=${pricesString}` : ""}` +
         `&latitude=${latitude}&longitude=${longitude}&limit=14`
 
     const yelpResp = await fetch(yelpFetchUrl, yelpHTTPOptions)
     const yelpRespJSON = await yelpResp?.json()
-
     if (!yelpRespJSON?.businesses) {
         return errorMessage
     }
@@ -141,6 +143,7 @@ async function getYelpNearby(coordinates: Coordinates, yelpKey: string, filtersO
             if (distance) {
                 distance *= metersToMiles
             }
+
             let yelpRestaurant: YelpRestaurant = {
                 apiRespOrigin: 'yelp',
                 name: business.name,
@@ -179,8 +182,9 @@ async function getYelpNearby(coordinates: Coordinates, yelpKey: string, filtersO
 
         prevYelpFilters = {
             isEmpty: newIsEmpty,
-            prevFoodTypesString: filterString,
-            prevPricesString: pricesString
+            prevCuisinesString: filterString,
+            prevPricesString: pricesString,
+            prevDistance: filtersObject.filterDistance
         }
 
         return yelpCache.pop()
@@ -235,13 +239,13 @@ async function fetchTripAdvisorResult(tripAdvisorFetchUrl: string, tripAdvisorHT
 }
 
 
-function checkTripAdvisorFilterSubset(foodTypes: AcceptedFoodFilters[]) {
-    const curFoodStr = foodTypes.sort().join(",").toLowerCase()
-    const prevFoodStr = prevTripAdvisorFilters.prevFoodTypesString
+function checkTripAdvisorFilterSubset(cuisines: AcceptedFoodFilters[]) {
+    const curFoodStr = cuisines.sort().join(",").toLowerCase()
+    const prevFoodStr = prevTripAdvisorFilters.prevCuisinesString
     if (prevFoodStr == "" && curFoodStr != "") {
         return false;
     }
-    else if (curFoodStr == "" || curFoodStr.includes(prevTripAdvisorFilters.prevFoodTypesString)) {
+    else if (curFoodStr == "" || curFoodStr.includes(prevTripAdvisorFilters.prevCuisinesString)) {
         return true
     }
     return false
@@ -257,8 +261,8 @@ async function getTripAdvisorNearby(coordinates: Coordinates, tripAdvisorKey: st
         }
     }
 
-    const { foodTypes } = filtersObject
-    if (tripAdvisorCache.length > 0 && checkTripAdvisorFilterSubset(foodTypes)) {
+    const { cuisines } = filtersObject
+    if (tripAdvisorCache.length > 0 && checkTripAdvisorFilterSubset(cuisines)) {
         if (tripAdvisorCache.length - 1 == 0) {
             nextApiType = "yelp"
         }
@@ -273,17 +277,17 @@ async function getTripAdvisorNearby(coordinates: Coordinates, tripAdvisorKey: st
 
 
     const { latitude, longitude } = coordinates
-    const foodTypesArray = filtersObject.foodTypes
+    const cuisinesArray = filtersObject.cuisines
     let tripAdvisorResp;
 
     let filterString = ""
     //If filters are present perform a filter search
-    if (foodTypesArray.length > 0) {
+    if (cuisinesArray.length > 0) {
 
-        filterString = foodTypesArray.sort().join(",")
+        filterString = cuisinesArray.sort().join(",")
         const tripAdvisorFetchUrl = baseTripAdvisorURL +
             `/search?key=${tripAdvisorKey}` +
-            `&radius=${maxRadiusMeters}&radiusUnit=m` +
+            `&radius=${filtersObject.filterDistance}&radiusUnit=mi` +
             `&category=restaurants` +
             `&latLong=${latitude},${longitude}` +
             `&searchQuery=${filterString}`
@@ -292,7 +296,7 @@ async function getTripAdvisorNearby(coordinates: Coordinates, tripAdvisorKey: st
     } else {
         const tripAdvisorFetchUrl = baseTripAdvisorURL +
             `/nearby_search?key=${tripAdvisorKey}` +
-            `&radius=${maxRadiusMeters}&radiusUnit=m` +
+            `&radius=${filtersObject.filterDistance}&radiusUnit=mi` +
             `&category=restaurants` +
             `&latLong=${latitude},${longitude}`
         tripAdvisorResp = await fetch(tripAdvisorFetchUrl, tripAdvisorHTTPOptions)
@@ -321,7 +325,7 @@ async function getTripAdvisorNearby(coordinates: Coordinates, tripAdvisorKey: st
         p2 = tripAdvisorCache.length; while (p2) p1 = Math.random() * p2-- | 0, p3 = tripAdvisorCache[p2], tripAdvisorCache[p2] = tripAdvisorCache[p1], tripAdvisorCache[p1] = p3
 
         // update previous filters based off of current filters
-        prevTripAdvisorFilters.prevFoodTypesString = filterString.toLowerCase()
+        prevTripAdvisorFilters.prevCuisinesString = filterString.toLowerCase()
         let placeId = tripAdvisorCache.pop()!
         const tripAdvisorFetchUrl = baseTripAdvisorURL +
             `/${placeId}/details?key=${tripAdvisorKey}`
@@ -331,7 +335,7 @@ async function getTripAdvisorNearby(coordinates: Coordinates, tripAdvisorKey: st
             nextApiType = "yelp"
         }
 
-        prevTripAdvisorFilters.prevFoodTypesString = filterString.toLowerCase()
+        prevTripAdvisorFilters.prevCuisinesString = filterString.toLowerCase()
         return await fetchTripAdvisorResult(tripAdvisorFetchUrl, tripAdvisorHTTPOptions, placeId, tripAdvisorKey)
     } else {
         return errorMessage
@@ -357,7 +361,7 @@ async function getANearbyRestaurant(coordinates: Coordinates, apiKeyBundler: Api
     if (prices.length > 0 || nextApiType == "yelp") {
         if (yelpKey) {
             const result = await getYelpNearby(coordinates, yelpKey, filtersObject)
-            if (result && !("errorMessage" in result)) {
+            if (result && !("error" in result)) {
                 return result
             }
         }
@@ -365,7 +369,7 @@ async function getANearbyRestaurant(coordinates: Coordinates, apiKeyBundler: Api
         //if yelp API fails then fall through to TA
         if (prices.length == 0 && tripAdvisorKey) {
             const result = await getTripAdvisorNearby(coordinates, tripAdvisorKey, filtersObject)
-            if (result && !("errorMessage" in result)) {
+            if (result && !("error" in result)) {
                 return result
             }
         }
@@ -374,14 +378,14 @@ async function getANearbyRestaurant(coordinates: Coordinates, apiKeyBundler: Api
     else if (nextApiType == "tripadvisor") {
         if (tripAdvisorKey) {
             const result = await getTripAdvisorNearby(coordinates, tripAdvisorKey, filtersObject)
-            if (result && !("errorMessage" in result)) {
+            if (result && !("error" in result)) {
                 return result
             }
         }
 
         if (yelpKey) {
             const result = await getYelpNearby(coordinates, yelpKey, filtersObject)
-            if (result && !("errorMessage" in result)) {
+            if (result && !("error" in result)) {
                 return result
             }
         }
