@@ -49,15 +49,15 @@
 }
 
 .filter-form__button {
-    padding: 5px 2px;
+    padding: 5px 8px;
     border: 1px solid white;
     border-radius: 4px;
     transition: 0.1s ease-in;
-    width: 70px;
+    min-width: 30px;
 }
 
 .filter-form__button--large {
-    width: 100px;
+    min-width: 50px;
 }
 
 .filter-form__button--clicked {
@@ -65,8 +65,27 @@
     border: 1px solid transparent;
 }
 
-.filter-form__button__container {
+.filter-form__button__container,
+.slider__container {
     padding: 10px;
     border-radius: var(--filter-border-radius);
     background-color: #2c2c2e;
+}
+
+
+input[type="range"] {
+    width: 80%;
+    max-width: 700px;
+}
+
+.form-range::-webkit-slider-thumb {
+    background: var(--light-blue-background);
+}
+
+.form-range::-moz-range-thumb {
+    background: var(--light-blue-background);
+}
+
+.form-range::-ms-thumb {
+    background: var(--light-blue-background);
 }
