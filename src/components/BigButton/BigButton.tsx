@@ -24,10 +24,12 @@ function useGeoLocation() {
 
         const cuisineString = reduxFilterState.cuisines.join(",")
         const pricesString = reduxFilterState.prices.join(",")
+        const filterDistance = reduxFilterState.filterDistance
         const fetchUrl = `/api/getNearbyRestaurant?` +
             `latitude=${coords.latitude}&longitude=${coords.longitude}` +
             `${cuisineString ? ("&cuisineString=" + cuisineString) : ""}` +
-            `${pricesString ? ("&pricesString=" + pricesString) : ""}`
+            `${pricesString ? ("&pricesString=" + pricesString) : ""}` +
+            `${filterDistance ? ("&filterDistance=" + filterDistance) : "13"}`
 
         const restaurant = await fetch(fetchUrl, {
             method: "GET",
