@@ -14,6 +14,19 @@
     font-weight: bold;
 }
 
+.ta-display__main::-webkit-scrollbar {
+    width: 6px;
+}
+
+.ta-display__main::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.ta-display__main::-webkit-scrollbar-thumb {
+    background: rgba(180, 180, 180, 0.373);
+    border-radius: 4px;
+}
+
 @media screen and (max-width:1000px) {
     .ta-display__wrapper {
         flex-direction: column;

@@ -30,7 +30,7 @@ export default function TripAdvisorRatingRow({
                             {price}
                         </span>
                     }
-                    {price && <span>•</span>}
+                    {price && <span className="ta-review__dot">•</span>}
                     <TripAdvisorCuisines
                         cuisines={cuisine}
                     />
