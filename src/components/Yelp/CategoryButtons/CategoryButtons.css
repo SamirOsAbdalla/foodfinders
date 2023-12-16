@@ -2,25 +2,27 @@
     padding-top: 15px;
 }
 
-.yelp-category__button--dark {
-    background-color: var(--light-blue-background);
+.yelp-category__button {
+    background-color: var(--yelp-red);
     border-radius: 4px;
     color: white;
-    width: min-content;
+    width: 130px;
     height: 36px;
-    padding: 10px 16px;
-    overflow: visible;
-    font-size: 14px;
-    flex-basis: 140px;
+    font-size: 12px;
+    min-width: 0;
+    padding: 6px 10px;
 }
 
+.yelp-category__button p {
+    text-overflow: ellipsis;
+}
 
 @media screen and (max-width: 680px) {
     .yelp-category__buttons {
         padding-top: 35px;
     }
 
-    .yelp-category__button--dark {
+    .yelp-category__button {
         font-size: 12px;
     }
 }
