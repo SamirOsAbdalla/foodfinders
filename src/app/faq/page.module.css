@@ -1,0 +1,45 @@
+.faq,
+.loading {
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--page-background-blue);
+    display: flex;
+    justify-content: center;
+}
+
+.faq {
+    padding-top: 100px;
+    overflow: auto;
+}
+
+.faq__container {
+    width: 80%;
+    max-width: 800px;
+    gap: 2.5em;
+    display: flex;
+    flex-direction: column;
+}
+
+.faq__item {
+    display: flex;
+    gap: .6em;
+    flex-direction: column;
+    align-items: flex-start;
+
+}
+
+.faq__question {
+    font-weight: bold;
+    font-size: 20px;
+    color: rgb(48, 55, 65)
+}
+
+.faq__answer {
+    max-width: 90%;
+    font-size: 14px;
+}
+
+.loading {
+    flex-direction: column;
+    align-items: center;
+}
