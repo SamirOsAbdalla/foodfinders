@@ -16,9 +16,14 @@
 
 .about__container {
     width: 80%;
-    max-width: 800px;
+    max-width: 650px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.paragraph {
+    font-size: 14px;
+    color: var(--light-blue-text)
 }

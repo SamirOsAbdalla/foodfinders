@@ -1,0 +1,9 @@
+.hungry-button {
+    border: none;
+    background-color: rgb(38, 46, 53);
+    border-radius: 4px;
+    padding: 5px 15px;
+    color: white;
+    cursor: pointer;
+    margin-top: 15px;
+}
