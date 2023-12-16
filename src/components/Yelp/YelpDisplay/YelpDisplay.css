@@ -1,17 +1,19 @@
 .yelp-display__section {
-    background-color: white;
+    background-color: var(--page-background-blue);
     height: 100vh;
 }
 
 .yelp-display__bottom {
+    align-self: center;
     padding-bottom: 20px;
+    max-width: 1000px;
+    width: 100%;
 }
 
 .yelp-display__main {
     padding: 100px 50px;
     overflow: auto;
     width: 75%;
-    border-right: 1px solid rgba(142, 142, 142, 0.616);
 }
 
 @media screen and (max-width:1000px) {
@@ -34,6 +36,6 @@
     }
 
     .yelp-display__bottom {
-        gap: 2em !important;
+        gap: 0em !important;
     }
 }
