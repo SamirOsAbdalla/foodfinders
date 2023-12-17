@@ -4,8 +4,8 @@ import "./CategoryButtons.css"
 
 function CategoryButton({ category }: any) {
     return (
-        <div key={category.alias} className={`yelp-category__button--dark d-flex justify-content-center align-items-center`}>
-            <span>{category.title}</span>
+        <div key={category.alias} className={`yelp-category__button d-flex justify-content-center align-items-center`}>
+            <p className="m-0">{category.title}</p>
         </div>
     )
 }

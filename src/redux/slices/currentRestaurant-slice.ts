@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ErrorMessage, TripAdvisorRestaurant, YelpRestaurant } from "@/util/restaurantTypes";
 type CurrentRestaurantState = {
-    currentRestaurant?: TripAdvisorRestaurant | YelpRestaurant | ErrorMessage
+    currentRestaurant?: TripAdvisorRestaurant | YelpRestaurant
 }
 
 type InitialState = {

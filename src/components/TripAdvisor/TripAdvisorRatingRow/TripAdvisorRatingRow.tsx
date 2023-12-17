@@ -22,28 +22,30 @@ export default function TripAdvisorRatingRow({
 
     return (
         <div className="ta__ratingrow__wrapper w-100 d-flex justify-content-between align-items-center gap-3">
-            {(!price && !rating && !reviewCount) ? <></> : <div className="ta__ratingrow__main d-flex justify-content-start align-items-center gap-2">
-                {price &&
-                    <span className="d-flex gap-2">
-                        {price}
-                    </span>
-                }
-                {price && <span>•</span>}
-                <TripAdvisorCuisines
-                    cuisines={cuisine}
-                />
-                {ratingUrl &&
-                    <div className="ta__rating__container position-relative">
-                        <Image fill src={ratingUrl} alt="Rating Image" />
-                    </div>
-                }
-                {rating && <span className="ta__rating">{rating}</span>}
-                {reviewCount && <span className="ta__review__count">({reviewCount} reviews)</span>}
-            </div>}
+            {(!price && !rating && (!reviewCount || parseInt(reviewCount) == 0)) ?
+                <></> :
+                <div className="ta__ratingrow__main d-flex justify-content-start align-items-center gap-2">
+                    {price &&
+                        <span className="d-flex gap-2 fw-bold">
+                            {price}
+                        </span>
+                    }
+                    {price && <span className="ta-review__dot">•</span>}
+                    <TripAdvisorCuisines
+                        cuisines={cuisine}
+                    />
+                    {ratingUrl &&
+                        <div className="ta__rating__container position-relative">
+                            <Image fill src={ratingUrl} alt="Rating Image" />
+                        </div>
+                    }
+                    {rating && <span className="ta__rating fw-bold">{rating}</span>}
+                    {reviewCount && <span className="ta__review__count">({reviewCount} reviews)</span>}
+                </div>}
 
-            {/* <FavoritesButton
+            <FavoritesButton
                 buttonOrigin="tripadvisor"
-            /> */}
+            />
         </div>
     )
 }

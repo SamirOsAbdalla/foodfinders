@@ -3,6 +3,15 @@
     height: 60px;
 }
 
+.ta__review__count {
+    color: var(--light-blue-text);
+    font-size: 14px;
+}
+
+.ta-review__dot {
+    font-size: 10px;
+}
+
 @media screen and (max-width:1000px) {
     .ta__ratingrow__wrapper {
         flex-wrap: wrap-reverse;

@@ -9,7 +9,8 @@ import { DropdownStatus } from "../Navbar/Navbar";
 import { useForm } from "react-hook-form";
 import {
     PossiblePrices,
-    AcceptedFoodFilters
+    AcceptedFoodFilters,
+    FiltersObject
 } from "@/util/restaurantTypes";
 import FormCuisines from "./FormCuisines";
 import {
@@ -21,6 +22,7 @@ import {
     RootState
 } from "@/redux/store";
 import { setFilters } from "@/redux/slices/filter-slice";
+import FormDistance from "./FormDistance";
 
 
 const cuisinesDefaultArray: AcceptedFoodFilters[] = []
@@ -38,7 +40,8 @@ function useFilters(closeForm: () => any) {
     } = useForm({
         defaultValues: {
             cuisines: cuisinesDefaultArray,
-            prices: pricesDefaultArray
+            prices: pricesDefaultArray,
+            filterDistance: "13"
         }
     })
 
@@ -47,9 +50,10 @@ function useFilters(closeForm: () => any) {
     useEffect(() => {
         setValue("cuisines", reduxFilterState.cuisines)
         setValue("prices", reduxFilterState.prices)
+        setValue("filterDistance", reduxFilterState.filterDistance)
     }, [reduxFilterState])
 
-    const submitHandler = handleSubmit((data: { cuisines: AcceptedFoodFilters[], prices: PossiblePrices[] }) => {
+    const submitHandler = handleSubmit((data: FiltersObject) => {
         dispatch(setFilters(data))
         closeForm()
     })
@@ -78,6 +82,10 @@ export default function FilterForm({
         <form onSubmit={submitHandler} className="filter-dropdown__form position-absolute start-50 translate-middle d-flex flex-column gap-4">
             <FormHeader
                 closeForm={closeForm}
+            />
+            <FormDistance
+                watchAllFields={watchAllFields}
+                register={register}
             />
             <FormPrices
                 watchAllFields={watchAllFields}

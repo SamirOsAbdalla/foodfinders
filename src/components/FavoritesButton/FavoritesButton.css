@@ -17,8 +17,8 @@
 }
 
 .yelp-button--red {
-    border: 2px solid rgba(255, 43, 43, 0.85);
-    color: rgba(255, 43, 43, 0.85);
+    border: 2px solid var(--yelp-red);
+    color: var(--yelp-red);
     background-color: white;
 }
 

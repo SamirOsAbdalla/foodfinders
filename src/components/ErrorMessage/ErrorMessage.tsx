@@ -5,24 +5,25 @@ import { useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '@/redux/store'
 import { BiSolidError } from "react-icons/bi";
 import { useDispatch } from "react-redux"
-import { setCurrentRestaurant } from "@/redux/slices/currentRestaurant-slice"
+import { setRestaurantError } from "@/redux/slices/restaurantError-slice"
 export default function ErrorMessage() {
 
-    let reduxRestaurant = useSelector((state: RootState) => state.currentRestaurantReducer.value)
+    let restaurantError = useSelector((state: RootState) => state.restaurantErrorReducer.value)
     let dispatch = useDispatch<AppDispatch>()
 
     useEffect(() => {
-        if (reduxRestaurant.currentRestaurant?.apiRespOrigin == "error") {
+        if (restaurantError) {
             setTimeout(() => {
-                dispatch(setCurrentRestaurant({ currentRestaurant: undefined }))
+                dispatch(setRestaurantError(false))
             }, 3000)
         }
 
-    }, [reduxRestaurant])
+    }, [restaurantError])
 
-    if (!(reduxRestaurant.currentRestaurant?.apiRespOrigin == "error")) {
+    if (!restaurantError) {
         return <></>
     }
+
     return (
         <div className="error__wrapper">
             <BiSolidError className="error__icon" />

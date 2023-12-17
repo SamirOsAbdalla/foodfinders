@@ -30,10 +30,14 @@ export default function Navbar() {
                     hamburgerStatus={hamburgerStatus}
                     setHamburgerStatus={setHamburgerStatus}
                 />
-                <div className="d-flex align-items-center gap-3">
+                <div className="d-flex align-items-center gap-4">
                     <Link href="/" className="navbar__brand text-decoration-none m-0 d-flex align-items-center justify-content-center">
                         SpeedEats
                     </Link>
+                    <NavbarLink
+                        text="FAQ"
+                        linkhref="/faq"
+                    />
                     <NavbarLink
                         text="About"
                         linkhref="/about"

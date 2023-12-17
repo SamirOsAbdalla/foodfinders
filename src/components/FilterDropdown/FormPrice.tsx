@@ -3,11 +3,13 @@ import {
     UseFormRegister,
     FieldValues,
 } from "react-hook-form"
+
 interface Props {
     price: PossiblePrices,
     register: UseFormRegister<any>
     isClicked: boolean
 }
+
 export default function FormPrice({
     price,
     register,

@@ -1,29 +1,23 @@
-:root {
-    --text-color: rgb(71 85 105/1);
-}
-
 .htu__wrapper {
     position: absolute;
     right: 5%;
     width: 270px;
     max-width: 80%;
-}
-
-.htu__heading {
+    background-color: rgb(255, 255, 255);
     color: rgb(0, 0, 0);
     padding: 5px 8px;
-    border-radius: 4px 4px 0px 0px;
-    width: 100%;
     box-shadow: 0 0 #0000,
         0 0 #0000,
         0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-    border: 1px solid #e2e8f0;
-    background-color: white;
-    color: rgb(71 85 105/1);
+    border-radius: 4px;
+    padding: 5px 8px;
 }
+
 
 .htu__heading--container {
     width: 100%;
+    font-weight: bold;
+    border-bottom: 2px solid rgba(199, 199, 199, 0.418);
 }
 
 .htu__caret {
@@ -33,23 +27,10 @@
 }
 
 .htu__dropdown {
-    padding: 5px 8px;
-    font-family: sans-serif;
-    font-size: 15px;
-    background-color: rgb(255, 255, 255);
-    visibility: hidden;
-    color: rgb(71 85 105/1);
+    color: var(--light-blue-text);
+    font-size: 14px;
 }
 
-.htu__dropdown--show {
-    height: 100%;
-    border-radius: 0px 0px 4px 4px;
-
-    box-shadow: 0 0 #0000,
-        0 0 #0000,
-        0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-    visibility: visible;
-}
 
 @media screen and (max-width:1000px) {
     .htu__wrapper {

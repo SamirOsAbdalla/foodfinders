@@ -42,7 +42,7 @@ export default function YelpUtilButtons(
     return (
         <div className="yelp-util-buttons__wrapper d-flex justify-content-start align-items-center gap-2">
             {phoneNumber &&
-                <Link className="text-decoration-none yelp-util__button d-flex justify-content-center align-items-center" href={`tel:${phoneNumber}`}>
+                <Link className="text-decoration-none yelp-util__button yelp-util__button--call d-flex justify-content-center align-items-center" href={`tel:${phoneNumber}`}>
                     <IoCallOutline className="yelp-phone__icon" />
                     Call
                 </Link>

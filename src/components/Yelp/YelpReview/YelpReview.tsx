@@ -48,7 +48,7 @@ export default function YelpReview({
 
 
     return (
-        <div className="w-100 d-flex justify-content-between flex-wrap gap-3">
+        <div className="w-100 yelp-review__wrapper d-flex justify-content-between flex-wrap gap-3">
             <div className="d-flex align-items-center gap-1">
                 {rating &&
                     <div className="d-flex align-items-center gap-2">
@@ -56,26 +56,29 @@ export default function YelpReview({
                             <Image width={100} height={20} src={getYelpRatingImageSrc()} alt="Yelp Rating" />
                         </div>
                         <span className="yelp-rating__text">{rating}</span>
+                        {reviewCount &&
+                            <span className="yelp-reviewcount__text">
+                                {`(${reviewCount} reviews)`}
+                            </span>
+                        }
                     </div>
                 }
-                {reviewCount && <span className="yelp-reviewcount__text__dot">•</span>}
-                {reviewCount &&
-                    <span className="yelp-reviewcount__text">
-                        {`${reviewCount} reviews`}
-                    </span>
-                }
-                {price && <span>•</span>}
+                {price && <span className="yelp-review__dot">•</span>}
                 {price &&
-                    <div className="d-flex justify-content-center align-items-center">
+                    <div className="fw-bold d-flex justify-content-center align-items-center">
                         {price}
                     </div>
                 }
-                <span>•</span>
-                {distance && <div>{distance.toFixed(1)} mi</div>}
+                <span className="yelp-review__dot">•</span>
+                {distance &&
+                    <div>
+                        <span className="fw-bold">{distance.toFixed(1)}</span> mi
+                    </div>
+                }
             </div>
-            {/* <FavoritesButton
+            <FavoritesButton
                 buttonOrigin="yelp"
-            /> */}
+            />
         </div>
 
     )

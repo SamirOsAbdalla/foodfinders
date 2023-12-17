@@ -6,6 +6,7 @@ interface Props {
 export default function FavoritesButton({
     buttonOrigin
 }: Props) {
+    return (<></>)
     return (
         <button className={`favorites-button ${buttonOrigin == "yelp" ? "yelp-button--red" : "tripadvisor-button--green"}`}>
             <FaHeart />

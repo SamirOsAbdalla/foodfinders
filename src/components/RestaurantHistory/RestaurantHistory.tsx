@@ -10,10 +10,21 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/redux/store';
 import { setCurrentRestaurant } from '@/redux/slices/currentRestaurant-slice';
 import { metersToMiles } from '@/util/constants';
+
+import { IoSearch } from "react-icons/io5";
+
+const getFilteredItems = (items: (YelpRestaurant | TripAdvisorRestaurant)[], filter: string) => {
+    const lowercaseFilter = filter.toLowerCase()
+    return items.filter(item => {
+        return item.name?.toLowerCase().includes(lowercaseFilter)
+    })
+}
+
 export default function RestaurantHistory() {
     const restaurantHistory = useSelector((state: RootState) => state.restaurantHistoryReducer.restaurantHistory)
     const dispatch = useDispatch<AppDispatch>()
 
+    const [filter, setFilter] = useState<string>("")
 
     const returnClickHandler = (restaurant: YelpRestaurant | TripAdvisorRestaurant) => {
         if (restaurant.apiRespOrigin == "tripadvisor") {
@@ -21,9 +32,6 @@ export default function RestaurantHistory() {
                 dispatch(setCurrentRestaurant({ currentRestaurant: restaurant }))
             }
         }
-
-
-
         // Basically this function accounts for the fact that the person may have moved
         // a considerable distance since the last time they viewed the restaurant and thus
         // the distance needs to be updated
@@ -68,11 +76,21 @@ export default function RestaurantHistory() {
 
     return (
         <div className="rh__wrapper">
-            <div className="rh__heading w-100 d-flex justify-content-start align-items-center">
+            <div className="rh__heading w-100 d-flex justify-content-between align-items-center">
                 Restaurant History
+                <div className="rh__input--container d-flex align-items-center justify-content-start">
+                    <IoSearch className="rh__search--icon" />
+                    <input value={filter}
+                        onChange={(e) => setFilter(e.target.value)}
+                        type="text"
+                        className="rh__input"
+                        placeholder="Search..."
+                    />
+                </div>
+
             </div>
             <div className="rh__item__container">
-                {restaurantHistory.map(restaurant => {
+                {getFilteredItems(restaurantHistory, filter).map(restaurant => {
                     return (
                         <HistoryItem
                             clickHandler={returnClickHandler(restaurant)}
