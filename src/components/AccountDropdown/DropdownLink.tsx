@@ -4,15 +4,17 @@ import Link from 'next/link'
 interface Props {
     text: string,
     linkhref: string,
-    children: React.ReactNode
+    children: React.ReactNode,
+    closeAccountDropdown: () => any
 }
 export default function DropdownLink({
     text,
     linkhref,
-    children
+    children,
+    closeAccountDropdown
 }: Props) {
     return (
-        <Link href={`${linkhref}`} className="d-flex align-items-center justify-content-between gap-3 w-100 text-decoration-none dropdown__link">
+        <Link href={`${linkhref}`} onClick={closeAccountDropdown} className="d-flex align-items-center justify-content-between gap-3 w-100 text-decoration-none dropdown__link">
             {text}
             {children}
         </Link>

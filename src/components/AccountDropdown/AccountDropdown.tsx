@@ -7,9 +7,11 @@ import { DropdownStatus } from "../Navbar/Navbar";
 
 interface Props {
     dropdownStatus: DropdownStatus
+    closeAccountDropdown: () => any
 }
 export default function AccountDropdown({
-    dropdownStatus
+    dropdownStatus,
+    closeAccountDropdown
 }: Props) {
 
     if (dropdownStatus == "closed") {
@@ -18,20 +20,22 @@ export default function AccountDropdown({
         )
     }
 
+
     // Practicing with SOLID principles led to me try and implement the links using the
     // open closed principle
     return (
         <div data-testid="account-dropdown" className="account-dropdown__wrapper py-2  position-absolute d-flex flex-column gap-2">
             <DropdownLink
+                closeAccountDropdown={closeAccountDropdown}
                 text="Favorites"
                 linkhref="/favorites"
             >
                 <MdOutlineFavoriteBorder />
             </DropdownLink>
-
             <DropdownLink
-                text="Logout"
-                linkhref="/login"
+                closeAccountDropdown={closeAccountDropdown}
+                text="Login"
+                linkhref="/signIn"
             >
                 <HiLogout />
             </DropdownLink>
