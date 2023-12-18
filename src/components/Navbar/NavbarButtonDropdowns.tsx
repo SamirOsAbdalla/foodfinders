@@ -12,7 +12,7 @@ import { TbFilters } from 'react-icons/tb';
 import AccountDropdown from '../AccountDropdown/AccountDropdown';
 import FilterDropdown from '../FilterDropdown/FilterDropdown';
 import { NavbarButtonColor } from './NavbarButton';
-
+import { usePathname } from 'next/navigation';
 interface Props {
     closeHamburger: () => any
 }
@@ -85,10 +85,13 @@ export default function NavbarButtonDropdowns({
         toggleFilterDropdownStatus
     } = useDropdowns(closeHamburger)
 
-
+    const pathname = usePathname()
+    if ((pathname.includes("signIn") || pathname.includes("register"))) {
+        return (<></>)
+    }
     return (
         <div className="d-flex align-items-center gap-4">
-            {/* <div ref={accountDropdownRef} className="position-relative">
+            <div ref={accountDropdownRef} className="position-relative">
                 <NavbarButton
                     clickHandler={toggleAccountDropdownStatus}
                     text="Account"
@@ -96,8 +99,11 @@ export default function NavbarButtonDropdowns({
                 >
                     <BsPerson className="navbar__button--icon" />
                 </NavbarButton>
-                <AccountDropdown dropdownStatus={accountDropdownStatus} />
-            </div> */}
+                <AccountDropdown
+                    dropdownStatus={accountDropdownStatus}
+                    closeAccountDropdown={toggleAccountDropdownStatus}
+                />
+            </div>
             <div className="position-relative">
                 <NavbarButton
                     clickHandler={toggleFilterDropdownStatus}
