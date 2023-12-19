@@ -15,10 +15,8 @@ export const POST = async (request: NextRequest) => {
 
     const existingUser = await UserModel.findOne({ email })
     if (existingUser) {
-        return new NextResponse("Email already exists", { status: 400 })
+        return new NextResponse(JSON.stringify("Email already exists"), { status: 400 })
     }
-
-
 
     try {
         const newUser = await UserModel.create({
@@ -28,8 +26,8 @@ export const POST = async (request: NextRequest) => {
         if (!newUser) {
             throw new Error("Error creating user")
         }
-        return new NextResponse("User successfully created", { status: 200 })
+        return new NextResponse(JSON.stringify("User successfully created"), { status: 200 })
     } catch (err: any) {
-        return new NextResponse("Error creating user", { status: 500 })
+        return new NextResponse(JSON.stringify("Error creating user"), { status: 500 })
     }
 }
