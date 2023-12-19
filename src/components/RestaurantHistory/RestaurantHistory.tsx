@@ -78,8 +78,8 @@ export default function RestaurantHistory() {
         <div className="rh__wrapper">
             <div className="rh__heading w-100 d-flex justify-content-between align-items-center">
                 Restaurant History
-                <div className="rh__input--container d-flex align-items-center justify-content-start">
-                    <IoSearch className="rh__search--icon" />
+                <div className="rh__input--container position-relative d-flex align-items-center justify-content-start">
+                    <IoSearch className="rh__search--icon position-absolute" />
                     <input value={filter}
                         onChange={(e) => setFilter(e.target.value)}
                         type="text"
