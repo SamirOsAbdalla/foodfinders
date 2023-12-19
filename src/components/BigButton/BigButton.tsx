@@ -7,10 +7,7 @@ import { AppDispatch, RootState } from "@/redux/store";
 import { setCurrentRestaurant } from "@/redux/slices/currentRestaurant-slice";
 import { setRestaurantHistory } from "@/redux/slices/restaurantHistory-slice";
 import { setRestaurantError } from "@/redux/slices/restaurantError-slice";
-
-interface Props {
-    buttonSize: "small" | "main"
-}
+import { useSession } from "next-auth/react";
 
 function useGeoLocation() {
     const reduxFilterState = useSelector((state: RootState) => state.filterReducer.value)
@@ -64,17 +61,26 @@ function useGeoLocation() {
     }
 }
 
-export default function BigButton({ buttonSize }: Props) {
+interface Props {
+    buttonSize: "small" | "main"
+    colorType?: "yelp" | "tripadvisor"
+}
+
+export default function BigButton({
+    buttonSize,
+    colorType
+}: Props) {
 
     const {
         loading,
         handleBigButtonClick
     } = useGeoLocation()
 
+
     return (
         <div className={`big-button__wrapper big-button__wrapper--${buttonSize}`}>
-            <div onClick={handleBigButtonClick} className={`big-button__container big-button__container--${buttonSize} ${loading == true && "big-button__container--loading"} d-flex align-items-center justify-content-center`}>
-                <button className={`big-button big-button--${buttonSize} ${loading == true && "big-button--loading"}`}>
+            <div onClick={handleBigButtonClick} className={`big-button__container big-button__container--${buttonSize} ${loading == true && "big-button__container--loading"} ${colorType && `container--${colorType}`} d-flex align-items-center justify-content-center`}>
+                <button className={`big-button big-button--${buttonSize} ${colorType && `button--${colorType}`} ${loading == true && "big-button--loading"}`}>
                     <IoFastFoodOutline className={`fast-food__icon fast-food__icon--${buttonSize}`} />
                 </button>
             </div>
