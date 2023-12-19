@@ -1,11 +1,13 @@
 :root {
-    --dark-blue: rgb(0, 119, 255)
+    --dark-blue: rgb(0, 119, 255);
+    --button-padding: 12px 0px;
+    --gap: 1.2rem;
 }
 
 .login-page__wrapper {
     width: 100vw;
     height: 100vh;
-    gap: 1.2rem;
+    gap: var(--gap);
     overflow: auto;
 }
 
@@ -26,7 +28,7 @@
 
 .login-page__main {
     padding-top: 100px;
-    gap: 1.2rem;
+    gap: var(--gap);
     width: 100%;
     z-index: 1;
 }
@@ -89,9 +91,10 @@
 }
 
 .page-providers__wrapper {
-    gap: 1.2rem;
+    gap: var(--gap);
     color: white;
-    width: 100%;
+    width: 450px;
+    max-width: 90%;
 }
 
 .page-providers__or {
@@ -102,7 +105,7 @@
     width: 100%;
     background-color: var(--dark-blue);
     border: none;
-    padding: 12px 0px;
+    padding: var(--button-padding);
     border-radius: 4px;
     color: white;
     transition: 0.2s ease-in;
@@ -110,6 +113,11 @@
 
 .login-page__button--main:hover {
     background-color: rgb(0, 103, 221);
+}
+
+.login-page__button--main:disabled {
+    background-color: var(--dark-blue);
+
 }
 
 .page-switch__wrapper {
@@ -129,4 +137,55 @@ input:-webkit-autofill:active {
     -webkit-text-fill-color: #ffffff;
     transition: background-color 5000s ease-in-out 0s;
     box-shadow: inset 0 0 20px 20px #00000029;
+}
+
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+}
+
+.loading-spinner::after {
+    content: "";
+    width: 25px;
+    height: 25px;
+    border: 2px solid var(--dark-blue);
+    border-top-color: white;
+    border-left-color: white;
+    border-radius: 50%;
+    animation: loading 1s ease infinite
+}
+
+.form-error__wrapper {
+    background-color: rgb(15, 0, 0);
+    padding: 10px 10px;
+    color: rgb(255, 131, 131);
+}
+
+.form-error__icon {
+    font-size: 24px;
+    color: red;
+}
+
+.form-error__button {
+    padding: var(--button-padding);
+    border-radius: 4px;
+    border: none;
+    background-color: white;
+    transition: 0.2s ease-in;
+}
+
+.form-error__button:hover {
+    background-color: rgb(244, 244, 244);
+}
+
+.google-image__container {
+    width: 30px;
+    height: 30px;
+    left: 10px;
+}
+
+@keyframes loading {
+    to {
+        transform: rotate(1turn)
+    }
 }

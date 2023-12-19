@@ -1,9 +1,13 @@
 "use client"
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import PageInput from './PageInput'
 import { PageType } from './LoginPage'
 import PageButton from './PageButton'
+import { signIn, useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+import LoadingSpinner from './LoadingSpinner'
+import FormError from './FormError'
 
 interface Props {
     pageType: PageType
@@ -14,40 +18,93 @@ export default function LoginForm({
 
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
+    const [error, setError] = useState<string>("")
+    const [loading, setLoading] = useState<boolean>(false)
+
+    const session = useSession()
+    const router = useRouter()
+
+
+    useEffect(() => {
+        if (session.status === "authenticated") {
+            router.replace("/")
+        }
+    }, [session, router])
+
+    const handleRegistration = async (user: { email: string, password: string }) => {
+
+        const res = await fetch("/api/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application / json"
+            },
+            body: JSON.stringify(user)
+        })
+        const resJSON = await res.json()
+
+
+        enableButton()
+        setLoading(false)
+        if (res.status != 200) {
+            setError(resJSON)
+        } else {
+
+            handleLogin(user)
+        }
+    }
+
+    const handleLogin = async ({ email, password }: { email: string, password: string }) => {
+        const res = await signIn("credentials", {
+            redirect: false,
+            email,
+            password
+        })
+
+        if (res?.error) {
+            setError(res.error)
+        } else {
+            setError("")
+            if (res?.url) {
+                enableButton()
+                setLoading(false)
+                router.replace("/")
+            }
+        }
+        enableButton()
+        setLoading(false)
+    }
+
+    const disableButton = () => {
+        const pageButton = document.querySelector(".login-page__button--main") as HTMLButtonElement
+        pageButton.disabled = true
+    }
+
+    const enableButton = () => {
+        const pageButton = document.querySelector(".login-page__button--main") as HTMLButtonElement
+        pageButton.disabled = false
+    }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+
+        setLoading(true)
+        disableButton()
         const user = {
             email,
             password
         }
 
-        try {
-            const res = await fetch("/api/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application / json"
-                },
-                body: JSON.stringify(user)
-            })
-
-            if (res.status == 400) {
-                //set email register error
-            } else if (res.status == 500) {
-
-            }
-            else if (res.status == 200) {
-                //handle success
-
-            }
-        } catch (err: any) {
-            //set error
+        if (pageType == "register") {
+            handleRegistration(user)
+        } else {
+            handleLogin(user)
         }
     }
 
 
     return (
         <form onSubmit={handleSubmit} className="login-form d-flex flex-column justify-content-center gap-4">
+            {error && <FormError message={error} />}
             <PageInput
                 type="email"
                 placeholder="Email"
@@ -61,6 +118,7 @@ export default function LoginForm({
                 setValue={setPassword}
             />
             <PageButton
+                loading={loading}
                 pageType={pageType}
             />
         </form>
