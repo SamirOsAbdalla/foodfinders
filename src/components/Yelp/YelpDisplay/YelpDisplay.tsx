@@ -48,6 +48,7 @@ export default function YelpDisplay({
                     />
                     <BigButton
                         buttonSize="small"
+                        colorType="yelp"
                     />
 
                 </div>

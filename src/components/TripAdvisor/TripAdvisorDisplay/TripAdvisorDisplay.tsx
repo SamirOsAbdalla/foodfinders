@@ -48,6 +48,7 @@ export default function TripAdvisorDisplay({
                 />
                 <BigButton
                     buttonSize="small"
+                    colorType="tripadvisor"
                 />
             </div>
             <RestaurantHistory />
