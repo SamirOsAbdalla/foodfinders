@@ -5,16 +5,16 @@ interface Props {
     text: string,
     linkhref: string,
     children: React.ReactNode,
-    closeAccountDropdown: () => any
+    onClick: () => any,
 }
 export default function DropdownLink({
     text,
     linkhref,
     children,
-    closeAccountDropdown
+    onClick
 }: Props) {
     return (
-        <Link href={`${linkhref}`} onClick={closeAccountDropdown} className="d-flex align-items-center justify-content-between gap-3 w-100 text-decoration-none dropdown__link">
+        <Link href={`${linkhref}`} onClick={onClick} className="d-flex align-items-center justify-content-between gap-3 w-100 text-decoration-none dropdown__link">
             {text}
             {children}
         </Link>
