@@ -36,7 +36,10 @@ export default function NavbarDropdown({
     }
     return (
         <div ref={navbarDropdownRef} data-testid="navbar__dropdown" className="navbar__dropdown justify-content-start align-items-start flex-column gap-4">
-            <Link href="/about" className="text-decoration-none dropdown__link">
+            <Link onClick={closeHamburger} href="/faq" className="text-decoration-none dropdown__link">
+                FAQ
+            </Link>
+            <Link onClick={closeHamburger} href="/about" className="text-decoration-none dropdown__link">
                 About
             </Link>
             {/* <Link href="/login" className="navbar__button--wide navbar__button--black text-decoration-none d-flex align-items-center justify-content-center align-self-center">
