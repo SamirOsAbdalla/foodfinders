@@ -1,26 +1,17 @@
 
 
-import { PossiblePrices } from "@/util/restaurantTypes"
+import { PossiblePrices, YelpRestaurant } from "@/util/restaurantTypes"
 import "./YelpReview.css"
 import Image from "next/image"
 import React from "react"
 import FavoritesButton from "@/components/FavoritesButton/FavoritesButton"
 
 interface Props {
-    rating?: number,
-    reviewCount?: number,
-    price?: PossiblePrices,
-    children?: React.ReactNode
-    distance?: number
+    restaurant: YelpRestaurant
 }
+export default function YelpReview({ restaurant }: Props) {
 
-export default function YelpReview({
-    rating,
-    reviewCount,
-    price,
-    children,
-    distance
-}: Props) {
+    const { rating, price, reviewCount, distance } = restaurant
     const getYelpRatingImageSrc = () => {
         switch (rating) {
             case (2.5): {
@@ -78,6 +69,7 @@ export default function YelpReview({
             </div>
             <FavoritesButton
                 buttonOrigin="yelp"
+                favoriteItem={restaurant}
             />
         </div>
 

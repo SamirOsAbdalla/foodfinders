@@ -2,23 +2,15 @@ import FavoritesButton from "@/components/FavoritesButton/FavoritesButton"
 import "./TripAdvisorRatingRow.css"
 import Image from "next/image"
 import TripAdvisorCuisines from "../TripAdvisorCuisines/TripAdvisorCuisines"
-import { ICuisine } from "@/util/restaurantTypes"
+import { ICuisine, TripAdvisorRestaurant } from "@/util/restaurantTypes"
 
 interface Props {
-    ratingUrl?: string
-    reviewCount?: string
-    cuisine?: ICuisine[]
-    rating?: string,
-    price?: string
+    restaurant: TripAdvisorRestaurant
 }
 
-export default function TripAdvisorRatingRow({
-    ratingUrl,
-    reviewCount,
-    cuisine,
-    rating,
-    price
-}: Props) {
+export default function TripAdvisorRatingRow({ restaurant }: Props) {
+
+    const { price, rating, reviewCount, cuisine, ratingImageUrl } = restaurant
 
     return (
         <div className="ta__ratingrow__wrapper w-100 d-flex justify-content-between align-items-center gap-3">
@@ -34,9 +26,9 @@ export default function TripAdvisorRatingRow({
                     <TripAdvisorCuisines
                         cuisines={cuisine}
                     />
-                    {ratingUrl &&
+                    {ratingImageUrl &&
                         <div className="ta__rating__container position-relative">
-                            <Image fill src={ratingUrl} alt="Rating Image" />
+                            <Image fill src={ratingImageUrl} alt="Rating Image" />
                         </div>
                     }
                     {rating && <span className="ta__rating fw-bold">{rating}</span>}
@@ -45,6 +37,7 @@ export default function TripAdvisorRatingRow({
 
             <FavoritesButton
                 buttonOrigin="tripadvisor"
+                favoriteItem={restaurant}
             />
         </div>
     )
