@@ -27,6 +27,7 @@ export interface Coordinates {
 
 
 export interface GenericRestaurant {
+    id: string | number
     apiRespOrigin: PossibleApisStrict
     name?: string
     phoneNumber?: string

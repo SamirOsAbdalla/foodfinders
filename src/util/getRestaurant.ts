@@ -161,6 +161,7 @@ async function getYelpNearby(coordinates: Coordinates, yelpKey: string, filtersO
             }
 
             let yelpRestaurant: YelpRestaurant = {
+                id: business.id,
                 apiRespOrigin: 'yelp',
                 name: business.name,
                 restaurantImageUrl: business.image_url,
@@ -233,6 +234,7 @@ async function fetchTripAdvisorResult(tripAdvisorFetchUrl: string, tripAdvisorHT
 
     // Final Object
     let tripAdvisorRestaurant: TripAdvisorRestaurant = {
+        id: singleTaItemRespJSON.id,
         apiRespOrigin: 'tripadvisor',
         name: singleTaItemRespJSON.name,
         address,
