@@ -10,6 +10,7 @@ import BigButton from "@/components/BigButton/BigButton"
 import CategoryButtons from "../CategoryButtons/CategoryButtons"
 
 export default function YelpDisplay({
+    id,
     name,
     rating,
     phoneNumber,
@@ -21,6 +22,21 @@ export default function YelpDisplay({
     reviewCount,
     distance,
 }: YelpRestaurant) {
+
+    const consolidatedRestaurant: YelpRestaurant = {
+        apiRespOrigin: "yelp",
+        id,
+        name,
+        rating,
+        phoneNumber,
+        price,
+        address,
+        yelpWebsiteUrl,
+        restaurantImageUrl,
+        categories,
+        reviewCount,
+        distance
+    }
 
     return (
         <section className="w-100 yelp-display__section d-flex">
@@ -37,10 +53,7 @@ export default function YelpDisplay({
                         name={name}
                     />
                     <YelpReview
-                        rating={rating}
-                        reviewCount={reviewCount}
-                        price={price}
-                        distance={distance}
+                        restaurant={consolidatedRestaurant}
                     />
                     <YelpUtilButtons
                         phoneNumber={phoneNumber}

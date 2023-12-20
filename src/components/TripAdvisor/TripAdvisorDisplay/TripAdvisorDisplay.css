@@ -7,6 +7,7 @@
     padding: 100px 30px 30px 30px;
     width: 75%;
     overflow: auto;
+    background-color: var(--page-background-blue);
 }
 
 .ta__heading__name {

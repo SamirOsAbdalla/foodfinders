@@ -11,6 +11,7 @@ import BigButton from "@/components/BigButton/BigButton"
 
 export default function TripAdvisorDisplay({
     name,
+    id,
     phoneNumber,
     address,
     price,
@@ -22,6 +23,23 @@ export default function TripAdvisorDisplay({
     reviewCount,
     cuisine
 }: TripAdvisorRestaurant) {
+
+    const consolidatedRestaurant: TripAdvisorRestaurant = {
+        id,
+        apiRespOrigin: "tripadvisor",
+        name,
+        phoneNumber,
+        address,
+        price,
+        restaurantImageUrl,
+        ratingImageUrl,
+        tripAdvisorUrl,
+        hours,
+        rating,
+        reviewCount,
+        cuisine
+    }
+
 
     return (
         <section className="w-100 ta-display__wrapper d-flex">
@@ -37,11 +55,7 @@ export default function TripAdvisorDisplay({
                     />
                 </div>
                 <TripAdvisorRatingRow
-                    price={price}
-                    rating={rating}
-                    ratingUrl={ratingImageUrl}
-                    reviewCount={reviewCount}
-                    cuisine={cuisine}
+                    restaurant={consolidatedRestaurant}
                 />
                 <TripAdvisorHours
                     hours={hours}
