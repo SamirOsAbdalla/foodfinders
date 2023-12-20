@@ -22,6 +22,22 @@
     background-color: white;
 }
 
+.yelp-button__added {
+    background-color: var(--yelp-red);
+    color: white;
+}
+
+.tripadvisor-button__added {
+    background-color: #34e0a1;
+    color: white;
+}
+
+.favorites-button__heart-check {
+    font-size: 16px;
+}
+
+
+
 @media screen and (max-width:550px) {
     .favorites-button {
         width: 50px;
