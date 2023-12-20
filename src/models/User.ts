@@ -1,9 +1,11 @@
 import { Schema, model, models } from 'mongoose';
 import * as bcrypt from "bcrypt"
+import { IFavorite, favoriteSchema } from './Favorite';
 
 interface IUser {
     email: string,
-    password: string
+    password: string,
+    favorites: IFavorite[]
 }
 
 const userSchema = new Schema<IUser>({
@@ -12,7 +14,11 @@ const userSchema = new Schema<IUser>({
         unique: true,
         required: true
     },
-    password: { type: String, required: false }
+    password: { type: String, required: false },
+    favorites: {
+        type: [favoriteSchema],
+        required: false
+    }
 })
 
 
