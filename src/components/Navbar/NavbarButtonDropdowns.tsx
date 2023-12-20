@@ -1,6 +1,4 @@
 import {
-    SetStateAction,
-    Dispatch,
     useEffect,
     useRef,
     useState
@@ -86,9 +84,11 @@ export default function NavbarButtonDropdowns({
     } = useDropdowns(closeHamburger)
 
     const pathname = usePathname()
+
     if ((pathname.includes("signIn") || pathname.includes("register"))) {
         return (<></>)
     }
+
     return (
         <div className="d-flex align-items-center gap-4">
             <div ref={accountDropdownRef} className="position-relative">
