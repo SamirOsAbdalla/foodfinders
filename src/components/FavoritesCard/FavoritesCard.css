@@ -1,0 +1,50 @@
+.favorites-card__wrapper {
+    width: 300px;
+    height: 350px;
+    background-color: white;
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.card-image {
+    height: 120px;
+}
+
+.background__black {
+    background-color: black;
+}
+
+.ta__card-image__container {
+    height: 100%;
+}
+
+.favorites-card__bottom {
+    padding: 8px;
+}
+
+.category-item {
+    background-color: var(--yelp-red);
+    color: white;
+    border-radius: 16px;
+    padding: 4px 8px;
+    font-size: 12px;
+}
+
+.card-name {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.origin-attribution {
+    gap: .2em;
+    padding: 8px 12px;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 4px;
+    max-width: 250px;
+}
+
+.oa__yelp-text{
+    color:var(--yelp-red);
+}
