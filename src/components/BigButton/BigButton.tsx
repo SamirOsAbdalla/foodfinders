@@ -7,7 +7,6 @@ import { AppDispatch, RootState } from "@/redux/store";
 import { setCurrentRestaurant } from "@/redux/slices/currentRestaurant-slice";
 import { setRestaurantHistory } from "@/redux/slices/restaurantHistory-slice";
 import { setRestaurantError } from "@/redux/slices/restaurantError-slice";
-import { useSession } from "next-auth/react";
 
 function useGeoLocation() {
     const reduxFilterState = useSelector((state: RootState) => state.filterReducer.value)
