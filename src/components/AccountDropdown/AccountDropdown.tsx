@@ -5,6 +5,9 @@ import { MdOutlineFavoriteBorder } from "react-icons/md";
 import DropdownLink from "./DropdownLink";
 import { DropdownStatus } from "../Navbar/Navbar";
 import { signOut, useSession } from "next-auth/react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
+import { setFavoritesEmail } from "@/redux/slices/favorites-slice";
 
 interface Props {
     dropdownStatus: DropdownStatus
@@ -15,7 +18,7 @@ export default function AccountDropdown({
     closeAccountDropdown
 }: Props) {
     const { data: session } = useSession()
-
+    const dispatch = useDispatch<AppDispatch>()
     if (dropdownStatus == "closed") {
         return (
             <></>
@@ -25,6 +28,7 @@ export default function AccountDropdown({
 
     const onClickLogout = async () => {
         closeAccountDropdown()
+        dispatch(setFavoritesEmail(""))
         await signOut()
     }
 
