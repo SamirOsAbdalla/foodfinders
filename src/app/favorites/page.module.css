@@ -1,0 +1,8 @@
+.fc__wrapper {
+    padding: 6em 4em;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3em;
+}
