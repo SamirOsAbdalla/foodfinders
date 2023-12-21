@@ -13,6 +13,11 @@
     border: none;
 }
 
+.card__origin {
+    width: 90px;
+    font-size: 12px;
+    height: 30px;
+}
 
 @media screen and (max-width:560px) {
     .yelp-util-buttons__wrapper {
