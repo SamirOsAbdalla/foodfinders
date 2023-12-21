@@ -4,11 +4,14 @@ import { TripAdvisorRestaurant, YelpRestaurant } from "@/util/restaurantTypes";
 type FavoriteState = (TripAdvisorRestaurant | YelpRestaurant)[]
 
 type InitialState = {
-    favorites: FavoriteState
+    favorites: FavoriteState,
+    favoritesEmail: string
 }
 
 const initialState = {
-    favorites: []
+    favorites: [],
+    favoritesEmail: ""
+
 } as InitialState
 
 export const favorites = createSlice({
@@ -17,16 +20,30 @@ export const favorites = createSlice({
     reducers: {
         addFavorite: (state, action: PayloadAction<TripAdvisorRestaurant | YelpRestaurant>) => {
             return ({
-                favorites: [...state.favorites, action.payload]
+                favorites: [...state.favorites, action.payload],
+                favoritesEmail: state.favoritesEmail
             })
         },
         removeFavorite: (state, action: PayloadAction<TripAdvisorRestaurant | YelpRestaurant>) => {
             return ({
-                favorites: state.favorites.filter(favorite => favorite.id != action.payload.id)
+                favorites: state.favorites.filter(favorite => favorite.id != action.payload.id),
+                favoritesEmail: state.favoritesEmail
+            })
+        },
+        setFavoritesEmail: (state, action: PayloadAction<string>) => {
+            return ({
+                favorites: state.favorites,
+                favoritesEmail: action.payload
+            })
+        },
+        setFavorites: (state, action: PayloadAction<(TripAdvisorRestaurant | YelpRestaurant)[]>) => {
+            return ({
+                favorites: action.payload,
+                favoritesEmail: state.favoritesEmail
             })
         }
     }
 })
 
-export const { addFavorite, removeFavorite } = favorites.actions
+export const { addFavorite, removeFavorite, setFavoritesEmail, setFavorites } = favorites.actions
 export default favorites.reducer
