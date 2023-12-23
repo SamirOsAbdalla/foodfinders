@@ -32,10 +32,33 @@ interface Props {
     favoriteItem: TripAdvisorRestaurant | YelpRestaurant
 }
 
+export const removeFavoriteFromMongo = async (email: string | null | undefined, id: string | number) => {
+    if (!email) {
+        return
+    }
+
+    const body = {
+        email,
+        favoriteId: id
+    }
+
+    const fetchResp = await fetch("/api/favorites/removeFavorite", {
+        method: "POST",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body)
+    })
+    return fetchResp.status
+}
+
+
 export default function FavoritesButton({
     buttonOrigin,
     favoriteItem
 }: Props) {
+
     const [isAdded, setIsAdded] = useState<boolean>(false)
     const [error, setError] = useState<string>("Error adding to favorites")
 
@@ -55,7 +78,7 @@ export default function FavoritesButton({
             setIsAdded(false)
         }
 
-    }, [favorites])
+    }, [favorites, favoriteItem])
 
     const addFavoriteToMongo = async () => {
         const email = session?.user?.email
@@ -77,23 +100,7 @@ export default function FavoritesButton({
 
 
     }
-    const removeFavoriteFromMongo = async () => {
-        const email = session?.user?.email
-        const body = {
-            email,
-            favoriteId: favoriteItem.id
-        }
 
-        const fetchResp = await fetch("/api/favorites/removeFavorite", {
-            method: "POST",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(body)
-        })
-        return fetchResp.status
-    }
 
     const addToFavorites = async () => {
         //check if logged in
@@ -111,8 +118,10 @@ export default function FavoritesButton({
 
 
     const removeFromFavorites = async () => {
-        if ((await removeFavoriteFromMongo()) == 200) {
-            dispatch(removeFavorite(favoriteItem))
+        const email = session?.user?.email
+        const id = favoriteItem.id
+        if ((await removeFavoriteFromMongo(email, id)) == 200) {
+            dispatch(removeFavorite(favoriteItem.id))
         } else {
             setError("Error removing favorites")
         }
