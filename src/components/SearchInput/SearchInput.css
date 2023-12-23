@@ -1,0 +1,27 @@
+.search__input--container {
+    gap: 0.5em;
+    width: 150px;
+    max-width: 60%;
+}
+
+.search__input__search--icon {
+    background-color: rgb(0, 83, 156);
+    border-radius: 50%;
+    color: white;
+    background-color: black;
+    padding: 4px;
+    left: 4px;
+    font-size: 24px;
+}
+
+.search__input {
+    border: 2px solid var(--light-blue-text);
+    color: var(--light-blue-text);
+    width: 100%;
+    border-radius: 24px;
+    font-size: 14px;
+    padding-left: 40px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    width: 150px;
+}

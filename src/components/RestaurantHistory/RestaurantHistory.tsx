@@ -10,8 +10,7 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/redux/store';
 import { setCurrentRestaurant } from '@/redux/slices/currentRestaurant-slice';
 import { metersToMiles } from '@/util/constants';
-
-import { IoSearch } from "react-icons/io5";
+import SearchInput from '../SearchInput/SearchInput';
 
 const getFilteredItems = (items: (YelpRestaurant | TripAdvisorRestaurant)[], filter: string) => {
     const lowercaseFilter = filter.toLowerCase()
@@ -78,16 +77,10 @@ export default function RestaurantHistory() {
         <div className="rh__wrapper">
             <div className="rh__heading w-100 d-flex justify-content-between align-items-center">
                 Restaurant History
-                <div className="rh__input--container position-relative d-flex align-items-center justify-content-start">
-                    <IoSearch className="rh__search--icon position-absolute" />
-                    <input value={filter}
-                        onChange={(e) => setFilter(e.target.value)}
-                        type="text"
-                        className="rh__input"
-                        placeholder="Search..."
-                    />
-                </div>
-
+                <SearchInput
+                    value={filter}
+                    setValue={setFilter}
+                />
             </div>
             <div className="rh__item__container">
                 {getFilteredItems(restaurantHistory, filter).map(restaurant => {
