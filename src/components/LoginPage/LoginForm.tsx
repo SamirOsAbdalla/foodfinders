@@ -54,6 +54,7 @@ export default function LoginForm({
     }
 
     const handleLogin = async ({ email, password }: { email: string, password: string }) => {
+
         const res = await signIn("credentials", {
             redirect: false,
             email,
