@@ -17,12 +17,13 @@ import { AppDispatch } from '@/redux/store'
 import { TripAdvisorRestaurant, YelpRestaurant } from '@/util/restaurantTypes'
 import FavoritesCard from '@/components/FavoritesCard/FavoritesCard'
 import styles from "./page.module.css"
+import SearchInput from '@/components/SearchInput/SearchInput'
+import CardSkeletons from '@/components/CardSkeletons/CardSkeletons'
 
 
 const useFavoritesFilter = (favorites: (TripAdvisorRestaurant | YelpRestaurant)[]) => {
     const [clickFilter, setClickFilter] = useState<"yelp" | "tripadvisor" | "">("")
     const [searchFilter, setSearchFilter] = useState<string>("")
-    const [areCategoriesIncluded, setAreCategoriesIncluded] = useState<boolean>(false)
 
     const handleClickFilterClick = (requestedFilter: "yelp" | "tripadvisor") => {
         clickFilter == requestedFilter ? setClickFilter("") : setClickFilter(requestedFilter)
@@ -35,7 +36,7 @@ const useFavoritesFilter = (favorites: (TripAdvisorRestaurant | YelpRestaurant)[
     const satisfiesSearchFilter = (favorite: TripAdvisorRestaurant | YelpRestaurant) => {
         const initialFilter = (searchFilter == "" || favorite.name?.toLowerCase().includes(searchFilter))
 
-        if (initialFilter || favorite.apiRespOrigin == "tripadvisor" || (favorite.apiRespOrigin == "yelp" && !areCategoriesIncluded)) {
+        if (initialFilter || favorite.apiRespOrigin == "tripadvisor") {
             return initialFilter
         }
 
@@ -54,11 +55,10 @@ const useFavoritesFilter = (favorites: (TripAdvisorRestaurant | YelpRestaurant)[
 
 
     return {
+        clickFilter,
         handleClickFilterClick,
         searchFilter,
         setSearchFilter,
-        areCategoriesIncluded,
-        setAreCategoriesIncluded,
         filteredFavorites
     }
 }
@@ -69,14 +69,14 @@ export default function Favorites() {
     const { data: session } = useSession()
     const router = useRouter()
     const dispatch = useDispatch<AppDispatch>()
+    const [loading, setLoading] = useState<boolean>(false)
 
     const {
+        clickFilter,
         handleClickFilterClick,
         searchFilter,
         setSearchFilter,
         filteredFavorites,
-        areCategoriesIncluded,
-        setAreCategoriesIncluded
     } = useFavoritesFilter(favoritesReducer.favorites)
 
     useEffect(() => {
@@ -100,9 +100,11 @@ export default function Favorites() {
         }
 
         const handleFavoritesFetch = async (email: string) => {
+            setLoading(true)
             const favorites = await fetchFavoritesFromMongo(email)
             dispatch(setFavorites(favorites))
             dispatch(setFavoritesEmail(email))
+            setLoading(false)
         }
 
         if (!session) {
@@ -123,16 +125,29 @@ export default function Favorites() {
 
     return (
         <div className={styles.fc__wrapper}>
-            <div>
-                Filter by:
-                <div onClick={() => handleClickFilterClick("yelp")}>Yelp</div>
-                <div onClick={() => handleClickFilterClick("tripadvisor")}> TripAdvisor</div>
-                <input value={searchFilter} onChange={(e) => setSearchFilter(e.target.value.toLowerCase())} />
-                <button onClick={() => setAreCategoriesIncluded((currentOption) => !currentOption)}>
-                    {areCategoriesIncluded ? "Name" : "Name and Categories"}
-                </button>
+            <div className={`${styles.filters__container} d-flex flex-column align-items-center gap-3`}>
+                <div className="d-flex align-items-center gap-3">
+                    <div className={styles.favorites__text}>Filter by:</div>
+                    <div className="d-flex gap-2">
+                        <div onClick={() => handleClickFilterClick("yelp")} className={`${styles.click__filter} ${clickFilter == "yelp" ? `${styles.click__filter__yelp}` : ""}`}>Yelp</div>
+                        <div onClick={() => handleClickFilterClick("tripadvisor")} className={`${styles.click__filter} ${clickFilter == "tripadvisor" ? `${styles.click__filter__tripadvisor}` : ""}`}> TripAdvisor</div>
+                    </div>
+                </div>
+                <div className="w-100 d-flex justify-content-center align-items-center">
+                    <SearchInput
+                        value={searchFilter}
+                        setValue={setSearchFilter}
+                    />
+                </div>
             </div>
-            {filteredFavorites.map(favorite => <FavoritesCard key={favorite.id} restaurant={favorite} />)}
+            {loading && <CardSkeletons />}
+            {!loading &&
+                <div className={styles.cards__container}>
+                    {filteredFavorites.map((favorite) => {
+                        return (<FavoritesCard key={favorite.id} restaurant={favorite} />)
+                    })}
+                </div>
+            }
         </div >
     )
 }

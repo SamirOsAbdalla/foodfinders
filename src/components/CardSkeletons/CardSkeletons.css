@@ -1,0 +1,31 @@
+.card-skeletons__wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 3em;
+}
+
+.card-skeleton {
+    width: 300px;
+    height: 310px;
+    box-shadow: var(--threed-box-shadow);
+}
+
+.skeleton__bottom {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.card-skeleton__bottom {
+    padding: 20px;
+    padding-top: 70px;
+}
+
+@media screen and (max-width:775px) {
+    .card-skeletons__wrapper {
+        justify-content: center;
+    }
+}
