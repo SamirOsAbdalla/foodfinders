@@ -234,7 +234,7 @@ async function fetchTripAdvisorResult(tripAdvisorFetchUrl: string, tripAdvisorHT
 
     // Final Object
     let tripAdvisorRestaurant: TripAdvisorRestaurant = {
-        id: singleTaItemRespJSON.id,
+        id: singleTaItemRespJSON.location_id,
         apiRespOrigin: 'tripadvisor',
         name: singleTaItemRespJSON.name,
         address,
