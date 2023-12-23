@@ -11,12 +11,18 @@
     height: 40px;
     font-weight: bold;
     border: none;
+    transition: 0.2s ease-in;
+}
+
+.yelp-util__button:hover {
+    background-color: rgb(26, 26, 26);
 }
 
 .card__origin {
-    width: 90px;
+    width: 40px;
     font-size: 12px;
     height: 30px;
+    border: 1px solid white;
 }
 
 @media screen and (max-width:560px) {
