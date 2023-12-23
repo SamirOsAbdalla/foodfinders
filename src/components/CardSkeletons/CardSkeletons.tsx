@@ -14,7 +14,7 @@ export default function CardSkeletons() {
                         <Skeleton count={2} height={20} width={250} />
                     </div>
                     <div className="card-skeleton__bottom">
-                        <Skeleton count={1} height={20} width={250} />
+                        <Skeleton count={1} height={20} width={260} />
                     </div>
                 </div>
             )}
