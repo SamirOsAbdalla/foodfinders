@@ -14,7 +14,7 @@ export default function CardCategories({
 
     return (
         <div className="card-categories__wrapper d-flex gap-2">
-            {categories.map(category => <CategoryItem title={category.title} />)}
+            {categories.map(category => <CategoryItem key={category.title} title={category.title} />)}
         </div>
     )
 }
