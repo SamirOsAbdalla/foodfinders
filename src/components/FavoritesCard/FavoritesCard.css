@@ -67,14 +67,16 @@
 }
 
 .options__container {
+    font-size: 14px;
+    font-weight: 500;
     background-color: black;
     color: white;
     right: .5em;
     top: 2.5em;
-    padding: 12px 0px;
+    padding: 8px 0px;
     width: 10rem;
-    height: 100px;
     z-index: 9999;
+    border-radius: 2px;
 }
 
 .card-options__wrapper {
@@ -83,9 +85,9 @@
 
 .card-option__option {
     cursor: pointer;
-    padding: 4px
+    padding: 4px 8px
 }
 
 .card-option__option:hover {
-    background-color: rgba(185, 185, 185, 0.709);
+    background-color: rgba(235, 235, 235, 0.32);
 }
