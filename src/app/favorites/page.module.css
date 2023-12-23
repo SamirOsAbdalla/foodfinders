@@ -3,6 +3,59 @@
     width: 100vw;
     height: 100vh;
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
+    flex-direction: column;
+    overflow: auto;
     gap: 3em;
+    background-color: var(--page-background-blue);
+}
+
+.cards__container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3em
+}
+
+.favorites__text {
+    font-weight: bold;
+}
+
+.click__filter {
+    background-color: rgba(239, 239, 239, 0.494);
+    padding: 2px 6px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.click__filter__yelp {
+    background-color: var(--yelp-red);
+    color: white;
+}
+
+.click__filter__tripadvisor {
+    background-color: #00aa6c;
+    color: white;
+}
+
+.search__input {
+    padding: 0px;
+    max-width: 250px;
+}
+
+.search__button {
+    border: none;
+    background-color: rgb(0, 119, 255);
+    color: white;
+}
+
+.filters__container {
+    width: 100%;
+    max-width: 320px;
+}
+
+@media screen and (max-width:775px) {
+    .cards__container {
+        justify-content: center;
+    }
 }
