@@ -18,9 +18,15 @@ export const authOptions: any = {
             },
             async authorize(credentials: any) {
                 await connectDB()
+
                 try {
                     const user = await UserModel.findOne({ email: credentials.email })
                     if (user) {
+
+                        if (!user.password) {
+                            throw new Error("Incorrect password")
+                        }
+
                         const isPasswordCorrect = await bcrypt.compare(
                             credentials.password,
                             user.password
