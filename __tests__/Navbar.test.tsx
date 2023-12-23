@@ -1,10 +1,17 @@
 import { render, screen, fireEvent } from "@testing-library/react"
 import Navbar from "@/components/Navbar/Navbar"
 import { ReduxProvider } from "@/redux/provider"
+import SessionProvider from "@/components/Providers"
+import { usePathname } from "next/navigation"
+
 
 describe("Render navbar dropdowns/buttons", () => {
+
+
     it("should render the filter icon", () => {
-        render(<Navbar />)
+        render(
+            <Navbar />
+        )
         const filterButton = screen.getByTestId("navbar-filter__button")
 
         expect(filterButton).toBeInTheDocument()
