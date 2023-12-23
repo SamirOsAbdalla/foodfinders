@@ -8,7 +8,7 @@ export default function CardSkeletons() {
     return (
         <div className="card-skeletons__wrapper">
             {arr.map(card =>
-                <div className="card-skeleton">
+                <div key={card} className="card-skeleton">
                     <Skeleton count={1} height={120} width={300} />
                     <div className="skeleton__bottom">
                         <Skeleton count={2} height={20} width={250} />
