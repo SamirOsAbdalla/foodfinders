@@ -3,11 +3,11 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import "./CardSkeletons.css"
 import React from 'react'
 
-let arr = [1, 2, 3, 4]
+let skeletonMapArray = [1, 2, 3, 4]
 export default function CardSkeletons() {
     return (
         <div className="card-skeletons__wrapper">
-            {arr.map(card =>
+            {skeletonMapArray.map(card =>
                 <div key={card} className="card-skeleton">
                     <Skeleton count={1} height={120} width={300} />
                     <div className="skeleton__bottom">
