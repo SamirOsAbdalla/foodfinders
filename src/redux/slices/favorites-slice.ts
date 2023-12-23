@@ -24,9 +24,9 @@ export const favorites = createSlice({
                 favoritesEmail: state.favoritesEmail
             })
         },
-        removeFavorite: (state, action: PayloadAction<TripAdvisorRestaurant | YelpRestaurant>) => {
+        removeFavorite: (state, action: PayloadAction<string | number>) => {
             return ({
-                favorites: state.favorites.filter(favorite => favorite.id != action.payload.id),
+                favorites: state.favorites.filter(favorite => favorite.id != action.payload),
                 favoritesEmail: state.favoritesEmail
             })
         },
