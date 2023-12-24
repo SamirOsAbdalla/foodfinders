@@ -135,11 +135,12 @@ async function getYelpNearby(coordinates: Coordinates, yelpKey: string, filtersO
 
     let yelpRadius = (parseInt(filtersObject.filterDistance) * milesToMeters).toFixed(0)
 
+    let randomOffset = Math.random() * 100
     const yelpFetchUrl = baseYelpURL +
         `&radius=${yelpRadius}&open_now=true` +
         `${filterString ? `&categories=${filterString}` : ""}` +
         `${pricesString ? `&price=${pricesString}` : ""}` +
-        `&latitude=${latitude}&longitude=${longitude}&limit=14`
+        `&latitude=${latitude}&longitude=${longitude}&limit=14&offset=${randomOffset}`
 
     const yelpResp = await fetch(yelpFetchUrl, yelpHTTPOptions)
     const yelpRespJSON = await yelpResp?.json()
@@ -175,7 +176,7 @@ async function getYelpNearby(coordinates: Coordinates, yelpKey: string, filtersO
                 latitudeAndLongitude,
                 distance
             }
-
+            return yelpRestaurant
             // yelpCache.push(yelpRestaurant)
         }
     })
@@ -367,6 +368,11 @@ async function getANearbyRestaurant(coordinates: Coordinates, apiKeyBundler: Api
     //Order of priority goes: Prices Option Enabled -> nextApiType.
     //This is because TripAdvisor does not always provide a price rating
     const { prices } = filtersObject
+
+    const result = await getYelpNearby(coordinates, yelpKey!, filtersObject)
+    if (result && !("error" in result)) {
+        return result
+    }
 
     if (prices.length > 0 || nextApiType == "yelp") {
 
