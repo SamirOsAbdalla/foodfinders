@@ -135,7 +135,9 @@ async function getYelpNearby(coordinates: Coordinates, yelpKey: string, filtersO
 
     let yelpRadius = (parseInt(filtersObject.filterDistance) * milesToMeters).toFixed(0)
 
-    let randomOffset = Math.random() * 100
+    let randomOffset = parseInt((Math.random() * 100).toString())
+
+
     const yelpFetchUrl = baseYelpURL +
         `&radius=${yelpRadius}&open_now=true` +
         `${filterString ? `&categories=${filterString}` : ""}` +
@@ -144,12 +146,15 @@ async function getYelpNearby(coordinates: Coordinates, yelpKey: string, filtersO
 
     const yelpResp = await fetch(yelpFetchUrl, yelpHTTPOptions)
     const yelpRespJSON = await yelpResp?.json()
+
     if (!yelpRespJSON?.businesses) {
+
         return errorMessage
     }
 
     //Clean data so return object is easily obtainable from cache
     yelpCache = []
+    let finalYelpRestaurant;
     yelpRespJSON?.businesses?.forEach((business: any) => {
         if (business.rating && business.rating >= 2.5) {
             const address = business.location.display_address.join(" ")
@@ -176,11 +181,11 @@ async function getYelpNearby(coordinates: Coordinates, yelpKey: string, filtersO
                 latitudeAndLongitude,
                 distance
             }
-            return yelpRestaurant
+            finalYelpRestaurant = yelpRestaurant
             // yelpCache.push(yelpRestaurant)
         }
     })
-
+    return finalYelpRestaurant
     randomizeCache("yelp")
     if (yelpCache.length > 0) {
 
