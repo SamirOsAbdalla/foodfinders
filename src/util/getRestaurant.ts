@@ -23,25 +23,9 @@ import {
 } from "./restaurantTypes"
 
 
-//Variable to help cycle through API's. If for some reason a user gets through
-//all results of one API then the another API will be used
-let nextApiType = "yelp"
-
-let tripAdvisorCache: string[] = []
-let prevTripAdvisorFilters = {
-    prevCuisinesString: "",
-}
-
-let yelpCache: YelpRestaurant[] = []
-let prevYelpFilters = {
-    isDefault: true,
-    prevPricesString: "",
-    prevCuisinesString: "",
-    prevDistance: defaultDistanceRadius
-}
 
 // e.g. [$,$$,$$$$] -> 1,2,4
-function mapPricesToNumberString(priceArr: PossiblePrices[]) {
+export function mapPricesToNumberString(priceArr: PossiblePrices[]) {
     let new_arr: number[] = []
 
     for (let i = 0; i < priceArr.length; i++) {
@@ -62,60 +46,15 @@ function mapPricesToNumberString(priceArr: PossiblePrices[]) {
 /*This function is responsible for determining whether or not the filters in the previous api call
 are a subset of the filters in the current call. This way we can use the cache without having to make
 another API call*/
-function arePrevFiltersASubset(filtersObject: FiltersObject) {
-
-    //We must make the API call since the previous filters are too general for the current call
-    if (prevYelpFilters.isDefault &&
-        (filtersObject.prices.length > 0 || filtersObject.cuisines.length > 0 || filtersObject.filterDistance != defaultDistanceRadius)) {
-        return false
-    }
-
-    let prevPricesString = prevYelpFilters.prevPricesString
-    let prevCuisinesString = prevYelpFilters.prevCuisinesString
-    let currentPricesString = mapPricesToNumberString(filtersObject.prices)
-    let currentCuisinesString = filtersObject.cuisines.sort().join(",").toLowerCase()
-
-    if (currentPricesString.includes(prevPricesString)
-        && currentCuisinesString.includes(prevCuisinesString)
-        && parseInt(filtersObject.filterDistance) >= parseInt(prevYelpFilters.prevDistance)) {
-        return true
-    }
-    return false
-}
-
-const randomizeCache = (cacheType: string) => {
-    //randomize array
-    let p1
-    let p2;
-    let p3;
-    let curArr: any[] = []
-    if (cacheType == "yelp") {
-        curArr = yelpCache
-    } else {
-        curArr = tripAdvisorCache
-    }
-    p2 = curArr.length; while (p2) p1 = Math.random() * p2-- | 0, p3 = curArr[p2], curArr[p2] = curArr[p1], curArr[p1] = p3
-}
-
 
 async function getYelpNearby(coordinates: Coordinates, yelpKey: string, filtersObject: FiltersObject) {
 
-    if (arePrevFiltersASubset(filtersObject) && yelpCache.length > 0) {
-        nextApiType = "yelp"
-
-        //last cache element means go to next API
-        if (yelpCache.length - 1 == 0) {
-            nextApiType = "tripadvisor"
-        }
-        return yelpCache.pop()
-    }
-
-    //No subset/exhausted cache means make API call
     const yelpHTTPOptions = {
         method: "GET",
         headers: {
             "Accept": "application/json",
-            "Authorization": `Bearer ${yelpKey}`
+            "Authorization": `Bearer ${yelpKey}`,
+            "Cache": "no-store"
         }
     }
     const cuisinesArray = filtersObject.cuisines
@@ -135,26 +74,26 @@ async function getYelpNearby(coordinates: Coordinates, yelpKey: string, filtersO
 
     let yelpRadius = (parseInt(filtersObject.filterDistance) * milesToMeters).toFixed(0)
 
-    let randomOffset = parseInt((Math.random() * 100).toString())
+    let limit = 50;
 
+    //1000 is max number of results yelpApi can get at once
+    let randomOffset = parseInt((Math.random() * (100 - limit)).toString())
 
     const yelpFetchUrl = baseYelpURL +
         `&radius=${yelpRadius}&open_now=true` +
         `${filterString ? `&categories=${filterString}` : ""}` +
         `${pricesString ? `&price=${pricesString}` : ""}` +
-        `&latitude=${latitude}&longitude=${longitude}&limit=14&offset=${randomOffset}`
+        `&latitude=${latitude}&longitude=${longitude}&limit=${limit}&offset=${randomOffset}`
 
     const yelpResp = await fetch(yelpFetchUrl, yelpHTTPOptions)
     const yelpRespJSON = await yelpResp?.json()
 
     if (!yelpRespJSON?.businesses) {
-
         return errorMessage
     }
 
     //Clean data so return object is easily obtainable from cache
-    yelpCache = []
-    let finalYelpRestaurant;
+    let yelpCache: any[] = []
     yelpRespJSON?.businesses?.forEach((business: any) => {
         if (business.rating && business.rating >= 2.5) {
             const address = business.location.display_address.join(" ")
@@ -181,36 +120,28 @@ async function getYelpNearby(coordinates: Coordinates, yelpKey: string, filtersO
                 latitudeAndLongitude,
                 distance
             }
-            finalYelpRestaurant = yelpRestaurant
-            // yelpCache.push(yelpRestaurant)
+
+            yelpCache.push(yelpRestaurant)
         }
     })
-    return finalYelpRestaurant
-    randomizeCache("yelp")
+
     if (yelpCache.length > 0) {
-
-        //Although this may seem redundant the 'else' is accounting for the scenario where we have re-entered this function 
-        //due to the user having filters AND the next api type was tripadvisor 
-        if (yelpCache.length - 1 == 0) {
-            nextApiType = "tripadvisor"
-        } else {
-            nextApiType = "yelp"
-        }
-
-        const newIsDefault = (filterString == "" && pricesString == "" && filtersObject.filterDistance == defaultDistanceRadius)
-
-        prevYelpFilters = {
-            isDefault: newIsDefault,
-            prevCuisinesString: filterString,
-            prevPricesString: pricesString,
-            prevDistance: filtersObject.filterDistance
-        }
-
-        return yelpCache.pop()
+        randomizeArray(yelpCache)
+        return yelpCache
     } else {
         return errorMessage
     }
 }
+
+const randomizeArray = (curArr: any[]) => {
+    //randomize array
+    let p1
+    let p2;
+    let p3;
+
+    p2 = curArr.length; while (p2) p1 = Math.random() * p2-- | 0, p3 = curArr[p2], curArr[p2] = curArr[p1], curArr[p1] = p3
+}
+
 
 //Since we can only get valuable information from making a seperate API call, I just made
 //this util function to handle the API request
@@ -258,19 +189,6 @@ async function fetchTripAdvisorResult(tripAdvisorFetchUrl: string, tripAdvisorHT
     return tripAdvisorRestaurant
 }
 
-
-function checkTripAdvisorFilterSubset(cuisines: AcceptedFoodFilters[]) {
-    const curFoodStr = cuisines.sort().join(",").toLowerCase()
-    const prevFoodStr = prevTripAdvisorFilters.prevCuisinesString
-    if (prevFoodStr == "" && curFoodStr != "") {
-        return false;
-    }
-    else if (curFoodStr == "" || curFoodStr.includes(prevTripAdvisorFilters.prevCuisinesString)) {
-        return true
-    }
-    return false
-}
-
 async function getTripAdvisorNearby(coordinates: Coordinates, tripAdvisorKey: string, filtersObject: FiltersObject) {
 
     const tripAdvisorHTTPOptions = {
@@ -282,18 +200,6 @@ async function getTripAdvisorNearby(coordinates: Coordinates, tripAdvisorKey: st
     }
 
     const { cuisines } = filtersObject
-    if (tripAdvisorCache.length > 0 && checkTripAdvisorFilterSubset(cuisines)) {
-        if (tripAdvisorCache.length - 1 == 0) {
-            nextApiType = "yelp"
-        }
-
-        const placeId = tripAdvisorCache.pop()!
-
-        const tripAdvisorFetchUrl = baseTripAdvisorURL +
-            `/${placeId}/details?key=${tripAdvisorKey}`
-
-        return fetchTripAdvisorResult(tripAdvisorFetchUrl, tripAdvisorHTTPOptions, placeId, tripAdvisorKey)
-    }
 
 
     const { latitude, longitude } = coordinates
@@ -321,37 +227,28 @@ async function getTripAdvisorNearby(coordinates: Coordinates, tripAdvisorKey: st
             `&latLong=${latitude},${longitude}`
         tripAdvisorResp = await fetch(tripAdvisorFetchUrl, tripAdvisorHTTPOptions)
     }
+
     const tripAdvisorRespJSON = await tripAdvisorResp.json()
 
     //Only need to store location id's. Have to store in this way
     //since TripAdvisor gives more info only for specific Location Detail Searches
     const data = tripAdvisorRespJSON?.data
     const dataLength = data.length ?? 0
+    let tripAdvisorLocationArray = []
+
     for (let i = 0; i < dataLength; i++) {
         const locationId = data[i].location_id
         if (locationId) {
-            tripAdvisorCache.push(locationId)
+            tripAdvisorLocationArray.push(locationId)
         }
     }
 
-
-    //Return last item if we actually found locations
-    if (tripAdvisorCache.length > 0) {
-
-        randomizeCache("tripadvisor")
-
-        // update previous filters based off of current filters
-        prevTripAdvisorFilters.prevCuisinesString = filterString.toLowerCase()
-        let placeId = tripAdvisorCache.pop()!
+    if (tripAdvisorLocationArray.length > 0) {
+        randomizeArray(tripAdvisorLocationArray)
+        let placeId = tripAdvisorLocationArray.pop().toString()
         const tripAdvisorFetchUrl = baseTripAdvisorURL +
             `/${placeId}/details?key=${tripAdvisorKey}`
 
-
-        if (tripAdvisorCache.length == 0) {
-            nextApiType = "yelp"
-        }
-
-        prevTripAdvisorFilters.prevCuisinesString = filterString.toLowerCase()
         return await fetchTripAdvisorResult(tripAdvisorFetchUrl, tripAdvisorHTTPOptions, placeId, tripAdvisorKey)
     } else {
         return errorMessage
@@ -359,8 +256,13 @@ async function getTripAdvisorNearby(coordinates: Coordinates, tripAdvisorKey: st
 }
 
 
-async function getANearbyRestaurant(coordinates: Coordinates, apiKeyBundler: ApiKeyBundler,
-    filtersObject: FiltersObject): Promise<TripAdvisorRestaurant | YelpRestaurant | ErrorMessage> {
+async function getANearbyRestaurant(
+    coordinates: Coordinates,
+    apiKeyBundler: ApiKeyBundler,
+    filtersObject: FiltersObject,
+    initialApiToFetch: string
+)
+    : Promise<(TripAdvisorRestaurant) | YelpRestaurant[] | ErrorMessage> {
 
 
     if (coordinates.latitude == 0 || coordinates.longitude == 0) {
@@ -374,12 +276,7 @@ async function getANearbyRestaurant(coordinates: Coordinates, apiKeyBundler: Api
     //This is because TripAdvisor does not always provide a price rating
     const { prices } = filtersObject
 
-    const result = await getYelpNearby(coordinates, yelpKey!, filtersObject)
-    if (result && !("error" in result)) {
-        return result
-    }
-
-    if (prices.length > 0 || nextApiType == "yelp") {
+    if (prices.length > 0 || initialApiToFetch == "yelp") {
 
         if (yelpKey) {
             const result = await getYelpNearby(coordinates, yelpKey, filtersObject)
@@ -396,8 +293,9 @@ async function getANearbyRestaurant(coordinates: Coordinates, apiKeyBundler: Api
             }
         }
         return errorMessage
+
     }
-    else if (nextApiType == "tripadvisor") {
+    else if (initialApiToFetch == "tripadvisor") {
         if (tripAdvisorKey) {
             const result = await getTripAdvisorNearby(coordinates, tripAdvisorKey, filtersObject)
             if (result && !("error" in result)) {
@@ -411,10 +309,9 @@ async function getANearbyRestaurant(coordinates: Coordinates, apiKeyBundler: Api
                 return result
             }
         }
+
         return errorMessage
     }
-
-
     return errorMessage
 }
 
