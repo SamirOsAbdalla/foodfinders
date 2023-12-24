@@ -176,7 +176,7 @@ async function getYelpNearby(coordinates: Coordinates, yelpKey: string, filtersO
                 distance
             }
 
-            yelpCache.push(yelpRestaurant)
+            // yelpCache.push(yelpRestaurant)
         }
     })
 
