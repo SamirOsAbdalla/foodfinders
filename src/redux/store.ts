@@ -4,6 +4,7 @@ import currentRestaurantReducer from "./slices/currentRestaurant-slice"
 import restaurantHistoryReducer from "./slices/restaurantHistory-slice";
 import restaurantErrorReducer from "./slices/restaurantError-slice"
 import favoritesReducer from "./slices/favorites-slice"
+import cachedRestaurantsReducer from "./slices/cachedRestaurants-slice"
 
 export const store = configureStore({
     reducer: {
@@ -11,7 +12,8 @@ export const store = configureStore({
         currentRestaurantReducer,
         restaurantHistoryReducer,
         restaurantErrorReducer,
-        favoritesReducer
+        favoritesReducer,
+        cachedRestaurantsReducer
     }
 })
 
