@@ -20,11 +20,21 @@
     border: 2px solid var(--yelp-red);
     color: var(--yelp-red);
     background-color: white;
+    transition: 0.2s ease-in;
+}
+
+.yelp-button--red:hover {
+    background-color: rgb(255, 228, 228);
 }
 
 .yelp-button__added {
     background-color: var(--yelp-red);
     color: white;
+    transition: 0.2s ease-in;
+}
+
+.yelp-button__added:hover {
+    background-color: rgb(255, 117, 117);
 }
 
 .tripadvisor-button__added {
