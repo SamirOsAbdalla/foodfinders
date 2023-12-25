@@ -13,7 +13,6 @@ describe("Render navbar dropdowns/buttons", () => {
             <Navbar />
         )
         const filterButton = screen.getByTestId("navbar-filter__button")
-
         expect(filterButton).toBeInTheDocument()
     })
 
