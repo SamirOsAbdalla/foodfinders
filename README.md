@@ -5,3 +5,12 @@
 <p align="center">
   SpeedEats
 </h1>
+ <p align="center">
+   Fun web application to provide a curated restaurant pulled from multiples APIs.
+    <br />
+</p>
+<p align="center">
+  <a href="#about">About</a> •
+  <a href="#usage">How To Use</a> •
+  <a href="#favorites">Favorites</a> •
+</p>  
