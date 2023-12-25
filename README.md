@@ -10,11 +10,12 @@
     <br />
 </p>
 <p align="center">
+  <a href="#url">Live Site URL</a> •
   <a href="#about">About</a> •
   <a href="#usage">How To Use</a> •
   <a href="#favorites">Favorites</a>
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/SamirOsAbdalla/speed-eats/main/public/screenshot-main.png" alt="Logo" width="140" height="110">
+  <img src="https://raw.githubusercontent.com/SamirOsAbdalla/speed-eats/main/public/screenshot-main.png" alt="Main Screenshot">
 </h1>  
