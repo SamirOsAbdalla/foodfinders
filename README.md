@@ -16,5 +16,5 @@
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/SamirOsAbdalla/SpeedEats/main/public/screenshot-main.png" alt="Logo" width="140" height="110">
+  <img src="https://raw.githubusercontent.com/SamirOsAbdalla/speed-eats/main/public/screenshot-main.png" alt="Logo" width="140" height="110">
 </h1>  
