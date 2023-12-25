@@ -12,5 +12,9 @@
 <p align="center">
   <a href="#about">About</a> •
   <a href="#usage">How To Use</a> •
-  <a href="#favorites">Favorites</a> •
-</p>  
+  <a href="#favorites">Favorites</a>
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/SamirOsAbdalla/SpeedEats/main/public/screenshot-main.png" alt="Logo" width="140" height="110">
+</h1>  
