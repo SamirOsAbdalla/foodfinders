@@ -13,7 +13,7 @@
   <a href="#live-site-url">Live Site URL</a> •
   <a href="#about">About</a> •
   <a href="#usage">How To Use</a> •
-  <a href="#features">Features</a> •
+  <a href="#features">Features</a>
 </p>
 
 <p align="center">
@@ -37,5 +37,5 @@ restaurant will appear based off of any filters you set as well as your current 
 SpeedEats has a few features to make your restaurant browsing experience much smoother:
 - A restaurant history so that you can go back and view any previous restaurants you have seen
 - A favorites button to save the restaurants that you deem worthy
-- Filters so that even if you feel indecisive, you still have control over what you eat.
+- Filters so that even if you feel indecisive, you still have control over what you eat
 
