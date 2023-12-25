@@ -28,6 +28,7 @@ Oftentimes we have trouble picking a place to eat; whether with being out with f
 simply choosing what to have for dinner, sometimes trying to pick a restaurant can seem 
 impossible. Choose no more, for SpeedEats has arrived to choose for you.
 <br/>
+<br/>
 SpeedEats pulls from both the Yelp and TripAdvisor API to not only provide the best of 
 both APIs, but to avoid too much load on any one of them.
 
