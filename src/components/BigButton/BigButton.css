@@ -6,6 +6,10 @@
     padding-top: 100px;
 }
 
+.padding-small {
+    padding-top: 20px;
+}
+
 .big-button__wrapper--small {
     padding-top: 20px;
 }
@@ -28,7 +32,7 @@
 }
 
 .big-button__container--loading {
-    animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite backwards;
 }
 
 
@@ -66,9 +70,6 @@
     background-color: #00aa6c;
 }
 
-.big-button--loading {
-    animation: opposite-spin 2s linear infinite
-}
 
 .big-button--main {
     width: 280px;
@@ -94,19 +95,92 @@
     font-size: 50px;
 }
 
+/* @keyframes spin {
+    0% {
+        transform:  scale(1) translate(10px, 10px);
+    }
 
+    10% {
+        transform:  scale(.9) translate(-10px, -10px);
 
+    }
+
+    20% {
+        transform:  scale(1) translate(-20px, 10px);
+
+    }
+
+    30% {
+        transform:  scale(.9);
+
+    }
+
+    40% {
+        transform:  scale(1);
+
+    }
+
+    75% {
+        transform:  scale(1);
+    }
+
+    100% {
+        transform:  scale(1);
+    }
+} */
 @keyframes spin {
+    0% {
+        transform: scale(1) translate(5px, 5px);
+
+    }
+
+    10% {
+        transform: scale(.9) translate(-5px, -5px);
+
+    }
+
+    20% {
+        transform: scale(1) translate(-10px, 20px);
+
+    }
+
+    30% {
+        transform: scale(.9) translate(5px, -10px);
+
+    }
+
+    40% {
+        transform: scale(1) translate(10px, 10px);
+
+    }
+
+    50% {
+        transform: scale(.9) translate(7px, 10px);
+    }
+
+    60% {
+        transform: scale(.9) translate(-6px, -8px);
+    }
+
+    70% {
+        transform: scale(1) translate(-10px, 6px);
+    }
+
+    80% {
+        transform: scale(1) translate(6px, -4px);
+
+    }
+
+    90% {
+        transform: scale(1.1) translate(-3px, -8px);
+
+    }
+
     100% {
-        transform: rotate(360deg);
+        transform: scale(1);
     }
 }
 
-@keyframes opposite-spin {
-    100% {
-        transform: rotate(360deg);
-    }
-}
 
 /* Button takes up way too much space on smaller screens so reduce size */
 @media screen and (max-width:600px) {
@@ -119,5 +193,17 @@
     .big-button__main {
         width: 230px;
         height: 230px;
+    }
+}
+
+@media screen and (max-width:450px) {
+    .padding-small .big-button__container--main {
+        width: 300px;
+        height: 300px;
+    }
+
+    .padding-small .big-button--main {
+        width: 250px;
+        height: 250px;
     }
 }

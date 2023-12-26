@@ -112,13 +112,21 @@ function useGeoLocation() {
                     prevDistance: filterDistance
                 }
 
-                dispatch(setCachedRestaurants({ cachedRestaurants: restaurantsJSON, currentApiType: "yelp", prevYelpFilters }))
-                dispatch(setCurrentRestaurant({ currentRestaurant }))
-                dispatch(setRestaurantHistory(currentRestaurant))
+                setTimeout(() => {
+                    dispatch(setCachedRestaurants({ cachedRestaurants: restaurantsJSON, currentApiType: "yelp", prevYelpFilters }))
+                    dispatch(setCurrentRestaurant({ currentRestaurant }))
+                    dispatch(setRestaurantHistory(currentRestaurant))
+                    setLoading(false)
+                }, 500)
+                return
             } else {
-                dispatch(setCachedRestaurants({ cachedRestaurants: [], currentApiType: "yelp", prevYelpFilters: defaultPrevYelpFilters }))
-                dispatch(setCurrentRestaurant({ currentRestaurant: restaurantsJSON }))
-                dispatch(setRestaurantHistory(restaurantsJSON))
+                setTimeout(() => {
+                    dispatch(setCachedRestaurants({ cachedRestaurants: [], currentApiType: "yelp", prevYelpFilters: defaultPrevYelpFilters }))
+                    dispatch(setCurrentRestaurant({ currentRestaurant: restaurantsJSON }))
+                    dispatch(setRestaurantHistory(restaurantsJSON))
+                    setLoading(false)
+                }, 500)
+                return
             }
         } else {
             dispatch(setRestaurantError(true))
@@ -132,6 +140,9 @@ function useGeoLocation() {
 
     const handleBigButtonClick = () => {
         if (navigator.geolocation) {
+            if (loading) {
+                return;
+            }
             navigator.geolocation.getCurrentPosition(geolocationSuccess, geolocationError)
         }
     }
@@ -143,12 +154,12 @@ function useGeoLocation() {
 }
 
 interface Props {
-    buttonSize: "small" | "main"
+    paddingSmall?: true
     colorType?: "yelp" | "tripadvisor"
 }
 
 export default function BigButton({
-    buttonSize,
+    paddingSmall,
     colorType
 }: Props) {
 
@@ -159,10 +170,10 @@ export default function BigButton({
 
 
     return (
-        <div className={`big-button__wrapper big-button__wrapper--${buttonSize}`}>
-            <div onClick={handleBigButtonClick} className={`big-button__container big-button__container--${buttonSize} ${loading == true && "big-button__container--loading"} ${colorType && `container--${colorType}`} d-flex align-items-center justify-content-center`}>
-                <button className={`big-button big-button--${buttonSize} ${colorType && `button--${colorType}`} ${loading == true && "big-button--loading"}`}>
-                    <IoFastFoodOutline className={`fast-food__icon fast-food__icon--${buttonSize}`} />
+        <div className={`big-button__wrapper big-button__wrapper--main ${paddingSmall ? "padding-small" : ""}`}>
+            <div onClick={handleBigButtonClick} className={`big-button__container big-button__container--main ${loading == true && "big-button__container--loading"} ${colorType && `container--${colorType}`} d-flex align-items-center justify-content-center`}>
+                <button className={`big-button big-button--main ${colorType && `button--${colorType}`} ${loading == true && "big-button--loading"}`}>
+                    <IoFastFoodOutline className={`fast-food__icon fast-food__icon--main`} />
                 </button>
             </div>
         </div>
