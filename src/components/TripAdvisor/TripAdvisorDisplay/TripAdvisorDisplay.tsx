@@ -61,7 +61,7 @@ export default function TripAdvisorDisplay({
                     hours={hours}
                 />
                 <BigButton
-                    buttonSize="small"
+                    paddingSmall={true}
                     colorType="tripadvisor"
                 />
             </div>

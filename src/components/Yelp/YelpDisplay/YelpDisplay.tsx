@@ -60,7 +60,7 @@ export default function YelpDisplay({
                         address={address}
                     />
                     <BigButton
-                        buttonSize="small"
+                        paddingSmall={true}
                         colorType="yelp"
                     />
 

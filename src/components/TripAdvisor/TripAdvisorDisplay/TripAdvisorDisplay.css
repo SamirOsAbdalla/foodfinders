@@ -4,7 +4,7 @@
 }
 
 .ta-display__main {
-    padding: 100px 30px 30px 30px;
+    padding: 100px 50px 30px 50px;
     width: 75%;
     overflow: auto;
     background-color: var(--page-background-blue);
