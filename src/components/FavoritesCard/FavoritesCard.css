@@ -14,7 +14,7 @@
 }
 
 .favorites-card__buttons__wrapper {
-    z-index: 9999;
+    z-index: 2;
     right: 1em;
     top: .5em
 }
@@ -75,7 +75,7 @@
     top: 2.5em;
     padding: 8px 0px;
     width: 10rem;
-    z-index: 9999;
+    z-index: 9998;
     border-radius: 2px;
 }
 
