@@ -19,6 +19,7 @@ let cuisineOptions: AcceptedFoodFilters[] = [
     "Seafood",
     "Thai",
     "Japanese",
+    "Mediterranean"
 ]
 
 export default function FormCuisines({

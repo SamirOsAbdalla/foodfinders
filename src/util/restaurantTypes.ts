@@ -1,6 +1,6 @@
 
 export type AcceptedFoodFilters =
-    "Sandwiches" | "Breakfast" | "Sushi" | "Burgers"
+    "Sandwiches" | "Breakfast" | "Sushi" | "Burgers" | "Mediterranean"
     | "Pizza" | "Chinese" | "Mexican" | "Steak" | "Seafood" | "Thai" | "Japanese"
 
 export type PossibleApis = "yelp" | "tripadvisor" | undefined
