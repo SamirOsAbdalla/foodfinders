@@ -5,7 +5,7 @@ import Instructions from '../Instructions/Instructions'
 export default function HomePage() {
     return (
         <div className="home-page__wrapper">
-            <BigButton buttonSize='main' />
+            <BigButton />
             <div className="break"></div>
             <Instructions />
         </div>
