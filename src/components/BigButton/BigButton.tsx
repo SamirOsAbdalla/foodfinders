@@ -20,8 +20,7 @@ function arePrevFiltersASubset(filtersObject: FiltersObject, prevYelpFilters: an
     if (prevYelpFilters.isDefault &&
         (filtersObject.prices.length > 0 ||
             filtersObject.cuisines.length > 0 ||
-            parseInt(filtersObject.filterDistance) <= parseInt(defaultDistanceRadius))) {
-
+            parseInt(filtersObject.filterDistance) < parseInt(defaultDistanceRadius))) {
         return false
     }
 
@@ -54,17 +53,21 @@ function useGeoLocation() {
             filterDistance: reduxFilterState.filterDistance
         }
 
+
         if (
             reduxCacheState.cachedRestaurants.length > 0 &&
             arePrevFiltersASubset(currentFiltersObject, reduxCacheState.prevYelpFilters)) {
 
             if (reduxCacheState.currentApiType == "yelp") {
                 let cachedRestaurant = reduxCacheState.cachedRestaurants[reduxCacheState.cachedRestaurants.length - 1] as YelpRestaurant
-                dispatch(setCurrentRestaurant({ currentRestaurant: cachedRestaurant }))
-                dispatch(setRestaurantHistory(cachedRestaurant))
-                dispatch(popCachedRestaurant())
+                setTimeout(() => {
+                    dispatch(setCurrentRestaurant({ currentRestaurant: cachedRestaurant }))
+                    dispatch(setRestaurantHistory(cachedRestaurant))
+                    dispatch(popCachedRestaurant())
+                    setLoading(false)
+
+                }, 1000)
             }
-            setLoading(false)
             return
         }
 
