@@ -109,9 +109,9 @@ export default function FavoritesButton({
             return;
         }
 
-        if ((await addFavoriteToMongo()) == 200) {
-            dispatch(addFavorite(favoriteItem))
-        } else {
+        dispatch(addFavorite(favoriteItem))
+        if ((await addFavoriteToMongo()) != 200) {
+            dispatch(removeFavorite(favoriteItem.id))
             setError("Error adding to favorites")
         }
     }
